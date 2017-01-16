@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>page 4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="mike.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT9DL6C25JDhTG0ud6mH6T7GWo6BcRg7s&libraries=places"></script>
+
+</head>
+<body>
+<!--Drop down menu for Accommodations-->
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Accommodations
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        <li><a href="#" class="small" data-value="acc1" tabIndex="-1"><input type="checkbox"/>Hotels</a></li>
+        <li><a href="#" class="small" data-value="acc2" tabIndex="-1"><input type="checkbox"/>Motels</a></li>
+        <li><a href="#" class="small" data-value="acc3" tabIndex="-1"><input type="checkbox"/>Camping/RV Parks</a></li>
+        <li><a href="#" class="small" data-value="acc4" tabIndex="-1"><input type="checkbox"/>Bed and Breakfast</a></li>
+    </ul>
+</div>
+<!--Drop down menu for Attractions-->
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Attractions
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        <li><a href="#" class="small" data-value="att1" tabIndex="-1"><input type="checkbox"/>Amusement Parks</a></li>
+        <li><a href="#" class="small" data-value="att2" tabIndex="-1"><input type="checkbox"/>Museums</a></li>
+        <li><a href="#" class="small" data-value="att3" tabIndex="-1"><input type="checkbox"/>Tours/Excursions</a></li>
+        <li><a href="#" class="small" data-value="att4" tabIndex="-1"><input type="checkbox"/>Zoo/Aquarium</a></li>
+    </ul>
+</div>
+<!--Drop down menu for Outdoors and Recreation-->
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Outdoors/Recreation
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        <li><a href="#" class="small" data-value="rec1" tabIndex="-1"><input type="checkbox"/>Beaches</a></li>
+        <li><a href="#" class="small" data-value="rec2" tabIndex="-1"><input type="checkbox"/>Trails/Hikes</a></li>
+        <li><a href="#" class="small" data-value="rec3" tabIndex="-1"><input type="checkbox"/>National Parks</a></li>
+    </ul>
+</div>
+<!--Drop down menu for GasStations/ServiceStations-->
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Gas Stations/Service Stations
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        <li><a href="#" class="small" data-value="gas1" tabIndex="-1"><input type="checkbox"/>Gas Stations Only</a></li>
+        <li><a href="#" class="small" data-value="gas2" tabIndex="-1"><input type="checkbox"/>Service Stations Only</a></li>
+        <li><a href="#" class="small" data-value="gas3" tabIndex="-1"><input type="checkbox"/>Gas and Service Stations</a></li>
+    </ul>
+</div>
+<!--Drop down menu for Food-->
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Food
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        <li><a href="#" class="small" data-value="food1" tabIndex="-1"><input type="checkbox"/>Restaurants</a></li>
+        <li><a href="#" class="small" data-value="food2" tabIndex="-1"><input type="checkbox"/>Diners</a></li>
+        <li><a href="#" class="small" data-value="food3" tabIndex="-1"><input type="checkbox"/>Fast Food</a></li>
+        <li><a href="#" class="small" data-value="food4" tabIndex="-1"><input type="checkbox"/>Vegetarian and Health Food</a></li>
+        <li><a href="#" class="small" data-value="food5" tabIndex="-1"><input type="checkbox"/>Bars and Drinks</a></li>
+        <li><a href="#" class="small" data-value="food6" tabIndex="-1"><input type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
+    </ul>
+</div>
+
+
+
+<div id="map"></div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSQraMil31XsNfvuz1wyP9N4814GM1DDk&libraries=places&callback=initMap" async defer></script>
+
+</body>
+</html>
