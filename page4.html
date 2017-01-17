@@ -12,67 +12,79 @@
 
 </head>
 <body>
+
+<div id="dropdownContainer">
 <!--Drop down menu for Accommodations-->
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Accommodations
-        <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-        <li><a href="#" class="small" data-value="acc1" tabIndex="-1"><input type="checkbox"/>Hotels</a></li>
-        <li><a href="#" class="small" data-value="acc2" tabIndex="-1"><input type="checkbox"/>Motels</a></li>
-        <li><a href="#" class="small" data-value="acc3" tabIndex="-1"><input type="checkbox"/>Camping/RV Parks</a></li>
-        <li><a href="#" class="small" data-value="acc4" tabIndex="-1"><input type="checkbox"/>Bed and Breakfast</a></li>
-    </ul>
-</div>
-<!--Drop down menu for Attractions-->
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Attractions
-        <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-        <li><a href="#" class="small" data-value="att1" tabIndex="-1"><input type="checkbox"/>Amusement Parks</a></li>
-        <li><a href="#" class="small" data-value="att2" tabIndex="-1"><input type="checkbox"/>Museums</a></li>
-        <li><a href="#" class="small" data-value="att3" tabIndex="-1"><input type="checkbox"/>Tours/Excursions</a></li>
-        <li><a href="#" class="small" data-value="att4" tabIndex="-1"><input type="checkbox"/>Zoo/Aquarium</a></li>
-    </ul>
-</div>
-<!--Drop down menu for Outdoors and Recreation-->
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Outdoors/Recreation
-        <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-        <li><a href="#" class="small" data-value="rec1" tabIndex="-1"><input type="checkbox"/>Beaches</a></li>
-        <li><a href="#" class="small" data-value="rec2" tabIndex="-1"><input type="checkbox"/>Trails/Hikes</a></li>
-        <li><a href="#" class="small" data-value="rec3" tabIndex="-1"><input type="checkbox"/>National Parks</a></li>
-    </ul>
-</div>
-<!--Drop down menu for GasStations/ServiceStations-->
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Gas Stations/Service Stations
-        <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-        <li><a href="#" class="small" data-value="gas1" tabIndex="-1"><input type="checkbox"/>Gas Stations Only</a></li>
-        <li><a href="#" class="small" data-value="gas2" tabIndex="-1"><input type="checkbox"/>Service Stations Only</a></li>
-        <li><a href="#" class="small" data-value="gas3" tabIndex="-1"><input type="checkbox"/>Gas and Service Stations</a></li>
-    </ul>
-</div>
-<!--Drop down menu for Food-->
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Food
-        <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-        <li><a href="#" class="small" data-value="food1" tabIndex="-1"><input type="checkbox"/>Restaurants</a></li>
-        <li><a href="#" class="small" data-value="food2" tabIndex="-1"><input type="checkbox"/>Diners</a></li>
-        <li><a href="#" class="small" data-value="food3" tabIndex="-1"><input type="checkbox"/>Fast Food</a></li>
-        <li><a href="#" class="small" data-value="food4" tabIndex="-1"><input type="checkbox"/>Vegetarian and Health Food</a></li>
-        <li><a href="#" class="small" data-value="food5" tabIndex="-1"><input type="checkbox"/>Bars and Drinks</a></li>
-        <li><a href="#" class="small" data-value="food6" tabIndex="-1"><input type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
-    </ul>
+    <form  id="searchForm" name="searchForm" action="" method="get" onsubmit="checkforChecked();">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-bed"></span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <p>Accommodations:</p>
+                <li><a><input value="hotel" type="checkbox"/>Hotels</a></li>
+                <li><a><input value="motel" type="checkbox"/>Motels</a></li>
+                <li><a><input value="rvParks/camping" type="checkbox"/>Camping/RV Parks</a></li>
+                <li><a><input value="bedBreakfast" type="checkbox"/>Bed and Breakfast</a></li>
+            </ul>
+        </div>
+
+        <!--Drop down menu for Attractions-->
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown"> <span class="glyphicon glyphicon-camera"></span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <p>Attractions</p>
+                <li><a><input value="amusement" type="checkbox"/>Amusement Parks</a></li>
+                <li><a><input value="museums" type="checkbox"/>Museums</a></li>
+                <li><a><input value="tours" type="checkbox"/>Tours/Excursions</a></li>
+                <li><a><input  value="zoo/aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
+            </ul>
+        </div>
+
+        <!--Drop down menu for Outdoors and Recreation-->
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown"><span class="glyphicon glyphicon-tree-conifer"></span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <p>Outdoors and Recreation:</p>
+                <li><a><input value="beachs" type="checkbox"/>Beaches</a></li>
+                <li><a><input value="trails" type="checkbox"/>Trails/Hikes</a></li>
+                <li><a><input value="nationalParks" type="checkbox"/>National Parks</a></li>
+            </ul>
+        </div>
+
+        <!--Drop down menu for GasStations/ServiceStations-->
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu4" data-toggle="dropdown"><span class="glyphicon glyphicon-scale"></span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <p>Gas and Service Stations</p>
+                <li><a><input value="gas" type="checkbox"/>Gas Stations Only</a></li>
+                <li><a><input value="serviceStations" type="checkbox"/>Service Stations Only</a></li>
+                <li><a><input  value="gas/serviceStations" type="checkbox"/>Gas and Service Stations</a></li>
+            </ul>
+        </div>
+
+        <!--Drop down menu for Food-->
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu5" data-toggle="dropdown"><span class="glyphicon glyphicon-cutlery"></span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <p>Food and Drink</p>
+                <li><a><input value="restaurants" type="checkbox"/>Restaurants</a></li>
+                <li><a><input value="diners" type="checkbox"/>Diners</a></li>
+                <li><a><input value="fastfood" type="checkbox"/>Fast Food</a></li>
+                <li><a><input value="healthFood" type="checkbox"/>Vegetarian and Health Food</a></li>
+                <li><a><input value="bars" type="checkbox"/>Bars and Drinks</a></li>
+                <li><a><input value="wineries/Breweries" type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
+            </ul>
+        </div>
+        <button class='btn' type="button" id='actionSubmit'>Show Results</button>
+    </form>
 </div>
 
 
 
-<div id="map"></div>
-<!-- Replace the value of the key parameter with your own API key. -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSQraMil31XsNfvuz1wyP9N4814GM1DDk&libraries=places&callback=initMap" async defer></script>
 
 </body>
 </html>
