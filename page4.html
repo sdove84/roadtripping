@@ -8,7 +8,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="mike.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT9DL6C25JDhTG0ud6mH6T7GWo6BcRg7s&libraries=places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=geometry,places"></script>
+
+
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .dropdown{
+            display: inline;
+        }
+    </style>
 
 </head>
 <body>
@@ -21,9 +40,9 @@
                 <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <p>Accommodations:</p>
-                <li><a><input value="hotel" type="checkbox"/>Hotels</a></li>
-                <li><a><input value="motel" type="checkbox"/>Motels</a></li>
-                <li><a><input value="rvParks/camping" type="checkbox"/>Camping/RV Parks</a></li>
+                <li><a><input value="hotels" type="checkbox"/>Hotels</a></li>
+                <li><a><input value="motel + lodging" type="checkbox"/>Motels</a></li>
+                <li><a><input value="campground + rv_park" type="checkbox"/>Camping/RV Parks</a></li>
                 <li><a><input value="bedBreakfast" type="checkbox"/>Bed and Breakfast</a></li>
             </ul>
         </div>
@@ -34,10 +53,10 @@
                 <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <p>Attractions</p>
-                <li><a><input value="amusement" type="checkbox"/>Amusement Parks</a></li>
+                <li><a><input value="amusement_park" type="checkbox"/>Amusement Parks</a></li>
                 <li><a><input value="museums" type="checkbox"/>Museums</a></li>
                 <li><a><input value="tours" type="checkbox"/>Tours/Excursions</a></li>
-                <li><a><input  value="zoo/aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
+                <li><a><input  value="zoo + aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
             </ul>
         </div>
 
@@ -47,7 +66,7 @@
                 <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <p>Outdoors and Recreation:</p>
-                <li><a><input value="beachs" type="checkbox"/>Beaches</a></li>
+                <li><a><input value="beach" type="checkbox"/>Beaches</a></li>
                 <li><a><input value="trails" type="checkbox"/>Trails/Hikes</a></li>
                 <li><a><input value="nationalParks" type="checkbox"/>National Parks</a></li>
             </ul>
@@ -60,8 +79,8 @@
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <p>Gas and Service Stations</p>
                 <li><a><input value="gas" type="checkbox"/>Gas Stations Only</a></li>
-                <li><a><input value="serviceStations" type="checkbox"/>Service Stations Only</a></li>
-                <li><a><input  value="gas/serviceStations" type="checkbox"/>Gas and Service Stations</a></li>
+                <li><a><input value="car repair" type="checkbox"/>Service Stations Only</a></li>
+                <li><a><input  value="gas_station/car repair" type="checkbox"/>Gas and Service Stations</a></li>
             </ul>
         </div>
 
@@ -73,8 +92,8 @@
                 <p>Food and Drink</p>
                 <li><a><input value="restaurants" type="checkbox"/>Restaurants</a></li>
                 <li><a><input value="diners" type="checkbox"/>Diners</a></li>
-                <li><a><input value="fastfood" type="checkbox"/>Fast Food</a></li>
-                <li><a><input value="healthFood" type="checkbox"/>Vegetarian and Health Food</a></li>
+                <li><a><input value="fast food" type="checkbox"/>Fast Food</a></li>
+                <li><a><input value="health Food + health" type="checkbox"/>Vegetarian and Health Food</a></li>
                 <li><a><input value="bars" type="checkbox"/>Bars and Drinks</a></li>
                 <li><a><input value="wineries/Breweries" type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
             </ul>
@@ -82,9 +101,7 @@
         <button class='btn' type="button" id='actionSubmit'>Show Results</button>
     </form>
 </div>
-
-
-
-
+<div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&next_page_token=next_page_token value&libraries=places" async defer></script>
 </body>
 </html>
