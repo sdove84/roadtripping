@@ -9,15 +9,29 @@
             $('button').click(function(){
                 console.log('click initiated');
                 $.ajax({
-                    dataType: 'json',
+                    dataType: 'jsonp',
                     method: "GET",
-                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/conditions/q/92081.json',
+                    //url: 'http://api.wunderground.com/api/dd19086be18c6fc3/radar/image.gif?centerlat=38&centerlon=-96.4&radius=100&width=280&height=280&newmaps=1',
+                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/conditions/q/NV/Las Vegas.json',
+                    //url: 'https://developers.google.com/maps/documentation/javascript/examples/overlay-simple',
                     success: function(result) {
                         console.log('AJAX Success function called, with the following result:', result);
-
+                        console.log('Location ' + result.current_observation.display_location.full);
+                        console.log('Temp ' + result.current_observation.temp_f);
+                        console.log('Weather ' + result.current_observation.weather);
+                        console.log('Wind Direction ' + result.current_observation.wind_dir);
+                        console.log('Wind Speed ' + result.current_observation.wind_mph);
+                        console.log('Pressure ' + result.current_observation.pressure_in);
                     //add display here
 
-                        //$('#display').append.current_observation;
+                        $('#display').append(result.current_observation.display_location.full,'<br>');
+                        $('#display').append(result.current_observation.temp_f,'<br>');
+                        $('#display').append(result.current_observation.weather);
+                        $('#display').append(result.current_observation.wind_dir);
+                        $('#display').append(result.current_observation.wind_mph);
+                        $('#display').append(result.current_observation.pressure_in);
+                        //$('#display').append(result.current_observation.display_location.full);
+
                     }
                 });
                 console.log('End of click function');
