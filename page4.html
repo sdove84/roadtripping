@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>page 4</title>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="30315203349-jd80sfb669777fd6d1dfterfccd6c8bq.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="mike.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=geometry,places"></script>
 
@@ -31,6 +34,14 @@
 
 </head>
 <body>
+
+<div id="googleSignIn">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+</div>
+
+<div id="googleSignOut">
+    <a href="#" onclick="signOut();">Sign out</a>
+</div>
 
 <div id="dropdownContainer">
 <!--Drop down menu for Accommodations-->
