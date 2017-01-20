@@ -10,7 +10,7 @@ $(document).ready(function(){
             //needs key for 'Your_Key' and geolocation for 'query'
             //NOT TESTED YET!
 
-            url: 'http://api.wunderground.com/api/Your_Key/alerts, conditions, forecast10day, geolookup, hourly/q/query.json',
+            url: 'http://api.wunderground.com/your_key/forecast/geolookup/conditions/q/CA/San_Diego.json',
             success: function(result) {
                 console.log('AJAX Success function called, with the following result:', result);
 
