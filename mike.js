@@ -19,20 +19,20 @@ function checkForCheckedValues(){
 
 // initMap HARDCODED irvine as the initial view will need to be changed to users geoLocation
 function initMap() {
-    var irvine = {lat: 33.669, lng: -117.822};
+    var lagunaBeach = {lat: 33.541679, lng: -117.777214};
     map = new google.maps.Map(document.getElementById('map'), {
-        center: irvine,
-        zoom: 10
+        center: lagunaBeach,
+        zoom: 12
     });
 
-    //The object below is hard coded to show results within the radius if irvine needs to be changed to either route
+    //The object below is hard coded to show results within the radius if irvine needs to be changed to either   route
     //or to users geoLocation. Name is the values of what will be searched for based off the checked values
     infowindow = new google.maps.InfoWindow();
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
-        location: irvine,
-        radius: 16093, // 10 mile radius search
-        name: checkedBoxes
+        location: lagunaBeach,
+        radius: 8046.72, // 5 mile radius search
+        types: checkedBoxes,
     }, callback);
 }
 
@@ -59,3 +59,4 @@ function createMarker(place) {
         infowindow.open(map, this);
     });
 }
+
