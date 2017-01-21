@@ -12,9 +12,11 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="mike.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=geometry,places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&next_page_token=next_page_token value&libraries=places" async defer></script>
 
 
 
+<!----------------------------------Google places style (Add dont mix up with other maps)--------------------------->
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -31,18 +33,16 @@
             display: inline;
         }
     </style>
+<!--------------------------------- END of Google places style-------------------------------------------------------->
 
 </head>
 <body>
-
-<div id="googleSignIn">
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-</div>
-
 <div id="googleSignOut">
     <a href="#" onclick="signOut();">Sign out</a>
 </div>
 
+
+<!-----------------------------------------User CheckBoxes---------------------------------------------------------->
 <div id="dropdownContainer">
 <!--Drop down menu for Accommodations-->
     <form  id="searchForm" name="searchForm" action="" method="get" onsubmit="checkforChecked();">
@@ -113,6 +113,5 @@
     </form>
 </div>
 <div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&next_page_token=next_page_token value&libraries=places" async defer></script>
 </body>
 </html>
