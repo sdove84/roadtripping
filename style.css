@@ -5,3 +5,16 @@
     -o-background-size: cover;
     background-size: cover;
 }
+#appNameHeader{
+    font-family: 'Permanent Marker', cursive;
+    font-size: 80px;
+}
+
+/* centers google sign in */
+.g-signin2{
+    width: 100%;
+}
+/* centers google sign in */
+.g-signin2 > div{
+    margin: 0 auto;
+}
