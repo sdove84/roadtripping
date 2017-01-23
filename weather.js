@@ -1,21 +1,33 @@
 /**
  * Created by Patrick on 1/17/2017.
  */
-$(document).ready(function(){
-    $('button').click(function(){
-        console.log('click initiated');
-        $.ajax({
-            dataType: 'json',
-
-            //needs key for 'Your_Key' and geolocation for 'query'
-            //NOT TESTED YET!
-
-            url: 'http://api.wunderground.com/your_key/forecast/geolookup/conditions/q/CA/San_Diego.json',
-            success: function(result) {
-                console.log('AJAX Success function called, with the following result:', result);
-
-            }
-        });
-        console.log('End of click function');
-    });
-});
+http://icons.wxug.com/i/c/k/chanceflurries.gif
+    http://icons.wxug.com/i/c/k/chancerain.gif
+        http://icons.wxug.com/i/c/k/chancesleet.gif
+            http://icons.wxug.com/i/c/k/chancesnow.gif
+                http://icons.wxug.com/i/c/k/chancetstorms.gif
+                    http://icons.wxug.com/i/c/k/clear.gif
+                        http://icons.wxug.com/i/c/k/cloudy.gif
+                            http://icons.wxug.com/i/c/k/flurries.gif
+                                http://icons.wxug.com/i/c/k/fog.gif
+                                    http://icons.wxug.com/i/c/k/hazy.gif
+                                        http://icons.wxug.com/i/c/k/mostlycloudy.gif
+                                            http://icons.wxug.com/i/c/k/mostlysunny.gif
+                                                http://icons.wxug.com/i/c/k/partlycloudy.gif
+                                                    http://icons.wxug.com/i/c/k/partlysunny.gif
+                                                        http://icons.wxug.com/i/c/k/sleet.gif
+                                                            http://icons.wxug.com/i/c/k/rain.gif
+                                                                http://icons.wxug.com/i/c/k/sleet.gif
+                                                                    http://icons.wxug.com/i/c/k/snow.gif
+                                                                        http://icons.wxug.com/i/c/k/sunny.gif
+                                                                            http://icons.wxug.com/i/c/k/tstorms.gif
+                                                                                http://icons.wxug.com/i/c/k/cloudy.gif
+                                                                                    http://icons.wxug.com/i/c/k/partlycloudy.gif
+// trend = result.current_observation.pressure_trend
+    if (trend === "+") {
+        return(arrow up)
+    } else if (trend === "-") {
+        return(arrow down)
+    } else {
+        return("steady")
+    }

@@ -5,6 +5,8 @@
     <title>Weather</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="http://icons.wxug.com/i/c/k/rain.gif">
     <script>
         $(document).ready(function(){
             $('button').click(function(){
@@ -13,7 +15,7 @@
                     dataType: 'jsonp',
                     method: "GET",
                     //url: 'http://api.wunderground.com/api/dd19086be18c6fc3/radar/image.gif?centerlat=38&centerlon=-96.4&radius=100&width=280&height=280&newmaps=1',
-                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/conditions/q/NV/Las Vegas.json',
+                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/astronomy/conditions/currenthurricane/forecast/forecast10day/geolookup/history/hourly/hourly10day/planner/rawtide/tide/webcams/yesterday/q/CA/Vista.json',
                     //url: 'https://developers.google.com/maps/documentation/javascript/examples/overlay-simple',
                     success: function(result) {
                         console.log('AJAX Success function called, with the following result:', result);
@@ -25,12 +27,13 @@
                         console.log('Pressure ' + result.current_observation.pressure_in);
                     //add display here
 
-                        $('#display').append(result.current_observation.display_location.full,'<br>');
-                        $('#display').append('Temp ' + result.current_observation.temp_f + '&#176;' + ' F','<br>');
-                        $('#display').append(result.current_observation.weather,'<br>');
-                        $('#display').append('Humidity ' + result.current_observation.relative_humidity, '<br>');
-                        $('#display').append('Wind ' + result.current_observation.wind_dir + ' ' + result.current_observation.wind_mph + ' mph','<br>');
-                        $('#display').append('Pressure ' + result.current_observation.pressure_in);
+                        $('#display').append(
+                                            result.current_observation.display_location.full,
+                                            'Temp ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
+                                            result.current_observation.icon,'<br>',
+                                            'Humidity ' + result.current_observation.relative_humidity, '<br>',
+                                            'Wind ' + result.current_observation.wind_dir + ' ' + result.current_observation.wind_mph + ' mph','<br>',
+                                            'Pressure ' + result.current_observation.pressure_in + result.current_observation.pressure_trend);
 
                     }
                 });
@@ -46,6 +49,7 @@
 </head>
 <body>
 <div id="display"></div>
+<div><img src="weather_radar/radar_dummy_data640x480.jpg" width="80%" height="60%"></div>
 <button>What's the weather like?</button>
 </body>
 </html>
