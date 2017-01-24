@@ -14,10 +14,9 @@
                 $.ajax({
                     dataType: 'jsonp',
                     method: "GET",
-                    //url: 'http://api.wunderground.com/api/dd19086be18c6fc3/radar/image.gif?centerlat=38&centerlon=-96.4&radius=100&width=280&height=280&newmaps=1',
-                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/astronomy/conditions/currenthurricane/forecast/forecast10day/geolookup/history/hourly/hourly10day/planner/rawtide/tide/webcams/yesterday/q/CA/Vista.json',
-                    //url: 'https://developers.google.com/maps/documentation/javascript/examples/overlay-simple',
+                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/q/92081.json',
                     success: function(result) {
+                        console.log(result.alerts[0].description);
                         console.log('AJAX Success function called, with the following result:', result);
                         console.log('Location ' + result.current_observation.display_location.full);
                         console.log('Temp ' + result.current_observation.temp_f);
@@ -28,12 +27,13 @@
                     //add display here
 
                         $('#display').append(
-                                            result.current_observation.display_location.full,
-                                            'Temp ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
-                                            result.current_observation.icon,'<br>',
-                                            'Humidity ' + result.current_observation.relative_humidity, '<br>',
-                                            'Wind ' + result.current_observation.wind_dir + ' ' + result.current_observation.wind_mph + ' mph','<br>',
-                                            'Pressure ' + result.current_observation.pressure_in + result.current_observation.pressure_trend);
+                                            result.current_observation.display_location.full,'<br>',
+                                            result.alerts[0].description,'<br>',
+                                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
+                                            //result.current_observation.icon_url,'<br>',
+                                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                                            'Wind:  ' + result.current_observation.wind_dir + ' ' + result.current_observation.wind_mph + ' mph','<br>',
+                                            'Pressure:  ' + result.current_observation.pressure_in + result.current_observation.pressure_trend);
 
                     }
                 });
@@ -48,8 +48,13 @@
     </style>
 </head>
 <body>
-<div id="display"></div>
-<div><img src="weather_radar/radar_dummy_data640x480.jpg" width="80%" height="60%"></div>
+<div id="display">
+    <!--This is where to put the conditions icon!-->
+
+    <img src="http://icons.wxug.com/i/c/k/mostlycloudy.gif"><br>
+</div>
+
+<div><img src="http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/92081.gif?width=280&height=280&newmaps=1&rainsnow=1" alt="weather radar"></div>
 <button>What's the weather like?</button>
 </body>
 </html>
