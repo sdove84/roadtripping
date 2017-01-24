@@ -12,7 +12,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="mike.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=geometry,places"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&next_page_token=next_page_token value&libraries=places" async defer></script>
+
 
 
 
@@ -31,6 +31,18 @@
         }
         .dropdown{
             display: inline;
+        }
+        .glyphicon-camera{
+            color: dodgerblue;
+        }
+        .glyphicon-tree-conifer{
+            color:green;
+        }
+        .glyphicon-scale{
+            color: rebeccapurple;
+        }
+        .glyphicon-cutlery{
+            color: darkred;
         }
     </style>
 <!--------------------------------- END of Google places style-------------------------------------------------------->
@@ -118,11 +130,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal" onclick="checkForCheckedValues()">Show Results</button>
+                <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal">Show Results</button>
             </div>
         </div>
-
     </div>
 </div>
+<div id="map"></div>
+
 </body>
 </html>
