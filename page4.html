@@ -37,81 +37,92 @@
 
 </head>
 <body>
+
+<div id="initModal">
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Display Data</button>
+</div>
+
 <div id="googleSignOut">
     <a href="#" onclick="signOut();">Sign out</a>
 </div>
 
-
-<!-----------------------------------------User CheckBoxes---------------------------------------------------------->
-<div id="dropdownContainer">
-<!--Drop down menu for Accommodations-->
-    <form  id="searchForm" name="searchForm" action="" method="get" onsubmit="checkforChecked();">
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-bed"></span>
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Please select what data you would like to be displayed on your route</h4>
+            </div>
+         <!-- Modal body content -->
+            <div class="modal-body">
+                <!-- first drop down -- Accommodations -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-bed"></span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <p>Accommodations:</p>
                 <li><a><input value="hotels" type="checkbox"/>Hotels</a></li>
                 <li><a><input value="motel + lodging" type="checkbox"/>Motels</a></li>
                 <li><a><input value="campground + rv_park" type="checkbox"/>Camping/RV Parks</a></li>
                 <li><a><input value="bedBreakfast" type="checkbox"/>Bed and Breakfast</a></li>
-            </ul>
+                </ul>
+            </div>
+                <! --- second drop down Attractions -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown"> <span class="glyphicon glyphicon-camera"></span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <p>Attractions</p>
+                        <li><a><input value="amusement_park" type="checkbox"/>Amusement Parks</a></li>
+                        <li><a><input value="museums" type="checkbox"/>Museums</a></li>
+                        <li><a><input value="tours" type="checkbox"/>Tours/Excursions</a></li>
+                        <li><a><input  value="zoo + aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
+                    </ul>
+                </div>
+                <! --- Third drop down Outdoors and Recreation -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown"><span class="glyphicon glyphicon-tree-conifer"></span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <p>Outdoors and Recreation:</p>
+                        <li><a><input value="beach" type="checkbox"/>Beaches</a></li>
+                        <li><a><input value="trails" type="checkbox"/>Trails/Hikes</a></li>
+                        <li><a><input value="nationalParks" type="checkbox"/>National Parks</a></li>
+                    </ul>
+                </div>
+                <!-- forth drop down Gas Stations and Service Stations -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu4" data-toggle="dropdown"><span class="glyphicon glyphicon-scale"></span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <p>Gas and Service Stations</p>
+                        <li><a><input value="gas" type="checkbox"/>Gas Stations Only</a></li>
+                        <li><a><input value="car repair" type="checkbox"/>Service Stations Only</a></li>
+                        <li><a><input  value="gas_station/car repair" type="checkbox"/>Gas and Service Stations</a></li>
+                    </ul>
+                </div>
+                <!-- fifth drop down food -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu5" data-toggle="dropdown"><span class="glyphicon glyphicon-cutlery"></span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <p>Food and Drink</p>
+                        <li><a><input value="restaurants" type="checkbox"/>Restaurants</a></li>
+                        <li><a><input value="diners" type="checkbox"/>Diners</a></li>
+                        <li><a><input value="fast food" type="checkbox"/>Fast Food</a></li>
+                        <li><a><input value="health Food + health" type="checkbox"/>Vegetarian and Health Food</a></li>
+                        <li><a><input value="bars" type="checkbox"/>Bars and Drinks</a></li>
+                        <li><a><input value="wineries/Breweries" type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal" onclick="checkForCheckedValues()">Show Results</button>
+            </div>
         </div>
 
-        <!--Drop down menu for Attractions-->
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown"> <span class="glyphicon glyphicon-camera"></span>
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <p>Attractions</p>
-                <li><a><input value="amusement_park" type="checkbox"/>Amusement Parks</a></li>
-                <li><a><input value="museums" type="checkbox"/>Museums</a></li>
-                <li><a><input value="tours" type="checkbox"/>Tours/Excursions</a></li>
-                <li><a><input  value="zoo + aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
-            </ul>
-        </div>
-
-        <!--Drop down menu for Outdoors and Recreation-->
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown"><span class="glyphicon glyphicon-tree-conifer"></span>
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <p>Outdoors and Recreation:</p>
-                <li><a><input value="beach" type="checkbox"/>Beaches</a></li>
-                <li><a><input value="trails" type="checkbox"/>Trails/Hikes</a></li>
-                <li><a><input value="nationalParks" type="checkbox"/>National Parks</a></li>
-            </ul>
-        </div>
-
-        <!--Drop down menu for GasStations/ServiceStations-->
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu4" data-toggle="dropdown"><span class="glyphicon glyphicon-scale"></span>
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <p>Gas and Service Stations</p>
-                <li><a><input value="gas" type="checkbox"/>Gas Stations Only</a></li>
-                <li><a><input value="car repair" type="checkbox"/>Service Stations Only</a></li>
-                <li><a><input  value="gas_station/car repair" type="checkbox"/>Gas and Service Stations</a></li>
-            </ul>
-        </div>
-
-        <!--Drop down menu for Food-->
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu5" data-toggle="dropdown"><span class="glyphicon glyphicon-cutlery"></span>
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <p>Food and Drink</p>
-                <li><a><input value="restaurants" type="checkbox"/>Restaurants</a></li>
-                <li><a><input value="diners" type="checkbox"/>Diners</a></li>
-                <li><a><input value="fast food" type="checkbox"/>Fast Food</a></li>
-                <li><a><input value="health Food + health" type="checkbox"/>Vegetarian and Health Food</a></li>
-                <li><a><input value="bars" type="checkbox"/>Bars and Drinks</a></li>
-                <li><a><input value="wineries/Breweries" type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
-            </ul>
-        </div>
-        <button class='btn' type="button" id='actionSubmit'>Show Results</button>
-    </form>
+    </div>
 </div>
-<div id="map"></div>
 </body>
 </html>

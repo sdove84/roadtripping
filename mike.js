@@ -30,7 +30,7 @@ function initiMapPlaces() {
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
         location: Irvine,
-        radius: 8093.4, // 5 mile radius search
+        radius: 16093.4, // 10 mile radius search
         name: checkedBoxes
     }, callbackPlaces)
 }
@@ -84,3 +84,4 @@ function signOut() {
 
 
 //-----------------------------------------End of Google Sign in--------------------------------------------------------
+
