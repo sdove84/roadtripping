@@ -8,9 +8,7 @@ $(document).ready(function() {
 });
 
 var map;
-var infowindow;
 var checkedBoxes = [];
-//  var Irvine = {lat: 33.6694444, lng: -117.8222222};
 
 
 
@@ -83,8 +81,6 @@ function createMarkers(places) {
             infoWindow.open(map,marker);
         });
 
-
-        placesList.innerHTML += '<li>' + place.name + '</li>';
         bounds.extend(place.geometry.location);
     }
     map.fitBounds(bounds);
@@ -96,6 +92,7 @@ function createMarkers(places) {
 
 
 //----------------------------------------Start of Google Sign In-------------------------------------------------------
+
 // client ID:   30315203349-jd80sfb669777fd6d1dfterfccd6c8bq.apps.googleusercontent.com
 // client secret:   klXp63ZEWeJ8DvO7npLy7RvE
 
@@ -118,7 +115,6 @@ function signOut() {
         console.log('User signed out.');
     });
 }
-
 
 //-----------------------------------------End of Google Sign in--------------------------------------------------------
 
