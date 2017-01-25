@@ -8,15 +8,28 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="http://icons.wxug.com/i/c/k/rain.gif">
     <script>
+
         $(document).ready(function(){
             $('button').click(function(){
                 console.log('click initiated');
                 $.ajax({
                     dataType: 'jsonp',
                     method: "GET",
-                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/q/92081.json',
+
+                    //hardcoded city for testing
+                    //url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/q/92081.json',
+
+                    //possible geolocation weather response
+                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
                     success: function(result) {
-                        console.log(result.alerts[0].description);
+                        var weather_alert=result.alerts[0].description;
+                        if (weather_alert !== undefined) {
+                            console.log(weather_alert);
+                        } else {
+                            weather_alert === "No alerts";
+                        }
+
+                        //console.log(result.alerts[0].description);
                         console.log('AJAX Success function called, with the following result:', result);
                         console.log('Location ' + result.current_observation.display_location.full);
                         console.log('Temp ' + result.current_observation.temp_f);
@@ -27,15 +40,20 @@
                     //add display here
 
                         $('#display').append(
+                                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
                                             result.current_observation.display_location.full,'<br>',
-                                            result.alerts[0].description,'<br>',
+                                            //need to fix bug for undefined alerts if there are no alerts
+                                            //result.alerts[0].description,'<br>',
+                                            weather_alert,'<br>',
                                             'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
-                                            //result.current_observation.icon_url,'<br>',
                                             'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                                            'Wind:  ' + result.current_observation.wind_dir + ' ' + result.current_observation.wind_mph + ' mph','<br>',
+                                            'Wind:  ' + result.current_observation.wind_string,'<br>',
+
+                                            //do we need pressure trend? displays as -, 0, + now
                                             'Pressure:  ' + result.current_observation.pressure_in + result.current_observation.pressure_trend);
 
                     }
+                    //need to put failure here
                 });
                 console.log('End of click function');
             });
@@ -48,13 +66,24 @@
     </style>
 </head>
 <body>
+<!--<form action="somepage.php">
+    Where are you going?<br>
+    <input type="text" name="location"><br>
+    <input type="submit" value="Here!">
+</form>-->
+<div id="icon">
+
+</div>
 <div id="display">
     <!--This is where to put the conditions icon!-->
 
-    <img src="http://icons.wxug.com/i/c/k/mostlycloudy.gif"><br>
 </div>
 
-<div><img src="http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/92081.gif?width=280&height=280&newmaps=1&rainsnow=1" alt="weather radar"></div>
+<!--This is the geolocation radar-->
+
+<div>
+    <img src="http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1" alt="weather radar">
+</div>
 <button>What's the weather like?</button>
 </body>
 </html>
