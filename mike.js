@@ -1,13 +1,16 @@
 $(document).ready(function() {
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
-        initiMapPlaces();
+        initMap();
+
+
     });
 });
 
 var map;
 var infowindow;
 var checkedBoxes = [];
+//  var Irvine = {lat: 33.6694444, lng: -117.8222222};
 
 
 
@@ -19,42 +22,68 @@ function checkForCheckedValues(){
     console.log("users picks to have displayed:" +" "+ checkedBoxes);
 }
 
-function initiMapPlaces() {
+function initMap() {
     var Irvine = {lat: 33.6694444, lng: -117.8222222};
     map = new google.maps.Map(document.getElementById('map'), {
-        center: Irvine,
+        center: Irvine ,
         zoom: 12
     });
-
-    infowindow = new google.maps.InfoWindow();
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
         location: Irvine,
-        radius: 11265.4, // 7 mile radius search
+        radius: 16093.4, //10 Mile radius
         name: checkedBoxes
-    }, callbackPlaces)
+    }, processResults);
 }
 
-function callbackPlaces(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-            createMarkerPlaces(results[i]);
+function processResults(results, status, pagination) {
+    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        return;
+    } else {
+        createMarkers(results);
+
+        if (pagination.hasNextPage) {
+            var moreButton = document.getElementById('more');
+
+            moreButton.disabled = false;
+
+            moreButton.addEventListener('click', function() {
+                moreButton.disabled = true;
+                pagination.nextPage();
+            });
         }
     }
 }
 
-function createMarkerPlaces(place) {
-    var placeLoc = place.geometry.location;
-    var marker = new google.maps.Marker({
-        map: map,
-        position: placeLoc
-    });
+function createMarkers(places) {
+    var bounds = new google.maps.LatLngBounds();
+    var placesList = document.getElementById('places');
 
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-    });
+    for (var i = 0, place; place = places[i]; i++) {
+        var image = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
+
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: image,
+            title: place.name,
+            position: place.geometry.location
+        });
+
+        placesList.innerHTML += '<li>' + place.name + '</li>';
+
+        bounds.extend(place.geometry.location);
+    }
+    map.fitBounds(bounds);
 }
+
+
+
 //---------------------------------------End of google places api-------------------------------------------------------
 
 
