@@ -68,15 +68,23 @@ function createMarkers(places) {
             scaledSize: new google.maps.Size(25, 25)
         };
 
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
             map: map,
             icon: image,
             title: place.name,
             position: place.geometry.location
         });
 
-        placesList.innerHTML += '<li>' + place.name + '</li>';
+        let infoWindow = new google.maps.InfoWindow({
+            content: place.name
+        });
 
+        marker.addListener('click',function(){
+            infoWindow.open(map,marker);
+        });
+
+
+        placesList.innerHTML += '<li>' + place.name + '</li>';
         bounds.extend(place.geometry.location);
     }
     map.fitBounds(bounds);
