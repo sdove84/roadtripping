@@ -20,13 +20,26 @@
     <title>Home Page</title>
 </head>
 
+<style>
+    #buttonContianer{
+        display: inline;
+    }
+    .g-signin2{
+        margin-top: 10%;
+    }
+    #beginTripButton{
+        margin-top: 10px;
+    }
+
+</style>
+
 <body class="container">
     <div class="text-center">
         <h1 id="appNameHeader">Road Tripping</h1>
-        <div id="googleSignIn" class="g-signin2" data-onsuccess="onSignIn"></div>
-        <button id="beginTripButton">Click here to start a trip</button>
-        <div id="googleSignOut">
-            <a href="#" onclick="signOut();">Sign out</a>
+            <div id="buttonContainer">
+                <div id="googleSignIn" class="g-signin2" data-onsuccess="onSignIn"></div>
+                <button id="beginTripButton">Plan Your Trip</button>
+            </div>
         </div>
     </div>
 </body>
