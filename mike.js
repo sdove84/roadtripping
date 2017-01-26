@@ -55,9 +55,15 @@ function processResults(results, status, pagination) {
 
 function createMarkers(places) {
     var bounds = new google.maps.LatLngBounds();
-    var placesList = document.getElementById('places');
-
     for (var i = 0, place; place = places[i]; i++) {
+        var name = place.name;
+        var address = places[i].vicinity;
+        var content =
+            '<div class="infoWindow">'+
+                '<h1 class="infoPlaceName">'+ name+ '</h1>'+
+                '<h5 class="infoPlaceAddress>">'+ address+'</h5>'+
+            '</div>';
+
         var image = {
             url: place.icon,
             size: new google.maps.Size(71, 71),
@@ -74,7 +80,9 @@ function createMarkers(places) {
         });
 
         let infoWindow = new google.maps.InfoWindow({
-            content: place.name
+            content: content
+
+
         });
 
         marker.addListener('click',function(){
