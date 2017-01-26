@@ -109,7 +109,7 @@ var map;
             draggable:true //disable move marker
         });
 
-        var contentString = '<div id="direction">' + '<p>You\'re here</p>' + '</div>';
+        var contentString = '<div id="direction">'+ "You\'re here" + '</div>';
 
         var infowindow = new google.maps.InfoWindow({
             content:contentString,
@@ -153,7 +153,6 @@ var map;
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-
                     console.log('here is pos', pos);
                     map.setCenter(pos);
                     marker.setPosition(pos);
@@ -181,16 +180,15 @@ var map;
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('right-panel'));
 
-        var control = document.getElementById('floating-panel');
-        control.style.display = 'block';
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+//        var control = document.getElementById('floating-panel');
+//        control.style.display = 'block';
+//        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
         var onChangeHandler = function() {
             calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
-
+//        document.getElementById('start').addEventListener('change', onChangeHandler);
+//        document.getElementById('end').addEventListener('change', onChangeHandler);
 
     }
 
@@ -211,6 +209,8 @@ var map;
 
         var originAutocomplete = new google.maps.places.Autocomplete(
                 originInput, {placeIdOnly: true});
+
+
         var destinationAutocomplete = new google.maps.places.Autocomplete(
                 destinationInput, {placeIdOnly: true});
 
