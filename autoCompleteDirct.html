@@ -67,31 +67,52 @@
        placeholder="Enter a destination location">
 
 <div id="mode-selector" class="controls">
-    <input type="radio" name="type" id="changemode-walking" checked="checked">
-    <label for="changemode-walking">Walking</label>
+    <!--<input type="radio" name="type" id="changemode-walking" checked="checked">-->
+    <!--<label for="changemode-walking">Walking</label>-->
 
-    <input type="radio" name="type" id="changemode-transit">
-    <label for="changemode-transit">Transit</label>
+    <!--<input type="radio" name="type" id="changemode-transit">-->
+    <!--<label for="changemode-transit">Transit</label>-->
 
     <input type="radio" name="type" id="changemode-driving">
-    <label for="changemode-driving">Driving</label>
+    <label for="changemode-driving"></label>
 </div>
+
+<div id="right-panel"></div>
 
 <div id="map"></div>
 <button id="goSomewhereButton" onClick="window.location='page4.html'" style="position: absolute; left: 52%; top: 9px">Go to next page</button>
 <script>
-    // This example requires the Places library. Include the libraries=places
-    // parameter when you first load the API. For example:
-    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
     function initMap() {
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
             center: {lat: 37.0902, lng: -95.7129},
             zoom: 4
         });
 
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+//        weatherLayer = new google.maps.weather.WeatherLayer({
+//            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+//        });
+
         new AutocompleteDirectionsHandler(map);
+
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+        var control = document.getElementById('floating-panel');
+        control.style.display = 'block';
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+        var onChangeHandler = function() {
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+        };
+        document.getElementById('start').addEventListener('change', onChangeHandler);
+        document.getElementById('end').addEventListener('change', onChangeHandler);
     }
 
     /**
@@ -101,7 +122,7 @@
         this.map = map;
         this.originPlaceId = null;
         this.destinationPlaceId = null;
-        this.travelMode = 'WALKING';
+        this.travelMode = 'DRIVING';
         var originInput = document.getElementById('origin-input');
         var destinationInput = document.getElementById('destination-input');
         var modeSelector = document.getElementById('mode-selector');
@@ -114,8 +135,8 @@
         var destinationAutocomplete = new google.maps.places.Autocomplete(
                 destinationInput, {placeIdOnly: true});
 
-        this.setupClickListener('changemode-walking', 'WALKING');
-        this.setupClickListener('changemode-transit', 'TRANSIT');
+//        this.setupClickListener('changemode-walking', 'WALKING');
+//        this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
 
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
@@ -126,8 +147,8 @@
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
     }
 
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
+//     Sets a listener on a radio button to change the filter type on Places
+//     Autocomplete.
     AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
         var radioButton = document.getElementById(id);
         var me = this;
@@ -143,7 +164,7 @@
         autocomplete.addListener('place_changed', function() {
             var place = autocomplete.getPlace();
             if (!place.place_id) {
-                window.alert("Please select an option from the dropdown list.");
+                window.alert("Please select an option from the drop down list.");
                 return;
             }
             if (mode === 'ORIG') {
