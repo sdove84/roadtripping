@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
-        initMap();
+        startPlaces();
 
 
     });
@@ -20,7 +20,7 @@ function checkForCheckedValues(){
     console.log("users picks to have displayed:" +" "+ checkedBoxes);
 }
 
-function initMap() {
+function startPlaces() {
     var Irvine = {lat: 33.6694444, lng: -117.8222222};
     map = new google.maps.Map(document.getElementById('map'), {
         center: Irvine ,
@@ -125,4 +125,3 @@ function signOut() {
 }
 
 //-----------------------------------------End of Google Sign in--------------------------------------------------------
-
