@@ -29,7 +29,7 @@
             outline: none;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
-
+        #current-location,
         #origin-input,
         #destination-input {
             background-color: #fff;
@@ -41,68 +41,114 @@
             text-overflow: ellipsis;
             width: 200px;
         }
-
+        #current-location,
         #origin-input:focus,
         #destination-input:focus {
             border-color: #4d90fe;
         }
-
         #mode-selector {
             color: #fff;
             background-color: #4d90fe;
             margin-left: 12px;
             padding: 5px 11px 0px 11px;
         }
-
         #mode-selector label {
             font-family: Roboto;
             font-size: 13px;
             font-weight: 300;
         }
-
     </style>
 </head>
 <body>
+<input id="current-location" class="current-location" type="button"
+       value="Current location">
 <input id="origin-input" class="controls" type="text"
        placeholder="Enter an origin location">
-
 <input id="destination-input" class="controls" type="text"
        placeholder="Enter a destination location">
-
 <div id="mode-selector" class="controls">
     <!--<input type="radio" name="type" id="changemode-walking" checked="checked">-->
     <!--<label for="changemode-walking">Walking</label>-->
-
     <!--<input type="radio" name="type" id="changemode-transit">-->
     <!--<label for="changemode-transit">Transit</label>-->
-
     <input type="radio" name="type" id="changemode-driving">
     <label for="changemode-driving"></label>
 </div>
-
 <div id="right-panel"></div>
 <div id="map"></div>
-<button id="goSomewhereButton" onClick="window.location='page4.html'" style="position: absolute; left: 52%; top: 9px">Go to next page</button>
 <script>
-
+    var map;
     function initMap() {
+        GeolocationControl();
+        var myLatLng = {lat: 33.6361719, lng: -117.73962320000001};
         var directionsDisplay = new google.maps.DirectionsRenderer;
-
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
-            center: {lat: 37.0902, lng: -95.7129},
+            center: myLatLng,
             zoom: 4
         });
-
+        marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Hello World!',
+            draggable:true //disable move marker
+        });
+        var contentString = '<div id="direction">'+ "You\'re here" + '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content:contentString,
+            maxwidth:300,
+        });
+        //when click on marker
+        marker.addListener('click',function(){
+            infowindow.open(map,marker);
+        });
+        //end infowindow
+        map.addListener('click',function(){
+            infowindow.close();
+        });
+        //when the marker start
+//        google.maps.event.addDomListener(marker, 'dragstart',function(event){
+//            console.log('start' , event);
+//        });
+//
+//        //when the marker end
+//        google.maps.event.addDomListener(marker, 'dragend',function(event){
+//            console.log('here is Lat and Lng' , event.latLng.lat(), event.latLng.lng());
+//            getNewMarker();
+//            map.setZoom(4);
+//        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+        function GeolocationControl(){//get current location
+            var geoButton = document.getElementById('current-location');
+            google.maps.event.addDomListener(geoButton, 'click' ,geolocate);
+        }
+        function geolocate(){
+            console.log('cung');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    console.log(position);
+                    //Geoposition {coords: Coordinates, timestamp: 1484769925428}
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    console.log('here is pos', pos);
+                    map.setCenter(pos);
+                    marker.setPosition(pos);
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        } //end geolocation
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
-
 //        weatherLayer = new google.maps.weather.WeatherLayer({
 //            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
 //        });
-
         new AutocompleteDirectionsHandler(map);
-
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('right-panel'));
 
@@ -116,7 +162,6 @@
 //        document.getElementById('start').addEventListener('change', onChangeHandler);
 //        document.getElementById('end').addEventListener('change', onChangeHandler);
     }
-
     /**
      * @constructor
      */
@@ -131,26 +176,21 @@
         this.directionsService = new google.maps.DirectionsService;
         this.directionsDisplay = new google.maps.DirectionsRenderer;
         this.directionsDisplay.setMap(map);
-
         var originAutocomplete = new google.maps.places.Autocomplete(
                 originInput, {placeIdOnly: true});
         var destinationAutocomplete = new google.maps.places.Autocomplete(
                 destinationInput, {placeIdOnly: true});
-
 //        this.setupClickListener('changemode-walking', 'WALKING');
 //        this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
-
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
     }
-
-//     Sets a listener on a radio button to change the filter type on Places
-//     Autocomplete.
+    //     Sets a listener on a radio button to change the filter type on Places
+    //     Autocomplete.
     AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
         var radioButton = document.getElementById(id);
         var me = this;
@@ -159,7 +199,6 @@
             me.route();
         });
     };
-
     AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
         var me = this;
         autocomplete.bindTo('bounds', this.map);
@@ -174,17 +213,17 @@
             } else {
                 me.destinationPlaceId = place.place_id;
             }
+            console.log('whattttttt', place.place_id);
             me.route();
         });
-
     };
-
+    //    cung start
+    //    cung end
     AutocompleteDirectionsHandler.prototype.route = function() {
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;
         }
         var me = this;
-
         this.directionsService.route({
             origin: {'placeId': this.originPlaceId},
             destination: {'placeId': this.destinationPlaceId},
@@ -197,7 +236,6 @@
             }
         });
     };
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLGhFk5m-1IGHOHb02jvRBSJIZZfrlDic&libraries=places&callback=initMap"
         async defer></script>
