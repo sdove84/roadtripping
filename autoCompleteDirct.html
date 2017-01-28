@@ -16,6 +16,9 @@
             margin: 0;
             padding: 0;
         }
+        #right-panel {
+
+        }
         .controls {
             margin-top: 10px;
             border: 1px solid transparent;
@@ -78,7 +81,6 @@
 </div>
 
 <div id="right-panel"></div>
-
 <div id="map"></div>
 <button id="goSomewhereButton" onClick="window.location='page4.html'" style="position: absolute; left: 52%; top: 9px">Go to next page</button>
 <script>
@@ -104,15 +106,15 @@
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('right-panel'));
 
-        var control = document.getElementById('floating-panel');
-        control.style.display = 'block';
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+//        var control = document.getElementById('floating-panel');
+//        control.style.display = 'block';
+//        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
         var onChangeHandler = function() {
             calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
+//        document.getElementById('start').addEventListener('change', onChangeHandler);
+//        document.getElementById('end').addEventListener('change', onChangeHandler);
     }
 
     /**
