@@ -1,5 +1,105 @@
+/* Sean's CSS */
+#map {
+    height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+#origin-input,
+#destination-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+#origin-input:focus,
+#destination-input:focus {
+    border-color: #4d90fe;
+}
+#mode-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    margin-left: 12px;
+    padding: 5px 11px 0px 11px;
+}
+#mode-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
 
-/* Start of Sean's CSS for autoComplete page */
+/* Mike CSS  */
 
-/* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
+#map {
+    height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#buttonContianer{
+    width: 100vw;
+    height: 8vh;
+}
+#displayData{
+    height: 100%;
+    width: 140px;
+    background-color: #3a87ad;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 16px;
+    border: solid black;
+}
+#more {
+    height: 100%;
+    width: 140px;
+    border-radius: 5px;
+    background-color: #3a87ad;
+    font-family: 'Roboto', 'sans-serif';
+    color: white;
+    font-size: 16px;
+    border: solid black;
+}
+#googleSignOut{
+    float: right;
+}
+.dropdown{
+    display: inline;
+}
+.glyphicon-camera{
+    color: dodgerblue;
+}
+.glyphicon-tree-conifer{
+    color:green;
+}
+.glyphicon-scale{
+    color: rebeccapurple;
+}
+.glyphicon-cutlery{
+    color: darkred;
+}
+.infoPlaceName{
+    font-family: 'Roboto', 'sans-serif';
+}
+.infoPlaceAddress{
+    font-family: 'Roboto', 'sans-serif';
+
+}
