@@ -194,7 +194,7 @@ function createMarkers(places) {
         bounds.extend(place.geometry.location);
     }
 }
-<!-- JS nav bar on index page -->
+<!-- JS nav bar on home page -->
 function openNav() {
     document.getElementById("mySidenav").style.width = "100%";
 }
@@ -202,7 +202,14 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+<!-- JS nav bar on index page -->
+function openNav2() {
+    document.getElementById("mySidenav2").style.width = "50%";
+}
 
+function closeNav2(){
+    document.getElementById("mySidenav2").style.width = "0";
+}
 
 
 
