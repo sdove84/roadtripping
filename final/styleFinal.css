@@ -146,8 +146,9 @@ html, body {
 
 
 /* Home page */
+
 .container {
-    background: url("RoadTrip Project/road-trip1.jpg") no-repeat center center fixed;
+    background: url("images/road-trip1.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -167,3 +168,4 @@ html, body {
     font-family: 'Permanent Marker', cursive;
     font-size: 80px;
 }
+
