@@ -201,6 +201,7 @@ var map;
         this.destinationPlaceId = null;
         this.travelMode = 'DRIVING';
         var originInput = document.getElementById('origin-input');
+
         var destinationInput = document.getElementById('destination-input');
         var modeSelector = document.getElementById('mode-selector');
         this.directionsService = new google.maps.DirectionsService;
@@ -217,7 +218,6 @@ var map;
 //        this.setupClickListener('changemode-walking', 'WALKING');
 //        this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
-
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
@@ -251,10 +251,17 @@ var map;
             } else {
                 me.destinationPlaceId = place.place_id;
             }
+            console.log('whattttttt', place.place_id);
             me.route();
         });
 
     };
+
+//    cung start
+
+//    cung end
+
+
 
     AutocompleteDirectionsHandler.prototype.route = function() {
         if (!this.originPlaceId || !this.destinationPlaceId) {

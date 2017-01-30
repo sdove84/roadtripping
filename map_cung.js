@@ -131,7 +131,8 @@ function initMap() {
         directionsDisplay.setMap(map);
         directionsService.route({
             origin: marker.getPosition(), //starting location
-            destination: newMarker.getPosition(), //end location
+            // destination: newMarker.getPosition(), //end location
+            destination: new google.maps.LatLng(38.859865546009075,-77.04626382499998), //end location. it works!
             travelMode: google.maps.TravelMode.DRIVING
         }, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
@@ -143,5 +144,6 @@ function initMap() {
     }
 
     GeolocationControl();
+
 }
 
