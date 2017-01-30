@@ -7,7 +7,6 @@ $(document).ready(function() {
     });
 });
 
-
 var map;
 var checkedBoxes = [];
 var loc = {};
@@ -38,9 +37,7 @@ function initMap() {
 //        document.getElementById('start').addEventListener('change', onChangeHandler);
 //        document.getElementById('end').addEventListener('change', onChangeHandler);
 }
-/**
- * @constructor
- */
+
 function AutocompleteDirectionsHandler(map) {
     this.map = map;
     this.originPlaceId = null;
@@ -56,8 +53,7 @@ function AutocompleteDirectionsHandler(map) {
         originInput, {placeIdOnly: true});
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, {placeIdOnly: true});
-//        this.setupClickListener('changemode-walking', 'WALKING');
-//        this.setupClickListener('changemode-transit', 'TRANSIT');
+
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
@@ -65,8 +61,7 @@ function AutocompleteDirectionsHandler(map) {
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
 }
-//     Sets a listener on a radio button to change the filter type on Places
-//     Autocomplete.
+
 AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
@@ -75,6 +70,7 @@ AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) 
         me.route();
     });
 };
+
 AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
     var me = this;
     autocomplete.bindTo('bounds', this.map);
