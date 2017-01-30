@@ -2,97 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>page 4</title>
+    <title>RoadTripping</title>
+
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="30315203349-jd80sfb669777fd6d1dfterfccd6c8bq.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styleFinal.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="mike.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=places"></script>
-
-
-
-
-<!----------------------------------Google places style (Add dont mix up with other maps)--------------------------->
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-        * element that contains the map. */
-        #map {
-            height: 100%;
-        }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        #buttonContianer{
-            width: 100vw;
-            height: 8vh;
-        }
-        #displayData{
-            height: 100%;
-            width: 140px;
-            background-color: #3a87ad;
-            font-family: 'Roboto', 'sans-serif';
-            font-size: 16px;
-            border: solid black;
-        }
-        #more {
-            height: 100%;
-            width: 140px;
-            border-radius: 5px;
-            background-color: #3a87ad;
-            font-family: 'Roboto', 'sans-serif';
-            color: white;
-            font-size: 16px;
-            border: solid black;
-        }
-        #googleSignOut{
-            float: right;
-        }
-        .dropdown{
-            display: inline;
-        }
-        .glyphicon-camera{
-            color: dodgerblue;
-        }
-        .glyphicon-tree-conifer{
-            color:green;
-        }
-        .glyphicon-scale{
-            color: rebeccapurple;
-        }
-        .glyphicon-cutlery{
-            color: darkred;
-        }
-        .infoPlaceName{
-            font-family: 'Roboto', 'sans-serif';
-        }
-        .infoPlaceAddress{
-            font-family: 'Roboto', 'sans-serif';
-
-        }
-
-
-
-
-
-
-    </style>
-<!--------------------------------- END of Google places style-------------------------------------------------------->
+    <script src="JsFinal.js"></script>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=places"></script>-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLGhFk5m-1IGHOHb02jvRBSJIZZfrlDic&libraries=places&callback=initMap"
+            async defer></script>
 
 </head>
 <body>
+<input id="origin-input" class="controls" type="text"
+       placeholder="Enter an origin location">
+<input id="destination-input" class="controls" type="text"
+       placeholder="Enter a destination location">
+
+<div id="mode-selector" class="controls">
+    <input type="radio" name="type" id="changemode-driving">
+    <label for="changemode-driving"></label>
+</div>
 
 <div id="buttonContianer">
-    <button  id= displayData type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Display Data</button>
+    <button  id= displayData type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Display     Data</button>
     <button id="more">More Data</button>
     <a id="googleSignOut" href="#" onclick="signOut();">Sign out</a>
 </div>
+
+<div id="right-panel"></div>
+<div id="map"></div>
+
+
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -101,19 +47,19 @@
                 <button type="button" class="close" data-dismiss="modal">&times;                    </button>
                 <h4 class="modal-title">Please select what data you would like to be displayed on your route</h4>
             </div>
-         <div class="modal-body">
+            <div class="modal-body">
                 <!-- first drop down -- Accommodations -->
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-bed"></span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <p>Accommodations:</p>
-                <li><a><input value="hotels" type="checkbox"/>Hotels</a></li>
-                <li><a><input value="motel + lodging" type="checkbox"/>Motels</a></li>
-                <li><a><input value="campground + rv_park" type="checkbox"/>Camping/RV Parks</a></li>
-                <li><a><input value="bedBreakfast" type="checkbox"/>Bed and Breakfast</a></li>
-                </ul>
-            </div>
+                        <p>Accommodations:</p>
+                        <li><a><input value="hotels" type="checkbox"/>Hotels</a></li>
+                        <li><a><input value="motel + lodging" type="checkbox"/>Motels</a></li>
+                        <li><a><input value="campground + rv_park" type="checkbox"/>Camping/RV Parks</a></li>
+                        <li><a><input value="bedBreakfast" type="checkbox"/>Bed and Breakfast</a></li>
+                    </ul>
+                </div>
                 <! --- second drop down Attractions -->
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown"> <span class="glyphicon glyphicon-camera"></span>
@@ -169,10 +115,13 @@
         </div>
     </div>
 </div>
-<div id="map"></div>
 
 
 
-</div>
+
 </body>
 </html>
+
+
+
+
