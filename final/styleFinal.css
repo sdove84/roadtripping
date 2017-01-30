@@ -98,21 +98,24 @@ html, body {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: black;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    opacity:0.5;
 }
-
+/* The navigation menu links */
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: white;
     display: block;
-    transition: 0.3s
-}
+    transition: 0.3s;
 
+
+}
+/* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
     color: #f1f1f1;
 }
@@ -129,8 +132,17 @@ html, body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+#home {
+    font-size: 80px;
+    cursor: pointer;
+    float: left;
+}
+
+#home2{
+
+}
 /* side nav bar for main maps page */
-.sidenav {
+.sidenav2 {
     height: 100%;
     width: 0;
     position: fixed;
@@ -143,7 +155,7 @@ html, body {
     padding-top: 60px;
 }
 
-.sidenav a {
+.sidenav2 a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -152,11 +164,11 @@ html, body {
     transition: 0.3s
 }
 
-.sidenav a:hover, .offcanvas a:focus{
+.sidenav2 a:hover, .offcanvas a:focus{
     color: #f1f1f1;
 }
 
-.sidenav .closebtn {
+.sidenav2 .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
@@ -165,8 +177,8 @@ html, body {
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav2 {padding-top: 15px;}
+    .sidenav2 a {font-size: 18px;}
 }
 
 
@@ -193,3 +205,9 @@ html, body {
     font-size: 80px;
 }
 
+#destination-input{
+    max-width:500px;
+}
+#mapPageMenuContainer{
+    background: url("images/road-trip1.jpg") no-repeat center center fixed;
+}

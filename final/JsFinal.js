@@ -197,15 +197,20 @@ function createMarkers(places) {
 <!-- JS nav bar on home page -->
 function openNav() {
     document.getElementById("mySidenav").style.width = "100%";
+    $('.text-center').hide();
 }
 
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
+    $('.text-center').show();
 }
 <!-- JS nav bar on index page -->
 function openNav2() {
-    document.getElementById("mySidenav2").style.width = "50%";
+    document.getElementById("mySidenav2").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
+
 
 function closeNav2(){
     document.getElementById("mySidenav2").style.width = "0";
