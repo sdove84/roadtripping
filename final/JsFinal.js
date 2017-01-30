@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("#mode-selector").hide();
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
         startPlaces();
@@ -61,8 +62,8 @@ function AutocompleteDirectionsHandler(map) {
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+    this.map.controls[google.maps].push(originInput);
+    this.map.controls[google.maps].push(destinationInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
 }
 //     Sets a listener on a radio button to change the filter type on Places
