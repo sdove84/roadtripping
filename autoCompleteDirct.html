@@ -16,6 +16,9 @@
             margin: 0;
             padding: 0;
         }
+        #right-panel {
+
+        }
         .controls {
             margin-top: 10px;
             border: 1px solid transparent;
@@ -148,9 +151,11 @@
         new AutocompleteDirectionsHandler(map);
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('right-panel'));
+
 //        var control = document.getElementById('floating-panel');
 //        control.style.display = 'block';
 //        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
         var onChangeHandler = function() {
             calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
@@ -166,6 +171,7 @@
         this.destinationPlaceId = null;
         this.travelMode = 'DRIVING';
         var originInput = document.getElementById('origin-input');
+
         var destinationInput = document.getElementById('destination-input');
         var modeSelector = document.getElementById('mode-selector');
         this.directionsService = new google.maps.DirectionsService;
@@ -212,8 +218,7 @@
             me.route();
         });
     };
-    //    cung start
-    //    cung end
+
     AutocompleteDirectionsHandler.prototype.route = function() {
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;

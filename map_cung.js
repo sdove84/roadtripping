@@ -97,8 +97,8 @@ function initMap() {
     function getNewMarker(){
         for (var i = 0; i<markers.length; i++){
             var item = createMarkers(markers[i]);
-            marker_created.push(item);
-            console.log(marker_created);
+            // marker_created.push(item);
+            // console.log(marker_created);
         }
     }
 
@@ -143,5 +143,6 @@ function initMap() {
     }
 
     GeolocationControl();
+
 }
 

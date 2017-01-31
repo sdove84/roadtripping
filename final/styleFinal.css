@@ -1,6 +1,7 @@
 /* Sean's CSS */
 #map {
     height: 100%;
+    width: 69%;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -44,8 +45,42 @@ html, body {
     font-size: 13px;
     font-weight: 300;
 }
+/*List directions==========================*/
+#right-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
 
-/* Mike CSS  */
+#right-panel select, #right-panel input {
+    font-size: 15px;
+}
+
+#right-panel select {
+    width: 100%;
+}
+
+#right-panel i {
+    font-size: 12px;
+}
+#right-panel {
+    height: 100%;
+    float: right;
+    width: 390px;
+    overflow: auto;
+}
+@media print {
+    #map {
+        height: 500px;
+        margin: 0;
+    }
+    #right-panel {
+        float: none;
+        width: auto;
+    }
+}
+
+/* Mike CSS =================================== */
 
 #map {
     height: 100%;
@@ -56,30 +91,16 @@ html, body {
     margin: 0;
     padding: 0;
 }
-#buttonContianer{
-    width: 100vw;
-    height: 8vh;
-}
+
 #displayData{
-    height: 100%;
-    width: 140px;
-    background-color: #3a87ad;
-    font-family: 'Roboto', 'sans-serif';
-    font-size: 16px;
-    border: solid black;
+    color: white;
+    display: block;
+
 }
 #more {
-    height: 100%;
-    width: 140px;
-    border-radius: 5px;
-    background-color: #3a87ad;
-    font-family: 'Roboto', 'sans-serif';
     color: white;
-    font-size: 16px;
-    border: solid black;
-}
-#googleSignOut{
-    float: right;
+
+
 }
 .dropdown{
     display: inline;
@@ -102,4 +123,126 @@ html, body {
 .infoPlaceAddress{
     font-family: 'Roboto', 'sans-serif';
 
+}
+
+/* style for nav bar on home page */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: black;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    opacity:0.5;
+}
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+
+
+}
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+#home {
+    font-size: 80px;
+    cursor: pointer;
+    float: left;
+}
+
+#home2{
+
+}
+/* side nav bar for main maps page */
+.sidenav2 {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav2 a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav2 a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav2 .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav2 {padding-top: 15px;}
+    .sidenav2 a {font-size: 18px;}
+}
+
+
+/* Home page */
+.container {
+    background: url("images/road-trip1.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#map {
+    height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#appNameHeader{
+    font-family: 'Permanent Marker', cursive;
+    font-size: 80px;
+}
+
+#destination-input{
+    max-width:500px;
+}
+#mapPageMenuContainer{
+    background: url("images/road-trip1.jpg") no-repeat center center fixed;
 }

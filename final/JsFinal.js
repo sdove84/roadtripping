@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("#mode-selector").hide();
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
         startPlaces();
@@ -22,22 +23,20 @@ function initMap() {
     });
     var trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(map);
+
 //        weatherLayer = new google.maps.weather.WeatherLayer({
 //            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
 //        });
+
     new AutocompleteDirectionsHandler(map);
     directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById('right-panel'));
-//        var control = document.getElementById('floating-panel');
-//        control.style.display = 'block';
-//        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-    var onChangeHandler = function() {
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-    };
-//        document.getElementById('start').addEventListener('change', onChangeHandler);
-//        document.getElementById('end').addEventListener('change', onChangeHandler);
+
+       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 }
 
+/**
+ * @constructor
+ */
 function AutocompleteDirectionsHandler(map) {
     this.map = map;
     this.originPlaceId = null;
@@ -45,10 +44,11 @@ function AutocompleteDirectionsHandler(map) {
     this.travelMode = 'DRIVING';
     var originInput = document.getElementById('origin-input');
     var destinationInput = document.getElementById('destination-input');
-    var modeSelector = document.getElementById('mode-selector');
+    // var modeSelector = document.getElementById('mode-selector');
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.directionsDisplay.setMap(map);
+    this.directionsDisplay.setPanel(document.getElementById('right-panel'));
     var originAutocomplete = new google.maps.places.Autocomplete(
         originInput, {placeIdOnly: true});
     var destinationAutocomplete = new google.maps.places.Autocomplete(
@@ -57,9 +57,11 @@ function AutocompleteDirectionsHandler(map) {
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+    // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
 }
 
 AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
@@ -190,7 +192,27 @@ function createMarkers(places) {
         bounds.extend(place.geometry.location);
     }
 }
+<!-- JS nav bar on home page -->
+function openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+    $('.text-center').hide();
+}
 
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    $('.text-center').show();
+}
+<!-- JS nav bar on index page -->
+function openNav2() {
+    document.getElementById("mySidenav2").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+
+function closeNav2(){
+    document.getElementById("mySidenav2").style.width = "0";
+}
 
 
 
