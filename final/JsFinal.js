@@ -24,7 +24,6 @@ function initMap() {
     new AutocompleteDirectionsHandler(map);
 }
 
-
 /**
  * @constructor
  */
