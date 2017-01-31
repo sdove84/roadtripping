@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("#mode-selector").hide();
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
         startPlaces();
@@ -59,9 +60,11 @@ function AutocompleteDirectionsHandler(map) {
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-    // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
+    this.map.controls[google.maps].push(originInput);
+    this.map.controls[google.maps].push(destinationInput);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
 }
 //     Sets a listener on a radio button to change the filter type on Places
 //     Autocomplete.
@@ -192,7 +195,27 @@ function createMarkers(places) {
         bounds.extend(place.geometry.location);
     }
 }
+<!-- JS nav bar on home page -->
+function openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+    $('.text-center').hide();
+}
 
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    $('.text-center').show();
+}
+<!-- JS nav bar on index page -->
+function openNav2() {
+    document.getElementById("mySidenav2").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+
+function closeNav2(){
+    document.getElementById("mySidenav2").style.width = "0";
+}
 
 
 

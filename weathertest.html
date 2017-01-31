@@ -1,134 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Adding a Custom Overlay</title>
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-            height: 100%;
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script>
+        var alertmessage = null;
+        //THIS IS THE GEOLOCATION WEATHER CALL!
+
+        $(document).ready(function(){
+            $.ajax({
+                dataType: 'jsonp',
+                method: "GET",
+                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
+                success: function(result) {
+                    //var alertmessage = null;
+                    function noAlerts () {
+                        if (result.alerts.length === 0) {
+                            alertmessage = "No alerts.";
+                        } else {
+                            alertmessage = result.alerts[0].description;
+                        }
+                    }
+                    noAlerts();
+
+                    //THIS WILL SHOW UP ON THE PAGE
+
+                    $('#display').append(
+                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
+                            result.current_observation.display_location.full,'<br>',
+                            //need to fix bug for undefined alerts if there are no alerts
+                            alertmessage,'<br>',
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
+                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                            'Wind:  ' + result.current_observation.wind_string,'<br>',
+                            'Pressure:  ' + result.current_observation.pressure_in,'<br>',
+                            //forecast here
+                            $('<p>').text('Powered by Weather Underground'),
+                            $('<img>',{src:"http://icons.wxug.com/graphics/wu2/logo_130x80.png"}));
+
+                    $('#radar').append(
+                            $('<img>', {
+                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=950&height=950&newmaps=1&rainsnow=1&smooth=1&noclutter=1&timelabel=1", alt:"weather radar"
+                            }));
+
+
+                    //need to put failure here
+                },
+                error: function(result) {
+                    $('#display').append(
+                            $('<p>').text(alertmessage));
+                }
+            });
+        });
+    </script>
+    <script>
+        var weatherState = null;
+        var weatherCity = null;
+
+        //THIS IS THE REQUESTED LOCATION CALL
+        //"http://autocomplete.wunderground.com/aq?query=city&c=US" query string needed for autocomplete
+        //using variable to read inputs
+        //can combine city and state in form again
+        //how to incorporate query string into input
+
+        function getWeather() {
+            $("#display").empty();
+            $("#radar").empty();
+            console.log("get WEATHER function called");
+            weatherState = $('#state').val();
+            console.log(weatherState);
+            weatherCity = $('#city').val();
+            console.log(weatherCity);
+            console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);
+            $.ajax({
+                dataType: 'jsonp',
+                method: "GET",
+                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/'+weatherState+'/'+weatherCity+'.json',
+                success: function (result) {
+
+                    var alertmessage = null;
+
+                    function noAlerts() {
+                        if (result.alerts.length === 0) {
+                            console.log('Test: ' + result.alerts);
+                            alertmessage = "No weather alerts.";
+                        } else {
+                            alertmessage = result.alerts[0].description;
+                        }
+                    }
+
+                    noAlerts();
+                    console.log(alertmessage);
+
+                    $('#currentlocation').append(
+                            result.current_observation.display_location.full);
+                    $('#alerts').append(
+                            alertmessage);
+                    $('#icon').append(
+                            $('<img>', {src: result.current_observation.icon_url}));
+                    $('#temp').append(
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F');
+                    $('#humidity').append(
+                            'Humidity:  ' + result.current_observation.relative_humidity);
+                    $('#wind').append(
+                            'Wind:  ' + result.current_observation.wind_string);
+                    $('#barometer').append(
+                            'Pressure:  ' + result.current_observation.pressure_in);
+
+
+                },
+                //need to put failure here
+                error: function(result) {
+                    $('#display').append(
+                            $('<p>').text('Error'));
+                }
+            })
         }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
+    </script>
+    <style>
+        #display {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #radar {
+            width: 100%;
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
-    <script>
-        // This example creates a custom overlay called USGSOverlay, containing
-        // a U.S. Geological Survey (USGS) image of the relevant area on the map.
-
-        // Set the custom overlay object's prototype to a new instance
-        // of OverlayView. In effect, this will subclass the overlay class therefore
-        // it's simpler to load the API synchronously, using
-        // google.maps.event.addDomListener().
-        // Note that we set the prototype to an instance, rather than the
-        // parent class itself, because we do not wish to modify the parent class.
-
-        var overlay;
-        USGSOverlay.prototype = new google.maps.OverlayView();
-
-        // Initialize the map and the custom overlay.
-
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 11,
-                center: {lat: 62.323907, lng: -150.109291},
-                mapTypeId: 'satellite'
-            });
-
-            var bounds = new google.maps.LatLngBounds(
-                    new google.maps.LatLng(62.281819, -150.287132),
-                    new google.maps.LatLng(62.400471, -150.005608));
-
-            // The photograph is courtesy of the U.S. Geological Survey.
-            var srcImage = 'https://developers.google.com/maps/documentation/' +
-                    'javascript/examples/full/images/talkeetna.png';
-
-            // The custom USGSOverlay object contains the USGS image,
-            // the bounds of the image, and a reference to the map.
-            overlay = new USGSOverlay(bounds, srcImage, map);
-        }
-
-        /** @constructor */
-        function USGSOverlay(bounds, image, map) {
-
-            // Initialize all properties.
-            this.bounds_ = bounds;
-            this.image_ = image;
-            this.map_ = map;
-
-            // Define a property to hold the image's div. We'll
-            // actually create this div upon receipt of the onAdd()
-            // method so we'll leave it null for now.
-            this.div_ = null;
-
-            // Explicitly call setMap on this overlay.
-            this.setMap(map);
-        }
-
-        /**
-         * onAdd is called when the map's panes are ready and the overlay has been
-         * added to the map.
-         */
-        USGSOverlay.prototype.onAdd = function() {
-
-            var div = document.createElement('div');
-            div.style.borderStyle = 'none';
-            div.style.borderWidth = '0px';
-            div.style.position = 'absolute';
-
-            // Create the img element and attach it to the div.
-            var img = document.createElement('img');
-            img.src = this.image_;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.position = 'absolute';
-            div.appendChild(img);
-
-            this.div_ = div;
-
-            // Add the element to the "overlayLayer" pane.
-            var panes = this.getPanes();
-            panes.overlayLayer.appendChild(div);
-        };
-
-        USGSOverlay.prototype.draw = function() {
-
-            // We use the south-west and north-east
-            // coordinates of the overlay to peg it to the correct position and size.
-            // To do this, we need to retrieve the projection from the overlay.
-            var overlayProjection = this.getProjection();
-
-            // Retrieve the south-west and north-east coordinates of this overlay
-            // in LatLngs and convert them to pixel coordinates.
-            // We'll use these coordinates to resize the div.
-            var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
-            var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
-
-            // Resize the image's div to fit the indicated dimensions.
-            var div = this.div_;
-            div.style.left = sw.x + 'px';
-            div.style.top = ne.y + 'px';
-            div.style.width = (ne.x - sw.x) + 'px';
-            div.style.height = (sw.y - ne.y) + 'px';
-        };
-
-        // The onRemove() method will be called automatically from the API if
-        // we ever set the overlay's map property to 'null'.
-        USGSOverlay.prototype.onRemove = function() {
-            this.div_.parentNode.removeChild(this.div_);
-            this.div_ = null;
-        };
-
-        google.maps.event.addDomListener(window, 'load', initMap);
-    </script>
 </head>
 <body>
-<div id="map"></div>
+
+<div class="col-xs-12" id="radar">
+
+    <!--This is the radar-->
+
+</div>
+
+<div id="display">
+    <div class="col-xs-6" class="current"><p>Current</p>
+        <div class="col-xs-12" id="currentlocation"></div>
+        <div class="col-xs-12" id="alerts"></div>
+        <div class="col-xs-6" id="icon"></div>
+        <div class="col-xs-6" id="temp"></div>
+        <div class="col-xs-12" id="humidity"></div>
+        <div class="col-xs-12" id="wind"></div>
+        <div class="col-xs-12" id="pressure"></div>
+    </div>
+    <div class="col-xs-6" class="forecast"></div>
+
+    <!--This is where to put the conditions!-->
+
+</div>
+
+
+<div id="selector">
+    <form class="selector">
+        Where do you want to go?<br>
+        <input type="text" name="location" id="city" autofocus placeholder="city" style="text-transform:capitalize"><br>
+        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)" style="text-transform:uppercase"><br>
+        <button onclick="getWeather()" type="button">I want to go here!</button>
+    </form>
+</div>
+<div id="credit">
+
+</div>
 </body>
 </html>
