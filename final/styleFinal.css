@@ -202,6 +202,12 @@ html, body {
     .sidenav2 {padding-top: 15px;}
     .sidenav2 a {font-size: 18px;}
 }
+@media screen and (max-width:800px ) {
+    #home2 {font-size: 25px;}
+    #mapLogo{ display: none;}
+    #getDirectionsButton {font-size: 25px;}
+    
+}
 
 
 /* Home page */
@@ -232,9 +238,9 @@ html, body {
 }
 
 #getDirectionsButton{
-    float: right;
-    font-size: 14px;
-    cursor:pointer;
+    text-align: right;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 .sidenav3 {
@@ -276,6 +282,10 @@ html, body {
     .sidenav3 a {font-size: 18px;}
 }
 
+#mapLogo{
+    font-size: 30px;
+    text-align: center;
+}
 
 
 
