@@ -36,17 +36,6 @@ function initMap() {
 
 }
 
-// function check() {
-//     if(document.getElementById('traffic').checked)
-//
-//     {trafficLayer.setMap(map);}
-//
-//     else
-//
-//     {trafficLayer.setMap(null);}
-// }
-
-
 /**
  * @constructor
  */
