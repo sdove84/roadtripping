@@ -17,6 +17,7 @@ var geocoder;
 function initMap() {
     geocoder = new google.maps.Geocoder;
     var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsService = new google.maps.DirectionsService;
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         center: {lat: 37.0902, lng: -95.7129},
@@ -24,21 +25,17 @@ function initMap() {
     });
     var trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(map);
+
 //        weatherLayer = new google.maps.weather.WeatherLayer({
 //            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
 //        });
+
     new AutocompleteDirectionsHandler(map);
     directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById('right-panel'));
-//        var control = document.getElementById('floating-panel');
-//        control.style.display = 'block';
-//        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-    var onChangeHandler = function() {
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-    };
-//        document.getElementById('start').addEventListener('change', onChangeHandler);
-//        document.getElementById('end').addEventListener('change', onChangeHandler);
+
+       map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 }
+
 /**
  * @constructor
  */
@@ -49,10 +46,11 @@ function AutocompleteDirectionsHandler(map) {
     this.travelMode = 'DRIVING';
     var originInput = document.getElementById('origin-input');
     var destinationInput = document.getElementById('destination-input');
-    var modeSelector = document.getElementById('mode-selector');
+    // var modeSelector = document.getElementById('mode-selector');
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.directionsDisplay.setMap(map);
+    this.directionsDisplay.setPanel(document.getElementById('right-panel'));
     var originAutocomplete = new google.maps.places.Autocomplete(
         originInput, {placeIdOnly: true});
     var destinationAutocomplete = new google.maps.places.Autocomplete(
@@ -62,9 +60,11 @@ function AutocompleteDirectionsHandler(map) {
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
     this.map.controls[google.maps].push(originInput);
     this.map.controls[google.maps].push(destinationInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
 }
 //     Sets a listener on a radio button to change the filter type on Places
 //     Autocomplete.
