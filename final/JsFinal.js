@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $("#mode-selector").hide();
+    $("#getDirectionsButton").hide();
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
         startPlaces();
@@ -108,6 +109,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
     }, function(response, status) {
         if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
+            $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
         }
