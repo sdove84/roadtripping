@@ -6,40 +6,100 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="http://icons.wxug.com/i/c/k/rain.gif">
     <script>
+
+        //THIS IS THE GEOLOCATION WEATHER CALL!
+
         $(document).ready(function(){
-            $('button').click(function(){
-                console.log('click initiated');
-                $.ajax({
-                    dataType: 'jsonp',
-                    method: "GET",
-                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/q/92081.json',
-                    success: function(result) {
-                        console.log(result.alerts[0].description);
-                        console.log('AJAX Success function called, with the following result:', result);
-                        console.log('Location ' + result.current_observation.display_location.full);
-                        console.log('Temp ' + result.current_observation.temp_f);
-                        console.log('Weather ' + result.current_observation.weather);
-                        console.log('Wind Direction ' + result.current_observation.wind_dir);
-                        console.log('Wind Speed ' + result.current_observation.wind_mph);
-                        console.log('Pressure ' + result.current_observation.pressure_in);
-                    //add display here
-
-                        $('#display').append(
-                                            result.current_observation.display_location.full,'<br>',
-                                            result.alerts[0].description,'<br>',
-                                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
-                                            //result.current_observation.icon_url,'<br>',
-                                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                                            'Wind:  ' + result.current_observation.wind_dir + ' ' + result.current_observation.wind_mph + ' mph','<br>',
-                                            'Pressure:  ' + result.current_observation.pressure_in + result.current_observation.pressure_trend);
-
+            $.ajax({
+                dataType: 'jsonp',
+                method: "GET",
+                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
+                success: function(result) {
+                    var alertmessage = null;
+                    function noAlerts () {
+                        if (result.alerts.length === 0) {
+                            alertmessage = "No alerts.";
+                        } else {
+                            alertmessage = result.alerts[0].description;
+                        }
                     }
-                });
-                console.log('End of click function');
+                    noAlerts();
+
+                    //THIS WILL SHOW UP ON THE PAGE
+
+                    $('#display').append(
+                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
+                            result.current_observation.display_location.full,'<br>',
+                            //need to fix bug for undefined alerts if there are no alerts
+                            alertmessage,'<br>',
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
+                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                            'Wind:  ' + result.current_observation.wind_string,'<br>',
+                            'Pressure:  ' + result.current_observation.pressure_in,'<br>',
+                            //forecast here
+                            $('<p>').text('Powered by Weather Underground'),
+                            $('<img>',{src:"http://icons.wxug.com/graphics/wu2/logo_130x80.png"}));
+
+                    $('#radar').append(
+                            $('<img>', {
+                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1", alt:"weather radar"
+                            }));
+
+
+                    //need to put failure here
+                }
             });
         });
+    </script>
+    <script>
+        var weatherState = null;
+        var weatherCity = null;
+
+        //THIS IS THE REQUESTED LOCATION CALL
+
+        function getWeather() {
+            $("#display").empty();
+            $("#radar").empty();
+            console.log("get WEATHER function called");
+            weatherState = $('#state').val();
+            weatherCity = $('#city').val();
+            console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);
+            $.ajax({
+                dataType: 'jsonp',
+                method: "GET",
+                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/'+weatherState+'/'+weatherCity+'.json',
+                success: function (result) {
+
+                    var alertmessage = null;
+
+                    function noAlerts() {
+                        if (result.alerts.length === 0) {
+                            console.log('Test: ' + result.alerts);
+                            alertmessage = "No alerts.";
+                        } else {
+                            alertmessage = result.alerts[0].description;
+                        }
+                    }
+
+                    noAlerts();
+                    console.log(alertmessage);
+
+                    $('#display').append(
+                            $('<img>', {src: result.current_observation.icon_url}), '<br>',
+                            result.current_observation.display_location.full, '<br>',
+                            //need to fix bug for undefined alerts if there are no alerts
+                            alertmessage,'<br>',
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
+                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                            'Wind:  ' + result.current_observation.wind_string, '<br>',
+
+                            //do we need pressure trend? displays as -, 0, + now
+                            'Pressure:  ' + result.current_observation.pressure_in);
+                }
+                //need to put failure here
+            })
+        }
     </script>
     <style>
         #display {
@@ -48,13 +108,28 @@
     </style>
 </head>
 <body>
-<div id="display">
-    <!--This is where to put the conditions icon!-->
 
-    <img src="http://icons.wxug.com/i/c/k/mostlycloudy.gif"><br>
+<div id="display">
+
+    <!--This is where to put the conditions!-->
+
 </div>
 
-<div><img src="http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/92081.gif?width=280&height=280&newmaps=1&rainsnow=1" alt="weather radar"></div>
-<button>What's the weather like?</button>
+<div id="radar">
+
+    <!--This is the radar-->
+
+</div>
+<div id="selector">
+    <form>
+        Where do you want to go?<br>
+        <input type="text" name="location" id="city" autofocus placeholder="city"><br>
+        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)"><br>
+        <button onclick="getWeather()" type="button">I want to go here!</button>
+    </form>
+</div>
+<div id="credit">
+
+</div>
 </body>
 </html>
