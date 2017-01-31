@@ -48,7 +48,7 @@ function AutocompleteDirectionsHandler(map) {
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.directionsDisplay.setMap(map);
-    this.directionsDisplay.setPanel(document.getElementById('right-panel'));
+    this.directionsDisplay.setPanel(document.getElementById('mySidenav3'));
     var originAutocomplete = new google.maps.places.Autocomplete(
         originInput, {placeIdOnly: true});
     var destinationAutocomplete = new google.maps.places.Autocomplete(
@@ -114,9 +114,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
     });
 };
 
-
 <!-- Mikes JS-->
-
 function checkForCheckedValues(){
     $("input[type=checkbox]:checked").each(function() {
         checkedBoxes.push($(this).val() );
@@ -208,11 +206,23 @@ function openNav2() {
     document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-
-
 function closeNav2(){
     document.getElementById("mySidenav2").style.width = "0";
 }
+
+<!-- JS nav bar for directions -->
+function openNav3() {
+    document.getElementById("mySidenav3").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+function closeNav3(){
+    document.getElementById("mySidenav3").style.width = "0";
+}
+
+
+
+
 
 
 
