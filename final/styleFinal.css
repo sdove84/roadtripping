@@ -80,11 +80,11 @@ html, body {
 #displayData{
     color: white;
     display: block;
-
+    background-color: black;
 }
 #more {
     color: white;
-
+    background-color: black;
 
 }
 .dropdown{
