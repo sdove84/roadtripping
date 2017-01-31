@@ -29,7 +29,7 @@
        placeholder="Enter a destination ">
 
 <div id="mode-selector" class="controls">
-    <input type="radio" name="type" id="changemode-driving">
+    <input name="type" id="changemode-driving">
     <label for="changemode-driving"></label>
 </div>
 
@@ -37,17 +37,24 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav2()">&times;</a>
     <button  id= displayData type="button" data-toggle="modal" data-target="#myModal">What would you like to see?</button>
     <button id="more">More Data</button>
-    <a href="">Weather</a>
+    <a href="weathertest.html">Weather</a>
+
     <a href="">some shit</a>
     <a href="">some more shit</a>
+    <a href="check_list.html">Pack/Shop List</a>
+
 </div>
 
 
+<span id="getDirectionsButton" onclick="openNav3()">Show Directions</span>
 
+<div id="mySidenav3" class="sidenav3">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav3()">&times;</a>
+    <label><input type="checkbox" id="traffic" onclick="showTraffic()" />Show/Hide Traffic</label>
+    <div id="right-panel"></div>
+</div>
 
 <div id="map"></div>
-
-
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">

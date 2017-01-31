@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $("#mode-selector").hide();
+    $("#getDirectionsButton").hide();
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
         startPlaces();
@@ -8,11 +9,11 @@ $(document).ready(function() {
     });
 });
 
-
 var map;
 var checkedBoxes = [];
 var loc = {};
 var geocoder;
+
 
 function initMap() {
     geocoder = new google.maps.Geocoder;
@@ -22,23 +23,29 @@ function initMap() {
         center: {lat: 37.0902, lng: -95.7129},
         zoom: 4
     });
-    var trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(map);
+
 //        weatherLayer = new google.maps.weather.WeatherLayer({
 //            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
 //        });
+
     new AutocompleteDirectionsHandler(map);
-    directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById('right-panel'));
-//        var control = document.getElementById('floating-panel');
-//        control.style.display = 'block';
-//        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-    var onChangeHandler = function() {
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-    };
-//        document.getElementById('start').addEventListener('change', onChangeHandler);
-//        document.getElementById('end').addEventListener('change', onChangeHandler);
+    // directionsDisplay.setMap(map);
+
+       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
 }
+
+// function check() {
+//     if(document.getElementById('traffic').checked)
+//
+//     {trafficLayer.setMap(map);}
+//
+//     else
+//
+//     {trafficLayer.setMap(null);}
+// }
+
+
 /**
  * @constructor
  */
@@ -49,25 +56,26 @@ function AutocompleteDirectionsHandler(map) {
     this.travelMode = 'DRIVING';
     var originInput = document.getElementById('origin-input');
     var destinationInput = document.getElementById('destination-input');
-    var modeSelector = document.getElementById('mode-selector');
+    // var modeSelector = document.getElementById('mode-selector');
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.directionsDisplay.setMap(map);
+    this.directionsDisplay.setPanel(document.getElementById('mySidenav3'));
     var originAutocomplete = new google.maps.places.Autocomplete(
         originInput, {placeIdOnly: true});
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, {placeIdOnly: true});
-//        this.setupClickListener('changemode-walking', 'WALKING');
-//        this.setupClickListener('changemode-transit', 'TRANSIT');
+
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-    this.map.controls[google.maps].push(originInput);
-    this.map.controls[google.maps].push(destinationInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+    // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
 }
-//     Sets a listener on a radio button to change the filter type on Places
-//     Autocomplete.
+
 AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
@@ -76,6 +84,7 @@ AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) 
         me.route();
     });
 };
+
 AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
     var me = this;
     autocomplete.bindTo('bounds', this.map);
@@ -111,15 +120,14 @@ AutocompleteDirectionsHandler.prototype.route = function() {
     }, function(response, status) {
         if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
+            $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
         }
     });
 };
 
-
 <!-- Mikes JS-->
-
 function checkForCheckedValues(){
     $("input[type=checkbox]:checked").each(function() {
         checkedBoxes.push($(this).val() );
@@ -211,10 +219,29 @@ function openNav2() {
     document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-
-
 function closeNav2(){
     document.getElementById("mySidenav2").style.width = "0";
+}
+
+<!-- JS nav bar for directions -->
+function openNav3() {
+    document.getElementById("mySidenav3").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+function closeNav3(){
+    document.getElementById("mySidenav3").style.width = "0";
+}
+
+function showTraffic() {
+    var trafficLayer = new google.maps.TrafficLayer();
+    if (document.getElementById('traffic').checked) {
+        trafficLayer.setMap(map);
+    }
+
+    else {
+        trafficLayer.setMap(null);
+    }
 }
 
 

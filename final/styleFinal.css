@@ -1,6 +1,7 @@
 /* Sean's CSS */
 #map {
     height: 100%;
+    width: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -44,8 +45,27 @@ html, body {
     font-size: 13px;
     font-weight: 300;
 }
+/*List directions==========================*/
+#mySidenav3 {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
 
-/* Mike CSS  */
+#mySidenav3 select, #mySidenav3 input {
+    font-size: 15px;
+}
+
+#mySidenav3 select {
+    width: 100%;
+}
+
+#mySidenav3 i {
+    font-size: 12px;
+}
+
+
+/* Mike CSS =================================== */
 
 #map {
     height: 100%;
@@ -60,11 +80,11 @@ html, body {
 #displayData{
     color: white;
     display: block;
-
+    background-color: black;
 }
 #more {
     color: white;
-
+    background-color: black;
 
 }
 .dropdown{
@@ -103,6 +123,7 @@ html, body {
     transition: 0.5s;
     padding-top: 60px;
     opacity:0.5;
+    text-align: center;
 }
 /* The navigation menu links */
 .sidenav a {
@@ -153,6 +174,7 @@ html, body {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+
 }
 
 .sidenav2 a {
@@ -194,12 +216,7 @@ html, body {
 #map {
     height: 100%;
 }
-/* Optional: Makes the sample page fill the window. */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+
 #appNameHeader{
     font-family: 'Permanent Marker', cursive;
     font-size: 80px;
@@ -211,3 +228,52 @@ html, body {
 #mapPageMenuContainer{
     background: url("images/road-trip1.jpg") no-repeat center center fixed;
 }
+
+#getDirectionsButton{
+    float: right;
+    font-size: 14px;
+    cursor:pointer;
+}
+
+.sidenav3 {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+
+}
+.sidenav3 a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav3 a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav3 .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav3 {padding-top: 15px;}
+    .sidenav3 a {font-size: 18px;}
+}
+
+
+
+
