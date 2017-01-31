@@ -13,6 +13,7 @@ var map;
 var checkedBoxes = [];
 var loc = {};
 var geocoder;
+var trafficLayer= null;
 
 
 function initMap() {
@@ -234,15 +235,12 @@ function closeNav3(){
 }
 
 function showTraffic() {
-    var trafficLayer = new google.maps.TrafficLayer();
-    if (document.getElementById('traffic').checked) {
+    if(document.getElementById('traffic').checked){
+        trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
-    }
 
-    else {
+    }  else{
         trafficLayer.setMap(null);
-    }
+ }
 }
-
-
 
