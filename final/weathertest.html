@@ -132,34 +132,26 @@
 </head>
 <body>
 
-<div class="col-xs-12" id="radar">
 
-    <!--This is the radar-->
-
-</div>
 
 <div id="display">
-    <div class="col-xs-6" class="current"><p>Current</p>
-        <div class="col-xs-12" id="currentlocation"></div>
-        <div class="col-xs-12" id="alerts"></div>
-        <div class="col-xs-6" id="icon"></div>
-        <div class="col-xs-6" id="temp"></div>
-        <div class="col-xs-12" id="humidity"></div>
-        <div class="col-xs-12" id="wind"></div>
-        <div class="col-xs-12" id="pressure"></div>
+    <div class="current"><p>Current</p>
+        <div id="currentlocation"></div>
+        <div id="alerts"></div>
+        <div id="icon"></div>
+        <div id="temp"></div>
+        <div id="humidity"></div>
+        <div id="wind"></div>
+        <div id="pressure"></div>
     </div>
-    <div class="col-xs-6" class="forecast"></div>
-
-    <!--This is where to put the conditions!-->
-
 </div>
 
 
 <div id="selector">
     <form class="selector">
         Where do you want to go?<br>
-        <input type="text" name="location" id="city" autofocus placeholder="city" style="text-transform:capitalize"><br>
-        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)" style="text-transform:uppercase"><br>
+        <input type="text" name="location" id="city" autofocus placeholder="City" style="text-transform:capitalize"><br>
+        <input type="text" name="location" id="state" autofocus placeholder="State (e.g. CA)" style="text-transform:uppercase"><br>
         <button onclick="getWeather()" type="button">I want to go here!</button>
     </form>
 </div>
