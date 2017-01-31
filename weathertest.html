@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script>
-
+        var alertmessage = null;
         //THIS IS THE GEOLOCATION WEATHER CALL!
 
         $(document).ready(function(){
@@ -16,7 +16,7 @@
                 method: "GET",
                 url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
                 success: function(result) {
-                    var alertmessage = null;
+                    //var alertmessage = null;
                     function noAlerts () {
                         if (result.alerts.length === 0) {
                             alertmessage = "No alerts.";
@@ -43,11 +43,15 @@
 
                     $('#radar').append(
                             $('<img>', {
-                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1", alt:"weather radar"
+                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=950&height=950&newmaps=1&rainsnow=1&smooth=1&noclutter=1&timelabel=1", alt:"weather radar"
                             }));
 
 
                     //need to put failure here
+                },
+                error: function(result) {
+                    $('#display').append(
+                            $('<p>').text(alertmessage));
                 }
             });
         });
@@ -57,13 +61,19 @@
         var weatherCity = null;
 
         //THIS IS THE REQUESTED LOCATION CALL
+        //"http://autocomplete.wunderground.com/aq?query=city&c=US" query string needed for autocomplete
+        //using variable to read inputs
+        //can combine city and state in form again
+        //how to incorporate query string into input
 
         function getWeather() {
             $("#display").empty();
             $("#radar").empty();
             console.log("get WEATHER function called");
             weatherState = $('#state').val();
+            console.log(weatherState);
             weatherCity = $('#city').val();
+            console.log(weatherCity);
             console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);
             $.ajax({
                 dataType: 'jsonp',
@@ -76,7 +86,7 @@
                     function noAlerts() {
                         if (result.alerts.length === 0) {
                             console.log('Test: ' + result.alerts);
-                            alertmessage = "No alerts.";
+                            alertmessage = "No weather alerts.";
                         } else {
                             alertmessage = result.alerts[0].description;
                         }
@@ -85,19 +95,28 @@
                     noAlerts();
                     console.log(alertmessage);
 
-                    $('#display').append(
-                            $('<img>', {src: result.current_observation.icon_url}), '<br>',
-                            result.current_observation.display_location.full, '<br>',
-                            //need to fix bug for undefined alerts if there are no alerts
-                            alertmessage,'<br>',
-                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
-                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                            'Wind:  ' + result.current_observation.wind_string, '<br>',
-
-                            //do we need pressure trend? displays as -, 0, + now
+                    $('#currentlocation').append(
+                            result.current_observation.display_location.full);
+                    $('#alerts').append(
+                            alertmessage);
+                    $('#icon').append(
+                            $('<img>', {src: result.current_observation.icon_url}));
+                    $('#temp').append(
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F');
+                    $('#humidity').append(
+                            'Humidity:  ' + result.current_observation.relative_humidity);
+                    $('#wind').append(
+                            'Wind:  ' + result.current_observation.wind_string);
+                    $('#barometer').append(
                             'Pressure:  ' + result.current_observation.pressure_in);
-                }
+
+
+                },
                 //need to put failure here
+                error: function(result) {
+                    $('#display').append(
+                            $('<p>').text('Error'));
+                }
             })
         }
     </script>
@@ -105,17 +124,31 @@
         #display {
             font-family: 'Roboto', sans-serif;
         }
+
+        #radar {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
-<div id="radar">
+<div class="col-xs-12" id="radar">
 
     <!--This is the radar-->
 
 </div>
 
 <div id="display">
+    <div class="col-xs-6" class="current"><p>Current</p>
+        <div class="col-xs-12" id="currentlocation"></div>
+        <div class="col-xs-12" id="alerts"></div>
+        <div class="col-xs-6" id="icon"></div>
+        <div class="col-xs-6" id="temp"></div>
+        <div class="col-xs-12" id="humidity"></div>
+        <div class="col-xs-12" id="wind"></div>
+        <div class="col-xs-12" id="pressure"></div>
+    </div>
+    <div class="col-xs-6" class="forecast"></div>
 
     <!--This is where to put the conditions!-->
 
@@ -123,10 +156,10 @@
 
 
 <div id="selector">
-    <form>
+    <form class="selector">
         Where do you want to go?<br>
-        <input type="text" name="location" id="city" autofocus placeholder="city"><br>
-        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)"><br>
+        <input type="text" name="location" id="city" autofocus placeholder="city" style="text-transform:capitalize"><br>
+        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)" style="text-transform:uppercase"><br>
         <button onclick="getWeather()" type="button">I want to go here!</button>
     </form>
 </div>
