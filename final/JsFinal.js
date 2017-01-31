@@ -13,6 +13,7 @@ var checkedBoxes = [];
 var loc = {};
 var geocoder;
 
+
 function initMap() {
     geocoder = new google.maps.Geocoder;
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -21,18 +22,28 @@ function initMap() {
         center: {lat: 37.0902, lng: -95.7129},
         zoom: 4
     });
-    var trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(map);
 
 //        weatherLayer = new google.maps.weather.WeatherLayer({
 //            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
 //        });
 
     new AutocompleteDirectionsHandler(map);
-    directionsDisplay.setMap(map);
+    // directionsDisplay.setMap(map);
 
        // map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
 }
+
+// function check() {
+//     if(document.getElementById('traffic').checked)
+//
+//     {trafficLayer.setMap(map);}
+//
+//     else
+//
+//     {trafficLayer.setMap(null);}
+// }
+
 
 /**
  * @constructor
@@ -220,9 +231,16 @@ function closeNav3(){
     document.getElementById("mySidenav3").style.width = "0";
 }
 
+function showTraffic() {
+    var trafficLayer = new google.maps.TrafficLayer();
+    if (document.getElementById('traffic').checked) {
+        trafficLayer.setMap(map);
+    }
 
-
-
+    else {
+        trafficLayer.setMap(null);
+    }
+}
 
 
 
