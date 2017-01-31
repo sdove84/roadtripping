@@ -17,7 +17,6 @@ var geocoder;
 function initMap() {
     geocoder = new google.maps.Geocoder;
     var directionsDisplay = new google.maps.DirectionsRenderer;
-    var directionsService = new google.maps.DirectionsService;
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         center: {lat: 37.0902, lng: -95.7129},
@@ -33,7 +32,7 @@ function initMap() {
     new AutocompleteDirectionsHandler(map);
     directionsDisplay.setMap(map);
 
-       map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 }
 
 /**
@@ -61,9 +60,9 @@ function AutocompleteDirectionsHandler(map) {
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
-    this.map.controls[google.maps].push(originInput);
-    this.map.controls[google.maps].push(destinationInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+    // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
 
 }
 //     Sets a listener on a radio button to change the filter type on Places
