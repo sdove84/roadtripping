@@ -4,8 +4,6 @@ $(document).ready(function() {
     $('#actionSubmit').click(function(){
         checkForCheckedValues();
         startPlaces();
-
-
     });
 });
 
@@ -15,7 +13,6 @@ var loc = {};
 var geocoder;
 var trafficLayer= null;
 
-
 function initMap() {
     geocoder = new google.maps.Geocoder;
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -24,27 +21,8 @@ function initMap() {
         center: {lat: 37.0902, lng: -95.7129},
         zoom: 4
     });
-
-//        weatherLayer = new google.maps.weather.WeatherLayer({
-//            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
-//        });
-
     new AutocompleteDirectionsHandler(map);
-    // directionsDisplay.setMap(map);
-
-       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-
 }
-
-// function check() {
-//     if(document.getElementById('traffic').checked)
-//
-//     {trafficLayer.setMap(map);}
-//
-//     else
-//
-//     {trafficLayer.setMap(null);}
-// }
 
 
 /**
@@ -57,7 +35,6 @@ function AutocompleteDirectionsHandler(map) {
     this.travelMode = 'DRIVING';
     var originInput = document.getElementById('origin-input');
     var destinationInput = document.getElementById('destination-input');
-    // var modeSelector = document.getElementById('mode-selector');
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.directionsDisplay.setMap(map);
@@ -73,8 +50,6 @@ function AutocompleteDirectionsHandler(map) {
 
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-    // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
-
 }
 
 AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
