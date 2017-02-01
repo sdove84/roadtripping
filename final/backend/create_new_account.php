@@ -1,11 +1,13 @@
 <?php
-include "backend/db.php";
+include "db.php";
 if(isset($_POST['submit'])) {
+
     $username = $_POST['username'];
-    $password = $_POST['username'];
+    $password = $_POST['password'];
     $email = $_POST['email'];
     $mpg = $_POST['mpg'];
-    if($username ==="" ||$password ==="" || $email ==="" || $mpg=""){
+
+    if($username ==="" ||$password ==="" || $email ==="" || $mpg===""){
         echo '<script language="javascript">';
         echo 'alert("please enter valid input")';
         echo '</script>';
@@ -13,9 +15,18 @@ if(isset($_POST['submit'])) {
         if(!$connection){
             echo (mysqli_error($connection));
         }else {
-            $query = "INSERT INTO users (username,password,email,mpg)";
+            $query = "INSERT INTO users (username,password,email,mpg) ";
             $query .= "VALUES('$username','$password','$email','$mpg')";
             $result = mysqli_query($connection,$query);
+            if(!$result){
+                echo(mysqli_error($result));
+            }else {
+                //if query successfuly
+                session_start();
+                $_SESSION['created_account']=true;
+                header('Location: signin.php');
+                echo ('successfully query');
+            }
         }
     }
 }
@@ -30,7 +41,7 @@ if(isset($_POST['submit'])) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="styleFinal.css">
+    <link type="text/css" rel="stylesheet" href="../styleFinal.css">
     <title>Create New Account</title>
 </head>
 <body class="container">
@@ -44,13 +55,13 @@ if(isset($_POST['submit'])) {
                     <input type="text" class="form-control" name="username" placeholder="Username">
                 </div>
                 <div class="col-xs-6">
-                    <input type="text" class="form-control" name="password" placeholder="Password">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
                 <div class="col-xs-6">
                     <input type="text" class="form-control" name="email" placeholder="Email">
                 </div>
                 <div class="col-xs-6">
-                    <input type="text" class="form-control" name="mpg" placeholder="MPG">
+                    <input type="number" class="form-control" name="mpg" placeholder="MPG">
                 </div>
                 <input type="submit" name ="submit" class="btn btn-success">
             </div>

@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if(isset($_SESSION['auth'])){
+//    echo '<script language="javascript">';
+//    echo 'alert("successfully logged in")';
+//    echo '</script>';
+}else {
+    header('loaction:signin.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +19,12 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="30315203349-jd80sfb669777fd6d1dfterfccd6c8bq.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styleFinal.css">
+    <link rel="stylesheet" href="../styleFinal.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="JsFinal.js"></script>
+    <script src="../JsFinal.js"></script>
     <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=places"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLGhFk5m-1IGHOHb02jvRBSJIZZfrlDic&libraries=places&callback=initMap"
             async defer></script>
@@ -25,7 +37,7 @@
 
 <input id="origin-input" class="controls" type="text"
        placeholder="Enter a location">
- <input id="destination-input" class="controls" type="text"
+<input id="destination-input" class="controls" type="text"
        placeholder="Enter a destination ">
 
 <div id="mode-selector" class="controls">
@@ -37,11 +49,11 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav2()">&times;</a>
     <button  id= displayData type="button" data-toggle="modal" data-target="#myModal">What would you like to see?</button>
     <button id="more">More Data</button>
-    <a href="create_new_account.html">Create Account</a>
-    <a href="backend/signin.php">Sign In</a>
+    <a href="../create_new_account.html">Create Account</a>
+    <a href="signin.php">Sign In</a>
     <a href="">My Account</a>
-    <a href="weathertest.html">Weather</a>
-    <a href="check_list.html">Pack/Shop List</a>
+    <a href="../weathertest.html">Weather</a>
+    <a href="../check_list.html">Pack/Shop List</a>
 
 </div>
 
