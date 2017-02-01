@@ -124,6 +124,7 @@ html, body {
     padding-top: 60px;
     opacity:0.5;
     text-align: center;
+    text-decoration: none;
 }
 /* The navigation menu links */
 .sidenav a {
@@ -136,9 +137,25 @@ html, body {
 
 
 }
+
+.homeNav a {
+    padding: 15px 8px 8px 10px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.8s;
+}
+.homeNav a:hover{
+    color: #ffff00;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
     color: #ffff00;
+    text-decoration: none;
 }
 
 .sidenav .closebtn {
@@ -157,7 +174,7 @@ html, body {
 
 #home2{
     font-size: 30px;
-
+    curser: pointer;
 
 }
 /* side nav bar for main maps page */
@@ -176,9 +193,9 @@ html, body {
 }
 
 .sidenav2 a {
-    padding: 8px 8px 8px 32px;
+    padding: 6px 8px 6px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 18px;
     color: white;
     display: block;
     transition: 0.3s
@@ -186,6 +203,7 @@ html, body {
 
 .sidenav2 a:hover, .offcanvas a:focus{
     color: #ffff00;
+    text-decoration: none;
 }
 
 .sidenav2 .closebtn {
@@ -219,7 +237,7 @@ html, body {
     max-width:500px;
 }
 #mapPageMenuContainer{
-    background: url("images/road-trip1.jpg") no-repeat center center fixed;
+    /*background: url("images/road-trip1.jpg") no-repeat center center fixed;*/
 }
 
 #getDirectionsButton{
@@ -272,6 +290,13 @@ html, body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+/*.sidenav {*/
+    /*padding-top: 15px;*/
+/*}*/
+/*.sidenav a {*/
+    /*font-size: 18px;*/
+/*}*/
 
 
 @media all and (max-width:800px ) {
