@@ -1,36 +1,44 @@
+<?php
+session_start();
+
+if(isset($_SESSION['auth'])){
+//    echo '<script language="javascript">';
+//    echo 'alert("successfully logged in")';
+//    echo '</script>';
+}else {
+    header('loaction:signin.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>RoadTripping</title>
+
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="30315203349-jd80sfb669777fd6d1dfterfccd6c8bq.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styleFinal.css">
+    <link rel="stylesheet" href="../styleFinal.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="JsFinal.js"></script>
+    <script src="../JsFinal.js"></script>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa6vv25gpTgNJQS3QV--o-FlHkUj9fr20&libraries=places"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLGhFk5m-1IGHOHb02jvRBSJIZZfrlDic&libraries=places&callback=initMap"
             async defer></script>
 
 </head>
 <body>
-<div id="mapPageMenuContainer" class="container-fluid">
-    <div class="row">
-        <span class="col-sm-4" id="home2" onclick="openNav2()">&#9776; Menu</span>
-         <span class="col-sm-4" id="mapLogo">Roadtripping</span>
-        <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Show Directions</span>
-    </div>
+<div id="mapPageMenuContainer">
+    <span id="home2" style="font-size:30px;cursor:pointer" onclick="openNav2()">&#9776; Menu</span>
 </div>
 
-<div id="inputsContainer" class="container-fluid">
-    <div class="row">
-        <input id="origin-input" class="col-sm-5" type="text"
+<input id="origin-input" class="controls" type="text"
        placeholder="Enter a location">
-        <input id="destination-input" class="col-sm-5" type="text"
+<input id="destination-input" class="controls" type="text"
        placeholder="Enter a destination ">
-    </div>
-</div>
 
 <div id="mode-selector" class="controls">
     <input name="type" id="changemode-driving">
@@ -39,19 +47,22 @@
 
 <div id="mySidenav2" class="sidenav2">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav2()">&times;</a>
-    <a href="backend/signin.php">Sign In</a>
-    <a href="create_new_account.html">Create Account</a>
+    <button  id= displayData type="button" data-toggle="modal" data-target="#myModal">What would you like to see?</button>
+    <button id="more">More Data</button>
+    <a href="../create_new_account.html">Create Account</a>
+    <a href="signin.php">Sign In</a>
     <a href="">My Account</a>
-    <a id= displayData type="button" data-toggle="modal" data-target="#myModal">Choose Places</a>
-    <a id="more">Display More</a>
-    <a href="check_list.html">Pack/Shop List</a>
-    <a href="weathertest.html">Weather</a>
+    <a href="../weathertest.html">Weather</a>
+    <a href="../check_list.html">Pack/Shop List</a>
 
 </div>
 
+
+<span id="getDirectionsButton" onclick="openNav3()">Show Directions</span>
+
 <div id="mySidenav3" class="sidenav3">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav3()">&times;</a>
-    <label id="directionsLabel"><input type="checkbox" id="traffic" onclick="showTraffic()" />Show/Hide                Traffic</label>
+    <label id="directionsLabel"><input type="checkbox" id="traffic" onclick="showTraffic()" />Show/Hide Traffic</label>
     <div id="right-panel"></div>
 </div>
 
@@ -132,6 +143,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 </body>
 </html>
