@@ -49,7 +49,6 @@ html, body {
 #mySidenav3 {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
-    padding-left: 10px;
 }
 
 #mySidenav3 select, #mySidenav3 input {
@@ -285,6 +284,9 @@ html, body {
     text-align: center;
 }
 
+#mapPageMenuContainer {
+    border-bottom: solid black;
+}
 
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
@@ -304,9 +306,21 @@ html, body {
     #mapLogo{ display: none;}
     #getDirectionsButton {
         font-size: 25px;
-        text-align: right                    }
-
+        text-align: right;
+        float: right;
+    }
 }
+
+@media all and (max-width:420px ) {
+    #origin-input {
+        width: 45%
+    }
+
+    #destination-input {
+        width: 45%
+    }
+}
+
 
 
 

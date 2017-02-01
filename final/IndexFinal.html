@@ -23,10 +23,14 @@
     </div>
 </div>
 
-<input id="origin-input" class="controls" type="text"
+<div id="inputsContainer" class="container-fluid">
+    <div class="row">
+        <input id="origin-input" class="col-sm-5" type="text"
        placeholder="Enter a location">
- <input id="destination-input" class="controls" type="text"
+        <input id="destination-input" class="col-sm-5" type="text"
        placeholder="Enter a destination ">
+    </div>
+</div>
 
 <div id="mode-selector" class="controls">
     <input name="type" id="changemode-driving">
@@ -42,14 +46,12 @@
     <a id="more">Display More</a>
     <a href="check_list.html">Pack/Shop List</a>
     <a href="weathertest.html">Weather</a>
+
 </div>
-
-
-
 
 <div id="mySidenav3" class="sidenav3">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav3()">&times;</a>
-    <label id="directionsLabel"><input type="checkbox" id="traffic" onclick="showTraffic()" />Show/Hide Traffic</label>
+    <label id="directionsLabel"><input type="checkbox" id="traffic" onclick="showTraffic()" />Show/Hide                Traffic</label>
     <div id="right-panel"></div>
 </div>
 
