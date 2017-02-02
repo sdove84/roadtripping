@@ -24,6 +24,8 @@ var nodesToCheck3 = null;
 var nodesToCheck4 = null;
 var nodesToCheck5 = null;
 var nodesToCheck6 = null;
+var marker_event;
+var infowindow;
 
 
 function initMap() {
@@ -35,9 +37,7 @@ function initMap() {
         zoom: 4,
     });
     new AutocompleteDirectionsHandler(map);
-
 }
-
 /**
  * @constructor
  */
@@ -65,9 +65,49 @@ function AutocompleteDirectionsHandler(map) {
 
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+
+
 }
 
-AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+function create_event_marker(result,lat,lng){
+     marker_event = new google.maps.Marker({
+        // The below line is equivalent to writing:
+        // position: new google.maps.LatLng(-34.397, 150.644)
+        position: {lat: lat, lng: lng},
+        map: map,
+        icon:'images/location_pin_marker.png'
+    });
+
+    create_info_event(marker_event,result);
+}
+
+function create_info_event(pos,result){
+
+    var contentString2 = '<div>' + '<p>'+ result.title+'</p>' + '</div>';
+    contentString2 += '<br>' + result.city_name;
+
+    var infoWindow2 = new google.maps.InfoWindow({
+        content: contentString2
+    });
+
+    //create info window for locations
+    // infoWindow2.addListener('domready',function(){
+    //     $('.direction').on('click',function(){
+    //         calculateAndDisplayRoute(infoWindow2,newMarker);//truyen newmarker vao de lay vi tri 2
+    //     });
+    // });
+    //when location marker clicked
+    pos.addListener('click',function(){
+        infoWindow2.open(map,pos);
+    });
+    return pos;
+}
+
+
+
+
+
+    AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
     radioButton.addEventListener('click', function() {
@@ -98,7 +138,12 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
         }
         me.route();
     });
+
 };
+
+
+
+//auto complete showing route function
 AutocompleteDirectionsHandler.prototype.route = function() {
     if (!this.originPlaceId || !this.destinationPlaceId) {
         return;
@@ -149,9 +194,10 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         } else {
             window.alert('Directions request failed due to ' + status);
         }
-
-
     });
+
+    //marker for events
+    getInformation();
 };
 
 
