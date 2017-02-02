@@ -94,11 +94,14 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         travelMode: this.travelMode
     }, function(response, status) {
         if (status === 'OK') {
+            console.log('cung',response);
             me.directionsDisplay.setDirections(response);
             $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
         }
+
+
     });
 };
 
