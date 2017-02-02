@@ -78,7 +78,7 @@ var endDate;
             //console.log('User has typed: ' + choice);
             startDate = $('#start').val();
             endDate = $('#end').val();
-            myDateRange= (startDate + '-' + endDate);
+            myDateRange= (startDate + '00-' + endDate + '00');
             console.log(myDateRange);
             getInformation();
         }
@@ -100,14 +100,20 @@ var endDate;
         <input type="radio" name="choose" value="Sports">Sports<br>
     </form>
     Trip start date:
-    <input id="start" type="text" placeholder="YYYYMMDD00"><br>
+    <input id="start" type="text" placeholder="YYYYMMDD"><br>
     Trip end date:
-    <input id="end" type="text" placeholder="YYYYMMDD00"><br>
+    <input id="end" type="text" placeholder="YYYYMMDD"><br>
 
     <button type="submit" onclick="getResults()">get results</button>
     <!-- NEED A START DATE FOR VARIABLE startDate AND END DATE FOR VARIABLE endDate WITH THE FORMAT YYYYMMDD00 FOR BOTH DATES-->
     <div id="display">
 
+    </div>
+    <!--THIS FULFILLS EVENTFUL.COM BRANDING GUIDELINES-->
+    <div class="eventful-badge eventful-medium">
+        <img src="http://api.eventful.com/images/powered/eventful_88x31.gif"
+             alt="Local Events, Concerts, Tickets">
+        <p><a href="http://eventful.com/">Events</a> by Eventful</p>
     </div>
 </body>
 </html>
