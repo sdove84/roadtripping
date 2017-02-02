@@ -5,7 +5,7 @@ $(document).ready(function() {
         checkForCheckedValues();
         startPlaces(nodesToCheck);
         startPlaces(nodesToCheck2);
-         startPlaces(nodesToCheck3);
+        startPlaces(nodesToCheck3);
         startPlaces(nodesToCheck4);
         startPlaces(nodesToCheck5);
         startPlaces(nodesToCheck6);
@@ -162,6 +162,8 @@ function checkForCheckedValues(){
 
 function startPlaces(nodes) {
     var service = new google.maps.places.PlacesService(map);
+
+    // ----------- The for loop is the fastest way to display the data but the browser limits to 9 calls at one time
     // for( var i = 0; i<nodesToCheck.length; i++) {
     //     service.nearbySearch({
     //         location: nodesToCheck[i],
@@ -281,4 +283,8 @@ function showTraffic() {
         trafficLayer.setMap(null);
  }
 }
+
+
+
+
 
