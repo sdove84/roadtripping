@@ -302,8 +302,12 @@ html, body {
 
 
 @media all and (max-width:800px ) {
-    #home2 {font-size: 25px;}
-    #mapLogo{ display: none;}
+    #home2 {
+        font-size: 25px;
+    }
+    #mapLogo{
+        display: none;
+    }
     #getDirectionsButton {
         font-size: 25px;
         text-align: right;
