@@ -5,6 +5,11 @@ $(document).ready(function() {
         checkForCheckedValues();
         startPlaces(nodesToCheck);
         startPlaces(nodesToCheck2);
+         startPlaces(nodesToCheck3);
+        startPlaces(nodesToCheck4);
+        startPlaces(nodesToCheck5);
+        startPlaces(nodesToCheck6);
+
     });
 });
 
@@ -15,6 +20,10 @@ var geocoder;
 var trafficLayer= null;
 var nodesToCheck = null;
 var nodesToCheck2 = null;
+var nodesToCheck3 = null;
+var nodesToCheck4 = null;
+var nodesToCheck5 = null;
+var nodesToCheck6 = null;
 
 
 function initMap() {
@@ -116,15 +125,25 @@ AutocompleteDirectionsHandler.prototype.route = function() {
                 var solutionLng = Math.pow((secondLng-firstLng),2);
                 var squareRoot = Math.sqrt(solutionLng + solutionLat);
                 var check = squareRoot * 69 ;
-                if(check>5){
+                if(check>15){
                     nodesToCheck.push(path[currentI]);
                     currentI = i;
                     console.log("This counts as one places google places api");
                 }
             }
             nodesToCheck.push(path[path.length-1]);
-            var splitPoint = Math.ceil(nodesToCheck.length / 2);
+            console.log(nodesToCheck.length);
+            var splitPoint = Math.ceil(nodesToCheck.length / 6);
             nodesToCheck2 = nodesToCheck.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 5);
+            nodesToCheck3 = nodesToCheck2.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 4);
+            nodesToCheck4 = nodesToCheck3.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 3);
+            nodesToCheck5 = nodesToCheck4.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 2);
+            nodesToCheck6 = nodesToCheck5.splice(splitPoint);
+
             $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
