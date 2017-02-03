@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
-    $('#actionSubmit').click(function(){
+    $('#actionSubmit').click(function () {
         checkForCheckedValues();
         startPlaces();
     });
@@ -11,7 +11,7 @@ var map;
 var checkedBoxes = [];
 var loc = {};
 var geocoder;
-var trafficLayer= null;
+var trafficLayer = null;
 
 function initMap() {
     geocoder = new google.maps.Geocoder;
@@ -51,19 +51,19 @@ function AutocompleteDirectionsHandler(map) {
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
 }
 
-AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
-    radioButton.addEventListener('click', function() {
+    radioButton.addEventListener('click', function () {
         me.travelMode = mode;
         me.route();
     });
 };
 
-AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
     var me = this;
     autocomplete.bindTo('bounds', this.map);
-    autocomplete.addListener('place_changed', function() {
+    autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
         if (!place.place_id) {
             window.alert("Please select an option from the drop down list.");
@@ -71,8 +71,8 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
         }
         if (mode === 'ORIG') {
             me.originPlaceId = place.place_id;
-            geocoder.geocode({'placeId': place.place_id}, function(results){
-                var latLng = results[0].geometry.location ;
+            geocoder.geocode({'placeId': place.place_id}, function (results) {
+                var latLng = results[0].geometry.location;
                 loc.lat = latLng.lat();
                 loc.lng = latLng.lng();
             });
@@ -83,7 +83,7 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
         me.route();
     });
 };
-AutocompleteDirectionsHandler.prototype.route = function() {
+AutocompleteDirectionsHandler.prototype.route = function () {
     if (!this.originPlaceId || !this.destinationPlaceId) {
         return;
     }
@@ -92,7 +92,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         origin: {'placeId': this.originPlaceId},
         destination: {'placeId': this.destinationPlaceId},
         travelMode: this.travelMode
-    }, function(response, status) {
+    }, function (response, status) {
         if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
             $("#getDirectionsButton").show();
@@ -103,11 +103,11 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 };
 
 <!-- Mikes JS-->
-function checkForCheckedValues(){
-    $("input[type=checkbox]:checked").each(function() {
-        checkedBoxes.push($(this).val() );
+function checkForCheckedValues() {
+    $("input[type=checkbox]:checked").each(function () {
+        checkedBoxes.push($(this).val());
     });
-    console.log("users picks to have displayed:" +" "+ checkedBoxes);
+    console.log("users picks to have displayed:" + " " + checkedBoxes);
 }
 
 function startPlaces() {
@@ -131,7 +131,7 @@ function processResults(results, status, pagination) {
 
             moreButton.disabled = false;
 
-            moreButton.addEventListener('click', function() {
+            moreButton.addEventListener('click', function () {
                 moreButton.disabled = true;
                 pagination.nextPage();
             });
@@ -145,9 +145,9 @@ function createMarkers(places) {
         var name = place.name;
         var address = places[i].vicinity;
         var content =
-            '<div class="infoWindow">'+
-            '<h1 class="infoPlaceName">'+ name+ '</h1>'+
-            '<h5 class="infoPlaceAddress>">'+ address+'</h5>'+
+            '<div class="infoWindow">' +
+            '<h1 class="infoPlaceName">' + name + '</h1>' +
+            '<h5 class="infoPlaceAddress>">' + address + '</h5>' +
             '</div>';
 
         var image = {
@@ -171,8 +171,8 @@ function createMarkers(places) {
 
         });
 
-        marker.addListener('click',function(){
-            infoWindow.open(map,marker);
+        marker.addListener('click', function () {
+            infoWindow.open(map, marker);
         });
 
         bounds.extend(place.geometry.location);
@@ -194,7 +194,7 @@ function openNav2() {
     document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-function closeNav2(){
+function closeNav2() {
     document.getElementById("mySidenav2").style.width = "0";
 }
 
@@ -204,17 +204,17 @@ function openNav3() {
     document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-function closeNav3(){
+function closeNav3() {
     document.getElementById("mySidenav3").style.width = "0";
 }
 
 function showTraffic() {
-    if(document.getElementById('traffic').checked){
+    if (document.getElementById('traffic').checked) {
         trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
 
-    }  else{
+    } else {
         trafficLayer.setMap(null);
- }
+    }
 }
 
