@@ -1,113 +1,212 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Weather</title>-->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">-->
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">-->
+    <!--<script>-->
+
+        <!--//THIS IS THE GEOLOCATION WEATHER CALL!-->
+
+        <!--$(document).ready(function(){-->
+            <!--$.ajax({-->
+                <!--dataType: 'jsonp',-->
+                <!--method: "GET",-->
+                <!--url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',-->
+                <!--success: function(result) {-->
+                    <!--var alertmessage = null;-->
+                    <!--function noAlerts () {-->
+                        <!--if (result.alerts.length === 0) {-->
+                            <!--alertmessage = "No alerts.";-->
+                        <!--} else {-->
+                            <!--alertmessage = result.alerts[0].description;-->
+                        <!--}-->
+                    <!--}-->
+                    <!--noAlerts();-->
+
+                    <!--//THIS WILL SHOW UP ON THE PAGE-->
+
+                    <!--$('#display').append(-->
+                            <!--$('<img>',{src:result.current_observation.icon_url}),'<br>',-->
+                            <!--result.current_observation.display_location.full,'<br>',-->
+                            <!--//need to fix bug for undefined alerts if there are no alerts-->
+                            <!--alertmessage,'<br>',-->
+                            <!--'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',-->
+                            <!--'Humidity:  ' + result.current_observation.relative_humidity, '<br>',-->
+                            <!--'Wind:  ' + result.current_observation.wind_string,'<br>',-->
+                            <!--'Pressure:  ' + result.current_observation.pressure_in,'<br>',-->
+                            <!--//forecast here-->
+                            <!--$('<p>').text('Powered by Weather Underground'),-->
+                            <!--$('<img>',{src:"http://icons.wxug.com/graphics/wu2/logo_130x80.png"}));-->
+
+                    <!--$('#radar').append(-->
+                            <!--$('<img>', {-->
+                                <!--src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1", alt:"weather radar"-->
+                            <!--}));-->
+
+
+                    <!--//need to put failure here-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
+    <!--<script>-->
+        <!--var weatherState = null;-->
+        <!--var weatherCity = null;-->
+
+        <!--//THIS IS THE REQUESTED LOCATION CALL-->
+
+        <!--function getWeather() {-->
+            <!--$("#display").empty();-->
+            <!--$("#radar").empty();-->
+            <!--console.log("get WEATHER function called");-->
+            <!--weatherState = $('#state').val();-->
+            <!--weatherCity = $('#city').val();-->
+            <!--console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);-->
+            <!--$.ajax({-->
+                <!--dataType: 'jsonp',-->
+                <!--method: "GET",-->
+                <!--url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/'+weatherState+'/'+weatherCity+'.json',-->
+                <!--success: function (result) {-->
+
+                    <!--var alertmessage = null;-->
+
+                    <!--function noAlerts() {-->
+                        <!--if (result.alerts.length === 0) {-->
+                            <!--console.log('Test: ' + result.alerts);-->
+                            <!--alertmessage = "No alerts.";-->
+                        <!--} else {-->
+                            <!--alertmessage = result.alerts[0].description;-->
+                        <!--}-->
+                    <!--}-->
+
+                    <!--noAlerts();-->
+                    <!--console.log(alertmessage);-->
+
+                    <!--$('#display').append(-->
+                            <!--$('<img>', {src: result.current_observation.icon_url}), '<br>',-->
+                            <!--result.current_observation.display_location.full, '<br>',-->
+                            <!--//need to fix bug for undefined alerts if there are no alerts-->
+                            <!--alertmessage,'<br>',-->
+                            <!--'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',-->
+                            <!--'Humidity:  ' + result.current_observation.relative_humidity, '<br>',-->
+                            <!--'Wind:  ' + result.current_observation.wind_string, '<br>',-->
+
+                            <!--//do we need pressure trend? displays as -, 0, + now-->
+                            <!--'Pressure:  ' + result.current_observation.pressure_in);-->
+                <!--}-->
+                <!--//need to put failure here-->
+            <!--})-->
+        <!--}-->
+    <!--</script>-->
+    <!--<style>-->
+        <!--#display {-->
+            <!--font-family: 'Roboto', sans-serif;-->
+        <!--}-->
+    <!--</style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div id="display">-->
+
+    <!--&lt;!&ndash;This is where to put the conditions!&ndash;&gt;-->
+
+<!--</div>-->
+
+<!--<div id="radar">-->
+
+    <!--&lt;!&ndash;This is the radar&ndash;&gt;-->
+
+<!--</div>-->
+<!--<div id="selector">-->
+    <!--<form>-->
+        <!--Where do you want to go?<br>-->
+        <!--<input type="text" name="location" id="city" autofocus placeholder="city"><br>-->
+        <!--<input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)"><br>-->
+        <!--<button onclick="getWeather()" type="button">I want to go here!</button>-->
+    <!--</form>-->
+<!--</div>-->
+<!--<div id="credit">-->
+
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weather</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script>
-
-        //THIS IS THE GEOLOCATION WEATHER CALL!
-
-        $(document).ready(function(){
-            $.ajax({
-                dataType: 'jsonp',
-                method: "GET",
-                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
-                success: function(result) {
-                    var alertmessage = null;
-                    function noAlerts () {
-                        if (result.alerts.length === 0) {
-                            alertmessage = "No alerts.";
-                        } else {
-                            alertmessage = result.alerts[0].description;
-                        }
-                    }
-                    noAlerts();
-
-                    //THIS WILL SHOW UP ON THE PAGE
-
-                    $('#display').append(
-                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
-                            result.current_observation.display_location.full,'<br>',
-                            //need to fix bug for undefined alerts if there are no alerts
-                            alertmessage,'<br>',
-                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
-                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                            'Wind:  ' + result.current_observation.wind_string,'<br>',
-                            'Pressure:  ' + result.current_observation.pressure_in,'<br>',
-                            //forecast here
-                            $('<p>').text('Powered by Weather Underground'),
-                            $('<img>',{src:"http://icons.wxug.com/graphics/wu2/logo_130x80.png"}));
-
-                    $('#radar').append(
-                            $('<img>', {
-                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1", alt:"weather radar"
-                            }));
-
-
-                    //need to put failure here
-                }
-            });
-        });
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://api.eventful.com/js/api">
     </script>
-    <script>
-        var weatherState = null;
-        var weatherCity = null;
-
-        //THIS IS THE REQUESTED LOCATION CALL
-
-        function getWeather() {
-            $("#display").empty();
-            $("#radar").empty();
-            console.log("get WEATHER function called");
-            weatherState = $('#state').val();
-            weatherCity = $('#city').val();
-            console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);
+    <script type="text/javascript">
+        $(document).ready(function() {
+        });
+        function getInformation() {
             $.ajax({
+                data: {
+                    app_key: "9QPc4kCRH3JtNMsD",
+                    keywords: "events"
+                },
                 dataType: 'jsonp',
-                method: "GET",
-                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/'+weatherState+'/'+weatherCity+'.json',
+                method: "POST",
+                    url: 'http://api.eventful.com/json/events/search/?query='+choice+'&location=' + cityForEvent,
                 success: function (result) {
-
-                    var alertmessage = null;
-
-                    function noAlerts() {
-                        if (result.alerts.length === 0) {
-                            console.log('Test: ' + result.alerts);
-                            alertmessage = "No alerts.";
-                        } else {
-                            alertmessage = result.alerts[0].description;
+                    console.log('Cung: ' + result);
+                    //returns message if no results found
+                    if (result.events === null) {
+                        $('#display').append('no results found');
+                    } else {
+                        //loop for results including condition for fewer than 10 events(max)
+                        for (var i = 0; i < result.events.event.length; i++) {
+                            //console.log("city name:" + result.events.event[i].city_name);
+                            //console.log("description:" + result.events.event[i].description);
+                            //console.log("time:" + result.events.event[i].start_time);
+                            //console.log("title:" + result.events.event[i].title);
+                            //displays results on page
+                            $('#display').append(
+                                    (i+1) + ")  ",
+                                    "City: " + result.events.event[i].city_name, '<br>',
+                                    "Time: " + result.events.event[i].start_time, '<br>',
+                                    "Title: " + result.events.event[i].title, '<br>',
+                                    "Description: " + result.events.event[i].description, '<br><br>');
                         }
                     }
-
-                    noAlerts();
-                    console.log(alertmessage);
-
-                    $('#display').append(
-                            $('<img>', {src: result.current_observation.icon_url}), '<br>',
-                            result.current_observation.display_location.full, '<br>',
-                            //need to fix bug for undefined alerts if there are no alerts
-                            alertmessage,'<br>',
-                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
-                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                            'Wind:  ' + result.current_observation.wind_string, '<br>',
-
-                            //do we need pressure trend? displays as -, 0, + now
-                            'Pressure:  ' + result.current_observation.pressure_in);
                 }
-                //need to put failure here
             })
         }
-    </script>
-    <style>
-        #display {
-            font-family: 'Roboto', sans-serif;
+        var cityForEvent = null;
+        var choice = null;
+        function getResults(){
+            //console.log($('#cityEvent').val());
+            cityForEvent = $('#cityEvent').val();
+            //console.log('user has typed: ' + cityForEvent);
+            //console.log(document.querySelector('input[name="choose"]:checked').value)
+            choice = (document.querySelector('input[name="choose"]:checked').value);
+            console.log('User has typed: ' + choice);
+            getInformation();
         }
-    </style>
+    </script>
 </head>
+
+
 <body>
+<input id="cityEvent" type="text" placeholder="pick city"><br>
+<form id="selection">
+    <input type="radio" id="1" name="choose" value="Comedy">Comedy<br>
+    <input type="radio" id="2" name="choose" value="Concerts and Tour Dates">Concerts and Tour Dates<br>
+    <input type="radio" id="3" name="choose" value="Conferences and Trade Shows">Conferences and Trade Shows<br>
+    <input type="radio" id="4" name="choose" value="Festivals">Festivals<br>
+    <input type="radio" id="5" name="choose" value="Food and Wine">Food and Wine<br>
+    <input type="radio" id="6" name="choose" value="Kids and Family">Kids and Family<br>
+    <input type="radio" id="7" name="choose" value="Nightlife and Singles">Nightlife and Singles<br>
+    <input type="radio" id="8" name="choose" value="Performing Arts">Performing Arts<br>
+    <input type="radio" id="9" name="choose" value="Sports">Sports<br>
+</form>
+<button type="submit" onclick="getResults()">get results</button>
 
 <div id="display">
 </div>
@@ -125,6 +224,7 @@
 </div>
 
 <div id="credit">
+
 </div>
 
 </body>

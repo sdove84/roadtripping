@@ -140,6 +140,7 @@ function initMap() {
                 window.alert('Directions request failed due to ' + status);
             }
         });
+        console.log('cung',getPath());
     }
 
     GeolocationControl();
