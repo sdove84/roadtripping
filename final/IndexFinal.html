@@ -24,18 +24,18 @@
 <body>
 <div id="mapPageMenuContainer" class="container-fluid">
     <div class="row">
-        <span class="col-sm-4" id="home2" onclick="openNav2()">&#9776; Menu</span>
-         <span class="col-sm-4" id="mapLogo">Roadtripping</span>
-        <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Show Directions</span>
+        <span class="mapMenu col-sm-4" id="home2" onclick="openNav2()">&#9776;<span>Menu</span></span>
+        <span class="col-sm-4" id="mapLogo">Roadtripping</span>
+        <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Directions</span>
     </div>
 </div>
 
 <div id="inputsContainer" class="container-fluid">
     <div class="row">
         <input id="origin-input" class="col-sm-5" type="text"
-       placeholder="Enter a location">
+               placeholder="Enter a location">
         <input id="destination-input" class="col-sm-5" type="text"
-       placeholder="Enter a destination ">
+               placeholder="Enter a destination ">
     </div>
 </div>
 
@@ -49,17 +49,19 @@
     <a href="backend/signin.php">Sign In</a>
     <a href="create_new_account.html">Create Account</a>
     <a href="">My Account</a>
-    <a id= displayData type="button" data-toggle="modal" data-target="#myModal">Choose Places</a>
+    <a id=displayData type="button" data-toggle="modal" data-target="#myModal">Choose Places</a>
     <a id="more">Display More</a>
     <a href="check_list.html">Pack/Shop List</a>
     <a href="weathertest.html">Weather</a>
+
     <a id= displayData2 type="button" data-toggle="modal" data-target="#myModal2">Find Event</a>
+
 
 </div>
 
 <div id="mySidenav3" class="sidenav3">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav3()">&times;</a>
-    <label id="directionsLabel"><input type="checkbox" id="traffic" onclick="showTraffic()" />Show/Hide                Traffic</label>
+    <label id="directionsLabel"><input type="checkbox" id="traffic" onclick="showTraffic()"/>Show/Hide Traffic</label>
     <div id="right-panel"></div>
 </div>
 
@@ -75,7 +77,8 @@
             <div class="modal-body">
                 <!-- first drop down -- Accommodations -->
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-bed"></span>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-bed"></span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Accommodations:</p>
@@ -87,19 +90,21 @@
                 </div>
                 <! --- second drop down Attractions -->
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown"> <span class="glyphicon glyphicon-camera"></span>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-camera"></span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Attractions</p>
                         <li><a><input value="amusement_park" type="checkbox"/>Amusement Parks</a></li>
                         <li><a><input value="museums" type="checkbox"/>Museums</a></li>
                         <li><a><input value="tours" type="checkbox"/>Tours/Excursions</a></li>
-                        <li><a><input  value="zoo + aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
+                        <li><a><input value="zoo + aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
                     </ul>
                 </div>
                 <!-- Third drop down Outdoors and Recreation -->
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown"><span class="glyphicon glyphicon-tree-conifer"></span>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-tree-conifer"></span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Outdoors and Recreation:</p>
@@ -110,18 +115,20 @@
                 </div>
                 <!-- forth drop down Gas Stations and Service Stations -->
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu4" data-toggle="dropdown"><span class="glyphicon glyphicon-scale"></span>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu4" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-scale"></span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Gas and Service Stations</p>
                         <li><a><input value="gas" type="checkbox"/>Gas Stations Only</a></li>
                         <li><a><input value="car repair" type="checkbox"/>Service Stations Only</a></li>
-                        <li><a><input  value="gas_station/car repair" type="checkbox"/>Gas and Service Stations</a></li>
+                        <li><a><input value="gas_station/car repair" type="checkbox"/>Gas and Service Stations</a></li>
                     </ul>
                 </div>
                 <!-- fifth drop down food -->
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu5" data-toggle="dropdown"><span class="glyphicon glyphicon-cutlery"></span>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu5" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-cutlery"></span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Food and Drink</p>
@@ -130,16 +137,19 @@
                         <li><a><input value="fast food" type="checkbox"/>Fast Food</a></li>
                         <li><a><input value="health Food + health" type="checkbox"/>Vegetarian and Health Food</a></li>
                         <li><a><input value="bars" type="checkbox"/>Bars and Drinks</a></li>
-                        <li><a><input value="wineries/Breweries" type="checkbox"/>Wineries, Breweries and Distilleries</a></li>
+                        <li><a><input value="wineries/Breweries" type="checkbox"/>Wineries, Breweries and
+                            Distilleries</a></li>
                     </ul>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal">Show Results</button>
+                <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal">Show Results
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -176,6 +186,7 @@
 
     </div>
 </div>
+
 
 </body>
 </html>
