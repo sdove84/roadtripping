@@ -3,7 +3,13 @@ $(document).ready(function () {
     $("#getDirectionsButton").hide();
     $('#actionSubmit').click(function () {
         checkForCheckedValues();
-        startPlaces();
+        startPlaces(nodesToCheck);
+        startPlaces(nodesToCheck2);
+        startPlaces(nodesToCheck3);
+        startPlaces(nodesToCheck4);
+        startPlaces(nodesToCheck5);
+        startPlaces(nodesToCheck6);
+
     });
 });
 
@@ -11,19 +17,29 @@ var map;
 var checkedBoxes = [];
 var loc = {};
 var geocoder;
-var trafficLayer = null;
+
+var trafficLayer= null;
+var nodesToCheck = null;
+var nodesToCheck2 = null;
+var nodesToCheck3 = null;
+var nodesToCheck4 = null;
+var nodesToCheck5 = null;
+var nodesToCheck6 = null;
+var marker_event;
+var infowindow;
+
+
 
 function initMap() {
     geocoder = new google.maps.Geocoder;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay = new google.maps.DirectionsRenderer;
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         center: {lat: 37.0902, lng: -95.7129},
-        zoom: 4
+        zoom: 4,
     });
     new AutocompleteDirectionsHandler(map);
 }
-
 /**
  * @constructor
  */
@@ -37,11 +53,15 @@ function AutocompleteDirectionsHandler(map) {
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.directionsDisplay.setMap(map);
+
+
     this.directionsDisplay.setPanel(document.getElementById('mySidenav3'));
     var originAutocomplete = new google.maps.places.Autocomplete(
         originInput, {placeIdOnly: true});
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, {placeIdOnly: true});
+
+    console.log('omg',destinationAutocomplete);
 
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
@@ -51,7 +71,52 @@ function AutocompleteDirectionsHandler(map) {
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
 }
 
+
 AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
+
+/**
+ *Create event Marker and info_window for marker
+ */
+
+function create_event_marker(result,lat,lng){
+     marker_event = new google.maps.Marker({
+        // The below line is equivalent to writing:
+        // position: new google.maps.LatLng(-34.397, 150.644)
+        position: {lat: lat, lng: lng},
+        map: map,
+        icon:'images/location_pin_marker.png'
+    });
+    create_info_event(marker_event,result);
+}
+
+function create_info_event(pos,result){
+
+    var contentString2 = '<div>' + '<p>'+ result.title+'</p>' + '</div>';
+    contentString2 += '<br>' + result.city_name;
+
+    var infoWindow2 = new google.maps.InfoWindow({
+        content: contentString2
+    });
+
+    //create info window for locations
+    // infoWindow2.addListener('domready',function(){
+    //     $('.direction').on('click',function(){
+    //         calculateAndDisplayRoute(infoWindow2,newMarker);//truyen newmarker vao de lay vi tri 2
+    //     });
+    // });
+    //when location marker clicked
+    pos.addListener('click',function(){
+        infoWindow2.open(map,pos);
+    });
+    return pos;
+}
+
+
+
+
+
+    AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+
     var radioButton = document.getElementById(id);
     var me = this;
     radioButton.addEventListener('click', function () {
@@ -82,8 +147,15 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
         }
         me.route();
     });
+
 };
-AutocompleteDirectionsHandler.prototype.route = function () {
+
+
+
+
+//auto complete showing route function
+AutocompleteDirectionsHandler.prototype.route = function() {
+
     if (!this.originPlaceId || !this.destinationPlaceId) {
         return;
     }
@@ -94,13 +166,51 @@ AutocompleteDirectionsHandler.prototype.route = function () {
         travelMode: this.travelMode
     }, function (response, status) {
         if (status === 'OK') {
+            console.log('cung',response);
             me.directionsDisplay.setDirections(response);
+            route = response.routes[0];
+            var path = response.routes[0].overview_path;
+
+            var currentI = 0;
+            nodesToCheck = [path[0]];
+            for(var i =1; i< path.length; i++ ){
+               var firstLat = path[currentI].lat();
+               var firstLng = path[currentI].lng();
+               var secondLat = path[i].lat();
+               var secondLng = path[i].lng();
+                var solutionLat = Math.pow((secondLat-firstLat),2);
+                var solutionLng = Math.pow((secondLng-firstLng),2);
+                var squareRoot = Math.sqrt(solutionLng + solutionLat);
+                var check = squareRoot * 69 ;
+                if(check>15){
+                    nodesToCheck.push(path[currentI]);
+                    currentI = i;
+                    console.log("This counts as one places google places api");
+                }
+            }
+            nodesToCheck.push(path[path.length-1]);
+            console.log(nodesToCheck.length);
+            var splitPoint = Math.ceil(nodesToCheck.length / 6);
+            nodesToCheck2 = nodesToCheck.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 5);
+            nodesToCheck3 = nodesToCheck2.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 4);
+            nodesToCheck4 = nodesToCheck3.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 3);
+            nodesToCheck5 = nodesToCheck4.splice(splitPoint);
+            splitPoint = Math.ceil(nodesToCheck.length / 2);
+            nodesToCheck6 = nodesToCheck5.splice(splitPoint);
+
             $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
         }
     });
+
+    //marker for events
+    getInformation();
 };
+
 
 <!-- Mikes JS-->
 function checkForCheckedValues() {
@@ -110,14 +220,30 @@ function checkForCheckedValues() {
     console.log("users picks to have displayed:" + " " + checkedBoxes);
 }
 
-function startPlaces() {
-    var dataStartPoint = loc;
+function startPlaces(nodes) {
     var service = new google.maps.places.PlacesService(map);
+
+    // ----------- The for loop is the fastest way to display the data but the browser limits to 9 calls at one time
+    // for( var i = 0; i<nodesToCheck.length; i++) {
+    //     service.nearbySearch({
+    //         location: nodesToCheck[i],
+    //         radius: 8046.72, //5 Mile radius
+    //         name: checkedBoxes
+    //     }, processResults);
+    // }
+
     service.nearbySearch({
-        location: dataStartPoint,
-        radius: 16093.4, //10 Mile radius
+        location: nodes[0],
+        radius: 8046.72, //5 Mile radius
         name: checkedBoxes
-    }, processResults);
+    }, function(results, status, pagination){
+        nodes.shift();
+        if(nodes.length > 0){
+            startPlaces(nodes);
+        }
+        processResults(results, status, pagination);
+    });
+
 }
 
 function processResults(results, status, pagination) {
@@ -217,4 +343,8 @@ function showTraffic() {
         trafficLayer.setMap(null);
     }
 }
+
+
+
+
 

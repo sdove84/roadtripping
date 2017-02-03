@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://api.eventful.com/js/api">
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+        });
+
+var output;
+var startDate;
+var endDate;
+        var myDateRange;
+
+        function getInformation() {
+            $.ajax({
+                data: {
+                    app_key: "9QPc4kCRH3JtNMsD"
+                },
+
+                dataType: 'jsonp',
+                method: "get",
+//                url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date=2017020500-2017021500&app_key=9QPc4kCRH3JtNMsD',
+                url: 'http://api.eventful.com/json/events/search?...&keywords=' + choice + '&location=' + cityForEvent + '&date=' + myDateRange + '&app_key=9QPc4kCRH3JtNMsD',
+
+                success: function (result) {
+                    output = result;
+                    console.log(output);
+
+                    //returns message if no results found
+                    if (result.events === null) {
+                        $('#display').append('no results found');
+                    } else {
+                        for (var i = 0; i < result.events.event.length; i++) {
+                            var eventCityName = result.events.event[i].city_name;
+                            var eventTime = result.events.event[i].start_time;
+                            var eventTitle = result.events.event[i].title;
+                            var eventName = result.events.event[i].venue_name;
+                            var eventAddress = result.events.event[i].venue_address;
+
+                            $('#display').append(
+                                    (i + 1) + ")  ",
+                                    "City: " + eventCityName, '<br>',
+                                    "Time: " + eventTime, '<br>',
+                                    "Title: " + eventTitle, '<br>',
+                                    "Venue: " + eventName, '<br>',
+                                    "Address: " + eventAddress, '<br>')
+
+                        }
+                    }
+                }
+
+            })
+        }
+        var cityForEvent = null;
+        var choice = null;
+        function getResults() {
+            cityForEvent = $('#cityEvent').val();
+
+            choice = (document.querySelector('input[name="choose"]:checked').value);
+            //console.log('User has typed: ' + choice);
+            startDate = $('#start').val();
+            endDate = $('#end').val();
+            myDateRange = (startDate + '00-' + endDate + '00');
+            console.log(myDateRange);
+            getInformation();
+        }
+
+    </script>
+</head>
+
+
+<body>
+<input id="cityEvent" type="text" placeholder="pick city"><br>
+    <form>
+        <input type="radio" name="choose" value="Comedy">Comedy<br>
+        <input type="radio" name="choose" value="Concerts and Tour Dates">Concerts and Tour Dates<br>
+        <input type="radio" name="choose" value="Conferences and Trade Shows">Conferences and Trade Shows<br>
+        <input type="radio" name="choose" value="Festivals">Festivals<br>
+        <input type="radio" name="choose" value="Food and Wine">Food and Wine<br>
+        <input type="radio" name="choose" value="Kids and Family">Kids and Family<br>
+        <input type="radio" name="choose" value="Nightlife and Singles">Nightlife and Singles<br>
+        <input type="radio" name="choose" value="Performing Arts">Performing Arts<br>
+        <input type="radio" name="choose" value="Sports">Sports<br>
+</form>
+    Trip start date:
+    <input id="start" type="text" placeholder="YYYYMMDD"><br>
+    Trip end date:
+    <input id="end" type="text" placeholder="YYYYMMDD"><br>
+    <button type="submit" onclick="getResults()">get results</button>
+
+<div id="display">
+</div>
+    <!--THIS FULFILLS EVENTFUL.COM BRANDING GUIDELINES-->
+<div class="eventful-badge eventful-medium">
+    <img src="http://api.eventful.com/images/powered/eventful_88x31.gif"
+             alt="Local Events, Concerts, Tickets">
+    <p><a href="http://eventful.com/">Events</a> by Eventful</p>
+</div>
+
+
+
+</body>
+</html>
