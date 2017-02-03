@@ -13,7 +13,7 @@ function getInformation() {
 
         dataType: 'jsonp',
         method: "get",
-               url: 'http://api.eventful.com/json/events/search?...&keywords=comedy&location=california&date=2017020500-2017021500&app_key=9QPc4kCRH3JtNMsD',
+               url: 'http://api.eventful.com/json/events/search?...&keywords=Las Vegas, NV, United States&date=2017020500-2017021500&app_key=9QPc4kCRH3JtNMsD',
 //         url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date='+myDateRange+'&app_key=9QPc4kCRH3JtNMsD',
 
         success: function (result) {
@@ -59,4 +59,11 @@ function getInformation() {
         }
 
     })
+}
+
+
+function getValueDestination(){
+    var destination_value = $('#destination-input').val();
+
+    console.log('here is destination value',destination_value);
 }

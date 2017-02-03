@@ -59,15 +59,19 @@ function AutocompleteDirectionsHandler(map) {
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, {placeIdOnly: true});
 
+    console.log('omg',destinationAutocomplete);
+
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-
-
 }
+
+/**
+ *Create event Marker and info_window for marker
+ */
 
 function create_event_marker(result,lat,lng){
      marker_event = new google.maps.Marker({
@@ -77,7 +81,6 @@ function create_event_marker(result,lat,lng){
         map: map,
         icon:'images/location_pin_marker.png'
     });
-
     create_info_event(marker_event,result);
 }
 
