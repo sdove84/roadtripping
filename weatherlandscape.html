@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <title>Title</title>
+    <style>
+        #radar {
+            width:375px;
+            height:375px;
+            border: solid 2px black;
+        }
+        @media screen and (min-width: 400px) {
+            #radar {
+                col-xs-8;
+                width:375px;
+                height:375px;;
+                border: solid 2px black;
+            }
+        }
+        #left-condition {
+            height:125px;
+            border: solid 2px black;
+        }
+        @media screen and (min-width: 400px) {
+            #left-condition {
+                height:125px;
+                border: solid 2px black;
+            }
+        }
+        #right-condition {
+            height:125px;
+            border: solid 2px black;
+        }
+        @media screen and (min-width: 400px) {
+            #left-condition {
+                height:100px;
+                border: solid 2px black;
+            }
+        }
+        #locationfinder {
+            height:125px;
+            border: solid 2px black;
+        }
+        @media screen and (min-width: 400px) {
+            #left-condition {
+                height:100px;
+                border: solid 2px black;
+            }
+        }
+        #footer {
+            height:30px;
+            border: solid 2px black;
+        }
+        @media screen and (min-width: 400px) {
+            #left-condition {
+                height:30px;
+                border: solid 2px black;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="col-xs-8" id="radar">
+    <p>radar</p>
+</div>
+<div class="col-xs-4" id="left-condition">
+    <p>place, icon, alerts</p>
+</div>
+<div class="col-xs-4" id="right-condition">
+    <p>temp, humid, wind, pressure</p>
+</div>
+<div class="col-xs-4" id="locationfinder">
+    <p>input form</p>
+</div>
+<div class="col-xs-4" id="footer">
+    <p>credit</p>
+</div>
+</body>
+</html>

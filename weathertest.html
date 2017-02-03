@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
     <title>Weather</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script>
         var alertmessage = null;
         //THIS IS THE GEOLOCATION WEATHER CALL!
@@ -14,8 +15,16 @@
             $.ajax({
                 dataType: 'jsonp',
                 method: "GET",
-                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
+                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/forecast/geolookup/q/autoip.json',
                 success: function(result) {
+                    //console.log('Forecast:  ', result.forecast.txt_forecast.forecastday[0].title);
+                    function forecast() {
+                        for (var i = 0; i < forecastday.length; i++) {
+
+                        }
+                    }
+
+
                     //var alertmessage = null;
                     function noAlerts () {
                         if (result.alerts.length === 0) {
@@ -27,22 +36,29 @@
                     noAlerts();
 
                     //THIS WILL SHOW UP ON THE PAGE
+                    $('#radar').append(
+                            $('<img>', {src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=375&height=375&newmaps=1&rainsnow=1&smooth=1&noclutter=1&timelabel=1", alt:"weather radar"}));
+
 
                     $('#display').append(
-                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
+                            //left side
+                            //larger font
                             result.current_observation.display_location.full,'<br>',
-                            //need to fix bug for undefined alerts if there are no alerts
+                            //larger icon maybe 75x75
+                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
+                            //in red and slightly larger font and maybe above location
                             alertmessage,'<br>',
+
+                            //on right side
+                            //any graphics and maybe color by temp the warmer the color
                             'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
                             'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
                             'Wind:  ' + result.current_observation.wind_string,'<br>',
+                            //maybe an indicator
                             'Pressure:  ' + result.current_observation.pressure_in,'<br>');
-                            //forecast here
 
-                    $('#radar').append(
-                            $('<img>', {
-                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1&smooth=1&noclutter=1&timelabel=1", alt:"weather radar"
-                            }));
+                    //forecast here
+
 
 
                     //need to put failure here
@@ -101,8 +117,16 @@
                             'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
                             'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
                             'Wind:  ' + result.current_observation.wind_string,'<br>',
-                            'Pressure:  ' + result.current_observation.pressure_in,'<br>');
-
+                            'Pressure:  ' + result.current_observation.pressure_in,'<br>',
+                            //NEED LOOP TO GENERATE FORECAST AND DIVIDE RESULTS INTO 4 SECTIONS
+                            'Forecast day:  ', result.forecast.simpleforecast.forecastday[0].date.weekday, '<br>',
+                            'Forecast icon:  ', $('<img>',{src:result.forecast.simpleforecast.forecastday[0].icon_url}), '<br>',
+                            'Forecast high:  ', result.forecast.simpleforecast.forecastday[0].high.fahrenheit, '<br>',
+                            'Forecast low:  ', result.forecast.simpleforecast.forecastday[0].low.fahrenheit, '<br>',
+                            'Forecast pop:  ', result.forecast.simpleforecast.forecastday[0].pop, '<br>',
+                            'Forecast wind speed:  ', result.forecast.simpleforecast.forecastday[0].avewind.mph, '<br>',
+                            'Forecast direction:  ', result.forecast.simpleforecast.forecastday[0].avewind.dir);
+                    //('Forecast:  ' + result.forecast.txt_forecast.forecastday.title)
 
 
                 },
@@ -122,44 +146,44 @@
         #radar {
             width: 100%;
         }
-
     </style>
 </head>
 <body>
 
-<div>
-    <a href="indexFinal.html">Back to Map</a>
-</div>
-
-<div id="radar">
+<div class="col-xs-12" id="radar">
 
     <!--This is the radar-->
 
 </div>
 
 <div id="display">
-    <div class="current"><p>Current</p>
-        <div id="currentlocation"></div>
-        <div id="alerts"></div>
-        <div id="icon"></div>
-        <div id="temp"></div>
-        <div id="humidity"></div>
-        <div id="wind"></div>
-        <div id="pressure"></div>
+    <div class="col-xs-12" class="current"><p>Current</p>
+        <div class="col-xs-12" id="currentlocation"></div>
+        <div class="col-xs-12" id="alerts"></div>
+        <div class="col-xs-12" id="icon"></div>
+        <div class="col-xs-12" id="temp"></div>
+        <div class="col-xs-12" id="humidity"></div>
+        <div class="col-xs-12" id="wind"></div>
+        <div class="col-xs-12" id="pressure"></div>
     </div>
+    <div class="col-xs-12" class="forecast"></div>
+
+    <!--This is where to put the conditions!-->
+
 </div>
 
 
 <div id="selector">
     <form class="selector">
         Where do you want to go?<br>
-        <input type="text" name="location" id="city" autofocus placeholder="City" style="text-transform:capitalize"><br>
-        <input type="text" name="location" id="state" autofocus placeholder="State (e.g. CA)" style="text-transform:uppercase"><br>
+        <input type="text" name="location" id="city" autofocus placeholder="city" style="text-transform:capitalize"><br>
+        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)" style="text-transform:uppercase"><br>
         <button onclick="getWeather()" type="button">I want to go here!</button>
     </form>
 </div>
 <div id="weather-underground-credit">
     <p>Powered by <a href="https://www.wunderground.com/"><img src="https://icons.wxug.com/logos/JPG/wundergroundLogo_4c_horz.jpg" width=90 height=21 alt="Powered by Weather Underground"></a></p>
+
 </div>
 </body>
 </html>
