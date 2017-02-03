@@ -113,7 +113,7 @@ html, body {
 
 .glyphicon-cutlery {
     color: darkred;
-}
+
 
 .infoPlaceName {
     font-family: 'Roboto', 'sans-serif';
@@ -121,6 +121,7 @@ html, body {
 
 .infoPlaceAddress {
     font-family: 'Roboto', 'sans-serif';
+
 
 }
 
