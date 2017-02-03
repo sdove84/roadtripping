@@ -191,6 +191,8 @@
         }
     </script>
 </head>
+
+
 <body>
 <input id="cityEvent" type="text" placeholder="pick city"><br>
 <form id="selection">
@@ -205,7 +207,25 @@
     <input type="radio" id="9" name="choose" value="Sports">Sports<br>
 </form>
 <button type="submit" onclick="getResults()">get results</button>
+
 <div id="display">
 </div>
+
+<div id="radar">
+</div>
+
+<div id="selector">
+    <form>
+        Where do you want to go?<br>
+        <input type="text" name="location" id="city" autofocus placeholder="city"><br>
+        <input type="text" name="location" id="state" autofocus placeholder="state (e.g. CA)"><br>
+        <button onclick="getWeather()" type="button">I want to go here!</button>
+    </form>
+</div>
+
+<div id="credit">
+
+</div>
+
 </body>
 </html>

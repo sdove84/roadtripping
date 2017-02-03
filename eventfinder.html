@@ -27,7 +27,7 @@ var endDate;
                 dataType: 'jsonp',
                 method: "get",
 //                url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date=2017020500-2017021500&app_key=9QPc4kCRH3JtNMsD',
-                url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date='+myDateRange+'&app_key=9QPc4kCRH3JtNMsD',
+                url: 'http://api.eventful.com/json/events/search?...&keywords=' + choice + '&location=' + cityForEvent + '&date=' + myDateRange + '&app_key=9QPc4kCRH3JtNMsD',
 
                 success: function (result) {
                     output = result;
@@ -37,53 +37,47 @@ var endDate;
                     if (result.events === null) {
                         $('#display').append('no results found');
                     } else {
-                    //loop for results including condition for fewer than 10 events(max)
-                    for (var i = 0; i < result.events.event.length; i++) {
-                        //console.log("city name:" + result.events.event[i].city_name);
-                        //console.log("description:" + result.events.event[i].description);
-                        //console.log("time:" + result.events.event[i].start_time);
-                        //console.log("title:" + result.events.event[i].title);
+                        for (var i = 0; i < result.events.event.length; i++) {
+                            var eventCityName = result.events.event[i].city_name;
+                            var eventTime = result.events.event[i].start_time;
+                            var eventTitle = result.events.event[i].title;
+                            var eventName = result.events.event[i].venue_name;
+                            var eventAddress = result.events.event[i].venue_address;
 
-                    //displays results on page
+                            $('#display').append(
+                                    (i + 1) + ")  ",
+                                    "City: " + eventCityName, '<br>',
+                                    "Time: " + eventTime, '<br>',
+                                    "Title: " + eventTitle, '<br>',
+                                    "Venue: " + eventName, '<br>',
+                                    "Address: " + eventAddress, '<br>')
 
-                        $('#display').append(
-                                (i+1) + ")  ",
-                                "City: " + result.events.event[i].city_name, '<br>',
-                                "Time: " + result.events.event[i].start_time, '<br>',
-                                "Title: " + result.events.event[i].title, '<br>',
-                                "Venue: " + result.events.event[i].venue_name, '<br>',
-                                "Address: " + result.events.event[i].venue_address, '<br>',
-                                "Latitude: " + result.events.event[i].latitude, '<br>',
-                                "Longitude: " + result.events.event[i].longitude, '<br>',
-                                "Description: " + result.events.event[i].description, '<br><br>');
                         }
                     }
                 }
 
             })
         }
-
-
         var cityForEvent = null;
         var choice = null;
-        function getResults(){
-            //console.log($('#cityEvent').val());
+        function getResults() {
             cityForEvent = $('#cityEvent').val();
-            //console.log('user has typed: ' + cityForEvent);
-            //console.log(document.querySelector('input[name="choose"]:checked').value)
+
             choice = (document.querySelector('input[name="choose"]:checked').value);
             //console.log('User has typed: ' + choice);
             startDate = $('#start').val();
             endDate = $('#end').val();
-            myDateRange= (startDate + '00-' + endDate + '00');
+            myDateRange = (startDate + '00-' + endDate + '00');
             console.log(myDateRange);
             getInformation();
         }
 
     </script>
 </head>
+
+
 <body>
-    <input id="cityEvent" type="text" placeholder="pick city"><br>
+<input id="cityEvent" type="text" placeholder="pick city"><br>
     <form>
         <input type="radio" name="choose" value="Comedy">Comedy<br>
         <input type="radio" name="choose" value="Concerts and Tour Dates">Concerts and Tour Dates<br>
@@ -94,22 +88,23 @@ var endDate;
         <input type="radio" name="choose" value="Nightlife and Singles">Nightlife and Singles<br>
         <input type="radio" name="choose" value="Performing Arts">Performing Arts<br>
         <input type="radio" name="choose" value="Sports">Sports<br>
-    </form>
+</form>
     Trip start date:
     <input id="start" type="text" placeholder="YYYYMMDD"><br>
     Trip end date:
     <input id="end" type="text" placeholder="YYYYMMDD"><br>
-
     <button type="submit" onclick="getResults()">get results</button>
-    <!-- NEED A START DATE FOR VARIABLE startDate AND END DATE FOR VARIABLE endDate WITH THE FORMAT YYYYMMDD00 FOR BOTH DATES-->
-    <div id="display">
 
-    </div>
+<div id="display">
+</div>
     <!--THIS FULFILLS EVENTFUL.COM BRANDING GUIDELINES-->
-    <div class="eventful-badge eventful-medium">
-        <img src="http://api.eventful.com/images/powered/eventful_88x31.gif"
+<div class="eventful-badge eventful-medium">
+    <img src="http://api.eventful.com/images/powered/eventful_88x31.gif"
              alt="Local Events, Concerts, Tickets">
-        <p><a href="http://eventful.com/">Events</a> by Eventful</p>
-    </div>
+    <p><a href="http://eventful.com/">Events</a> by Eventful</p>
+</div>
+
+
+
 </body>
 </html>
