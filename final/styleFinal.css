@@ -3,12 +3,14 @@
     height: 100%;
     width: 100%;
 }
+
 /* Optional: Makes the sample page fill the window. */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
+
 .controls {
     margin-top: 10px;
     border: 1px solid transparent;
@@ -19,6 +21,7 @@ html, body {
     outline: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
 #origin-input,
 #destination-input {
     background-color: #fff;
@@ -30,24 +33,28 @@ html, body {
     text-overflow: ellipsis;
     width: 200px;
 }
+
 #origin-input:focus,
 #destination-input:focus {
     border-color: #4d90fe;
 }
+
 #mode-selector {
     color: #fff;
     background-color: #4d90fe;
     margin-left: 12px;
     padding: 5px 11px 0px 11px;
 }
+
 #mode-selector label {
     font-family: Roboto;
     font-size: 13px;
     font-weight: 300;
 }
+
 /*List directions==========================*/
 #mySidenav3 {
-    font-family: 'Roboto','sans-serif';
+    font-family: 'Roboto', 'sans-serif';
     line-height: 30px;
 }
 
@@ -63,12 +70,12 @@ html, body {
     font-size: 12px;
 }
 
-
 /* Mike CSS =================================== */
 
 #map {
     height: 100%;
 }
+
 /* Optional: Makes the sample page fill the window. */
 html, body {
     height: 100%;
@@ -76,35 +83,44 @@ html, body {
     padding: 0;
 }
 
-#displayData{
+#displayData {
     /*color: white;*/
     display: block;
     background-color: black;
-    cursor:pointer;
+    cursor: pointer;
 }
-#more{
+
+#more {
     /*color: white;*/
-    cursor:pointer;
+    cursor: pointer;
 }
-.dropdown{
+
+.dropdown {
     display: inline;
 }
-.glyphicon-camera{
+
+.glyphicon-camera {
     color: dodgerblue;
 }
-.glyphicon-tree-conifer{
-    color:green;
+
+.glyphicon-tree-conifer {
+    color: green;
 }
-.glyphicon-scale{
+
+.glyphicon-scale {
     color: rebeccapurple;
 }
-.glyphicon-cutlery{
-    color: darkred;
-}
-.infoPlaceName{
 
+.glyphicon-cutlery {
+    color: darkred;
+
+
+.infoPlaceName {
+    font-family: 'Roboto', 'sans-serif';
 }
-.infoPlaceAddress{
+
+.infoPlaceAddress {
+    font-family: 'Roboto', 'sans-serif';
 
 
 }
@@ -121,10 +137,11 @@ html, body {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-    opacity:0.5;
+    opacity: 0.5;
     text-align: center;
     text-decoration: none;
 }
+
 /* The navigation menu links */
 .sidenav a {
     padding: 8px 8px 8px 32px;
@@ -134,10 +151,24 @@ html, body {
     display: block;
     transition: 0.3s;
 
-
 }
 
 .homeNav a {
+    padding: 15px 56px 8px 70px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: inline-block;
+    transition: 0.8s;
+}
+
+.homeNav a:hover {
+    color: #ffff00;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.signInNav a {
     padding: 15px 8px 8px 10px;
     text-decoration: none;
     font-size: 25px;
@@ -145,14 +176,30 @@ html, body {
     display: block;
     transition: 0.8s;
 }
-.homeNav a:hover{
+
+.signInNav a:hover {
+    color: #ffff00;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.createAccountNav a {
+    padding: 15px 8px 8px 10px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.8s;
+}
+
+.createAccountNav a:hover {
     color: #ffff00;
     text-decoration: none;
     cursor: pointer;
 }
 
 /* When you mouse over the navigation links, change their color */
-.sidenav a:hover, .offcanvas a:focus{
+.sidenav a:hover, .offcanvas a:focus {
     color: #ffff00;
     text-decoration: none;
 }
@@ -171,11 +218,12 @@ html, body {
     float: left;
 }
 
-#home2{
+#home2 {
     font-size: 30px;
-    curser: pointer;
+    cursor: pointer;
 
 }
+
 /* side nav bar for main maps page */
 .sidenav2 {
     height: 100%;
@@ -200,7 +248,7 @@ html, body {
     transition: 0.3s
 }
 
-.sidenav2 a:hover, .offcanvas a:focus{
+.sidenav2 a:hover, .offcanvas a:focus {
     color: #ffff00;
     text-decoration: none;
 }
@@ -212,6 +260,7 @@ html, body {
     font-size: 36px;
     margin-left: 50px;
 }
+
 /* Home page */
 .container {
     background: url("images/road-trip1.jpg") no-repeat center center fixed;
@@ -220,29 +269,31 @@ html, body {
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
-    width:100%;
+    width: 100%;
 }
 
 #map {
     height: 100%;
 }
 
-#appNameHeader{
+#appNameHeader {
     font-family: 'Permanent Marker', cursive;
     font-size: 80px;
 }
 
-#destination-input{
-    max-width:500px;
+#destination-input {
+    max-width: 500px;
 }
-#mapPageMenuContainer{
+
+#mapPageMenuContainer {
     /*background: url("images/road-trip1.jpg") no-repeat center center fixed;*/
 }
 
-#getDirectionsButton{
+#getDirectionsButton {
     text-align: right;
-    font-size: 30px;
+    font-size: 17px;
     cursor: pointer;
+    padding-top: 14px;
 }
 
 .sidenav3 {
@@ -258,6 +309,7 @@ html, body {
     padding-top: 60px;
 
 }
+
 .sidenav3 a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -267,7 +319,7 @@ html, body {
     transition: 0.3s
 }
 
-.sidenav3 a:hover, .offcanvas a:focus{
+.sidenav3 a:hover, .offcanvas a:focus {
     color: #f1f1f1;
 }
 
@@ -279,7 +331,7 @@ html, body {
     margin-left: 50px;
 }
 
-#mapLogo{
+#mapLogo {
     font-size: 30px;
     text-align: center;
 }
@@ -287,35 +339,50 @@ html, body {
 #mapPageMenuContainer {
     border-bottom: solid black;
 }
+.mapMenu > span{
+    font-size: 18px;
+}
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 /*.sidenav {*/
-    /*padding-top: 15px;*/
+/*padding-top: 15px;*/
 /*}*/
 /*.sidenav a {*/
-    /*font-size: 18px;*/
+/*font-size: 18px;*/
 /*}*/
 
-
-@media all and (max-width:800px ) {
+@media all and (max-width: 800px ) {
     #home2 {
         font-size: 25px;
+        padding-right: 0;
+        padding-left: 0;
     }
-    #mapLogo{
-        display: none;
+
+    #mapLogo {
+        padding-left: 25px;
     }
+
+
     #getDirectionsButton {
-        font-size: 25px;
+        font-size: 16px;
         text-align: right;
         float: right;
+        padding-top: 16px;
+        padding-left: 0;
+        padding-right:0;
     }
 }
 
-@media all and (max-width:420px ) {
+@media all and (max-width: 420px ) {
     #origin-input {
         width: 45%
     }
