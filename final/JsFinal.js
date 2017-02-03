@@ -2,6 +2,7 @@ $(document).ready(function() {
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
     $('#actionSubmit').click(function(){
+        slicedNodes();
         checkForCheckedValues();
         startPlaces(nodesToCheck);
         startPlaces(nodesToCheck2);
@@ -18,6 +19,7 @@ var checkedBoxes = [];
 var loc = {};
 var geocoder;
 var trafficLayer= null;
+var nodes = null;
 var nodesToCheck = null;
 var nodesToCheck2 = null;
 var nodesToCheck3 = null;
@@ -75,9 +77,7 @@ function AutocompleteDirectionsHandler(map) {
 
 function create_event_marker(result,lat,lng){
      marker_event = new google.maps.Marker({
-        // The below line is equivalent to writing:
-        // position: new google.maps.LatLng(-34.397, 150.644)
-        position: {lat: lat, lng: lng},
+         position: {lat: lat, lng: lng},
         map: map,
         icon:'images/location_pin_marker.png'
     });
@@ -105,11 +105,6 @@ function create_info_event(pos,result){
     });
     return pos;
 }
-
-
-
-
-
     AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
@@ -144,8 +139,6 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
 
 };
 
-
-
 //auto complete showing route function
 AutocompleteDirectionsHandler.prototype.route = function() {
     if (!this.originPlaceId || !this.destinationPlaceId) {
@@ -164,7 +157,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
             var path = response.routes[0].overview_path;
 
             var currentI = 0;
-            nodesToCheck = [path[0]];
+            nodes = [path[0]];
             for(var i =1; i< path.length; i++ ){
                var firstLat = path[currentI].lat();
                var firstLng = path[currentI].lng();
@@ -175,24 +168,12 @@ AutocompleteDirectionsHandler.prototype.route = function() {
                 var squareRoot = Math.sqrt(solutionLng + solutionLat);
                 var check = squareRoot * 69 ;
                 if(check>15){
-                    nodesToCheck.push(path[currentI]);
+                    nodes.push(path[currentI]);
                     currentI = i;
                     console.log("This counts as one places google places api");
                 }
             }
-            nodesToCheck.push(path[path.length-1]);
-            console.log(nodesToCheck.length);
-            var splitPoint = Math.ceil(nodesToCheck.length / 6);
-            nodesToCheck2 = nodesToCheck.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 5);
-            nodesToCheck3 = nodesToCheck2.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 4);
-            nodesToCheck4 = nodesToCheck3.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 3);
-            nodesToCheck5 = nodesToCheck4.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 2);
-            nodesToCheck6 = nodesToCheck5.splice(splitPoint);
-
+            nodes.push(path[path.length-1]);
             $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
@@ -206,36 +187,43 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 
 <!-- Mikes JS-->
 function checkForCheckedValues(){
+    checkedBoxes=[];
     $("input[type=checkbox]:checked").each(function() {
         checkedBoxes.push($(this).val() );
     });
     console.log("users picks to have displayed:" +" "+ checkedBoxes);
+
+}
+
+function slicedNodes() {
+    nodesToCheck = nodes.slice();
+    var splitPoint = Math.ceil(nodesToCheck.length / 6);
+    nodesToCheck2 = nodesToCheck.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 5);
+    nodesToCheck3 = nodesToCheck2.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 4);
+    nodesToCheck4 = nodesToCheck3.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 3);
+    nodesToCheck5 = nodesToCheck4.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 2);
+    nodesToCheck6 = nodesToCheck5.splice(splitPoint);
+
 }
 
 function startPlaces(nodes) {
+    if(nodes.length == 0){
+        return;
+    }
     var service = new google.maps.places.PlacesService(map);
-
-    // ----------- The for loop is the fastest way to display the data but the browser limits to 9 calls at one time
-    // for( var i = 0; i<nodesToCheck.length; i++) {
-    //     service.nearbySearch({
-    //         location: nodesToCheck[i],
-    //         radius: 8046.72, //5 Mile radius
-    //         name: checkedBoxes
-    //     }, processResults);
-    // }
-
     service.nearbySearch({
         location: nodes[0],
         radius: 8046.72, //5 Mile radius
         name: checkedBoxes
     }, function(results, status, pagination){
         nodes.shift();
-        if(nodes.length > 0){
-            startPlaces(nodes);
-        }
+        startPlaces(nodes);
         processResults(results, status, pagination);
     });
-
 }
 
 function processResults(results, status, pagination) {
@@ -243,19 +231,13 @@ function processResults(results, status, pagination) {
         return;
     } else {
         createMarkers(results);
-
         if (pagination.hasNextPage) {
-            var moreButton = document.getElementById('more');
-
-            moreButton.disabled = false;
-
-            moreButton.addEventListener('click', function() {
-                moreButton.disabled = true;
-                pagination.nextPage();
-            });
+            pagination.nextPage();
+            }
         }
-    }
 }
+
+
 
 function createMarkers(places) {
     var bounds = new google.maps.LatLngBounds();
@@ -264,7 +246,7 @@ function createMarkers(places) {
         var address = places[i].vicinity;
         var content =
             '<div class="infoWindow">'+
-            '<h1 class="infoPlaceName">'+ name+ '</h1>'+
+            '<h3 class="infoPlaceName">'+ name+ '</h3>'+
             '<h5 class="infoPlaceAddress>">'+ address+'</h5>'+
             '</div>';
 
@@ -295,6 +277,7 @@ function createMarkers(places) {
 
         bounds.extend(place.geometry.location);
     }
+
 }
 <!-- JS nav bar on home page -->
 function openNav() {
@@ -309,7 +292,7 @@ function closeNav() {
 <!-- JS nav bar on index page -->
 function openNav2() {
     document.getElementById("mySidenav2").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+    //document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 function closeNav2(){
