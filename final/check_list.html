@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <style>
     body {
@@ -10,6 +14,7 @@
         min-width: 250px;
         height: 100vh;
         width: 100vw;
+        background-color: black;
     }
 
     /* Include the padding and border in an element's total width and height */
@@ -21,6 +26,7 @@
     ul {
         margin: 0;
         padding: 0;
+
     }
 
     /* Style the list items */
@@ -31,6 +37,10 @@
         background: #eee;
         font-size: 18px;
         transition: 0.2s;
+        list-style-type: none;
+        width: 61%;
+        margin-left: auto;
+        margin-right: auto;
 
         /* make the list items unselectable */
         -webkit-user-select: none;
@@ -85,8 +95,8 @@
 
     /* Style the header */
     .header {
-        background-color: #000000;
-        padding: 30px 40px;
+
+        padding: 10px 35px;
         color: white;
         text-align: center;
     }
@@ -101,20 +111,21 @@
     /* Style the input */
     input {
         border: none;
-        width: 75%;
+        width: 53%;
         padding: 10px;
-        float: left;
+        /*float: left;*/
         font-size: 16px;
         border-radius: 8px 8px 8px 8px;
+        color: black;
     }
 
     /* Style the "Add" button */
     .addBtn {
         padding: 10px;
-        width: 25%;
+        width: 11%;
         background: #33cc33;
         color: #555;
-        float: left;
+        /*float: left;*/
         text-align: center;
         font-size: 16px;
         cursor: pointer;
@@ -123,25 +134,49 @@
         border: solid lightgrey 1px;
     }
 
-    /*.addBtn:hover {*/
-        /*background-color: #33cc33;*/
-    /*}*/
+    .backArrow:hover{
+        text-decoration: none;
+        color: yellow;
+        cursor: pointer;
+    }
+    .backArrow{
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+        padding: 42px 0 0 64px;
+    }
+    .backArrow > span{
+        font-family: Sans-serif;
+    }
+
+    /*mobal design*/
+
+    @media only screen and (max-width: 375px){
+        .addBtn {
+            padding: 10px;
+            width: 22%;
+        }
+        ul li {
+            width: 81%;
+        }
+        input{
+            width: 76%;
+        }
+        .backArrow{
+            font-size: 20px;
+            padding: 32px 0 0 23px;
+        }
+    }
+
 </style>
 </head>
 <body>
 <!--SHOPPING LIST-->
+<a href="indexFinal.html" class="backArrow glyphicon glyphicon-chevron-left"><span>Map</span></a>
 <div id="myDIV" class="header">
-    <a href="indexFinal.html">Back to Map</a>
     <h2 style="margin:5px">Shopping List</h2>
     <input type="text" id="myInput" placeholder="List Items...">
-    <span onclick="newElement()" class="addBtn">Add</span>
-
-    <select id="slct1" name="slct1" onchange="populate(this.id, 'slct2')">
-        <option value=""></option>
-        <option value="cat1"></option>
-        <option value="Cat2">Cat2</option>
-        <option value="Cat3">Cat3</option>
-    </select>
+    <button onclick="newElement()" class="addBtn">Add</button>
 </div>
 
 <ul id="myUL">
@@ -151,18 +186,17 @@
 
 </ul>
 <!--PACKING LIST-->
-<div id="myDIV" class="header">
+<div id="myDIV2" class="header">
     <h2 style="margin:5px">Packing List</h2>
-    <input type="text" id="myInput" placeholder="List Items...">
-    <span onclick="newElement()" class="addBtn">Add</span>
+    <input type="text" id="myInput2" placeholder="List Items...">
+    <button onclick="newElement2()" class="addBtn">Add</button>
 </div>
 
-<ul id="myUL">
+<ul id="myUL2">
     <li>Shirts</li>
     <li class="checked">Socks</li>
     <li>Underwear</li>
     <li>Bathing suit</li>
-
 </ul>
 
 <script>
@@ -170,16 +204,15 @@
     var myNodelist = document.getElementsByTagName("LI");
     var i;
     for (i = 0; i < myNodelist.length; i++) {
-        var span = document.createElement("SPAN");
+        var button = document.createElement("SPAN");
         var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        myNodelist[i].appendChild(span);
+        button.className = "close";
+        button.appendChild(txt);
+        myNodelist[i].appendChild(button);
     }
 
     // Click on a close button to hide the current list item
     var close = document.getElementsByClassName("close");
-    var i;
     for (i = 0; i < close.length; i++) {
         close[i].onclick = function() {
             var div = this.parentElement;
@@ -195,12 +228,13 @@
         }
     }, false);
 
-    // Create a new list item when clicking on the "Add" button
+    // Create a new list item when clicking on the "Add" button for shopping list
     function newElement() {
         var li = document.createElement("li");
         var inputValue = document.getElementById("myInput").value;
         var t = document.createTextNode(inputValue);
         li.appendChild(t);
+
         if (inputValue === '') {
             alert("You must write something!");
         } else {
@@ -208,11 +242,11 @@
         }
         document.getElementById("myInput").value = "";
 
-        var span = document.createElement("SPAN");
+        var button = document.createElement("SPAN");
         var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        li.appendChild(span);
+        button.className = "close";
+        button.appendChild(txt);
+        li.appendChild(button);
 
         for (i = 0; i < close.length; i++) {
             close[i].onclick = function() {
@@ -221,37 +255,35 @@
             }
         }
     }
-//drop down menu====================================================
-    function populate(slct1, slct2) {
-        var s1 = document.getElementById(slct1);
-        var s2 = document.getElementById(slct2);
-        s2.innerHTML = "";
-        if (s1.value == "Cat1") {
-            var optionArray = ["Subcat1", "Subcat1.1", "Subcat1.2"];
-        } else if (s1.value == "Cat2") {
-            var optionArray = ["Subcat2", "Subcat2.1", "Subcat2.2"];
-        } else if (s1.value == "Cat3") {
-            var optionArray = ["Subcat3", "Subcat3.1", "Subcat3.3"];
+
+    // Create a new list item when clicking on the "Add" button for packing list
+    function newElement2() {
+        var li = document.createElement("li");
+        var inputValue2 = document.getElementById("myInput2").value;
+        var y = document.createTextNode(inputValue2);
+        li.appendChild(y);
+
+        if (inputValue2 === '') {
+            alert("You must write something!");
+        } else {
+            document.getElementById("myUL2").appendChild(li);
         }
+        document.getElementById("myInput2").value = "";
 
-        for (var option in optionArray) {
-            if (optionArray.hasOwnProperty(option)) {
-                var pair = optionArray[option];
-                var checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.name = pair;
-                checkbox.value = pair;
-                s2.appendChild(checkbox);
+        var button = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        button.className = "close";
+        button.appendChild(txt);
+        li.appendChild(button);
 
-                var label = document.createElement('label')
-                label.htmlFor = pair;
-                label.appendChild(document.createTextNode(pair));
-
-                s2.appendChild(label);
-                s2.appendChild(document.createElement("br"));
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+                var div = this.parentElement;
+                div.style.display = "none";
             }
         }
     }
+
 </script>
 
     </body>
