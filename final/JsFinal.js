@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function(){
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
 
@@ -76,7 +76,6 @@ function AutocompleteDirectionsHandler(map) {
 }
 
 
-AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
 
 /**
  *Create event Marker and info_window for marker
