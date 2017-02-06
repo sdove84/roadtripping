@@ -27,7 +27,6 @@ var map;
 var checkedBoxes = [];
 var loc = {};
 var geocoder;
-
 var trafficLayer= null;
 var nodes = null;
 var nodesToCheck = null;
@@ -47,7 +46,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         center: {lat: 37.0902, lng: -95.7129},
-        zoom: 4,
+        zoom: 4
     });
     new AutocompleteDirectionsHandler(map);
 }
@@ -91,17 +90,15 @@ function AutocompleteDirectionsHandler(map) {
 function create_event_marker(result,lat,lng){
      marker_event = new google.maps.Marker({
          position: {lat: lat, lng: lng},
-        map: map,
-        icon:'images/location_pin_marker.png'
+         map: map,
+         icon:'images/location_pin_marker.png'
     });
     create_info_event(marker_event,result);
 }
 
 function create_info_event(pos,result){
-
     var contentString2 = '<div>' + '<p>'+ result.title+'</p>' + '</div>';
     contentString2 += '<br>' + result.city_name;
-
     var infoWindow2 = new google.maps.InfoWindow({
         content: contentString2
     });
@@ -175,15 +172,15 @@ AutocompleteDirectionsHandler.prototype.route = function() {
             var currentI = 0;
             nodes = [path[0]];
             for(var i =1; i< path.length; i++ ){
-               var firstLat = path[currentI].lat();
-               var firstLng = path[currentI].lng();
-               var secondLat = path[i].lat();
-               var secondLng = path[i].lng();
+                var firstLat = path[currentI].lat();
+                var firstLng = path[currentI].lng();
+                var secondLat = path[i].lat();
+                var secondLng = path[i].lng();
                 var solutionLat = Math.pow((secondLat-firstLat),2);
                 var solutionLng = Math.pow((secondLng-firstLng),2);
                 var squareRoot = Math.sqrt(solutionLng + solutionLat);
                 var check = squareRoot * 69 ;
-                if(check>15){
+                if(check>20){
                     nodes.push(path[currentI]);
                     currentI = i;
                     console.log("This counts as one places google places api");
@@ -195,7 +192,6 @@ AutocompleteDirectionsHandler.prototype.route = function() {
             window.alert('Directions request failed due to ' + status);
         }
     });
-
     //marker for events
     getInformation();
 };
@@ -248,16 +244,15 @@ function processResults(results, status, pagination) {
     } else {
         createMarkers(results);
         if (pagination.hasNextPage) {
-
             pagination.nextPage();
             }
-
-        }
+    }
 }
 
 
 
 function createMarkers(places) {
+    var  markersArray = [];
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0, place; place = places[i]; i++) {
         var name = place.name;
@@ -281,6 +276,7 @@ function createMarkers(places) {
             icon: image,
             title: place.name,
             position: place.geometry.location
+
         });
 
         let infoWindow = new google.maps.InfoWindow({
@@ -288,13 +284,16 @@ function createMarkers(places) {
 
 
         });
-
+        markersArray.push(marker);
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
         });
 
         bounds.extend(place.geometry.location);
+
     }
+    var markerCluster = new MarkerClusterer(map, markersArray,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
 }
 <!-- JS nav bar on home page -->
