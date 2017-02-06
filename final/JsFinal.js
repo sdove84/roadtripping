@@ -14,6 +14,13 @@ $(document).ready(function(){
         startPlaces(nodesToCheck6);
 
     });
+    // $('#submit_event').click(function (){
+    //     getResults();
+    // });
+
+    $('#submit_event').on('click', function() {
+        getResults();
+    });
 });
 
 var map;
