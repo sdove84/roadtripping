@@ -18,17 +18,24 @@
 
             function getJsonFromUrl() {
                 var query = location.search.substr(1);
+                console.log('Query: ' + query);
                 var result = {};
+                console.log('Result: ' + result);
                 query.split("&").forEach(function(part) {
-                    var item = part.split("=");
+                    var item = part.split("=");  //get rid of + in city with multiple words
+                    console.log('Item: ' + item);
                     result[item[0]] = decodeURIComponent(item[1]);
+                    console.log('Result item: ' + result[item[0]]);
+                    console.log('URI component: ' + (item[1]));
+
                 });
                 return result;
-            }console.log('trythis' + getJsonFromUrl());
+            }//console.log('trythis' + getJsonFromUrl());
 
             weatherState = getJsonFromUrl().weatherState;
             weatherCity = getJsonFromUrl().weatherCity;
-            console.log(weatherCity);
+            weatherCity = weatherCity.replace('+', ' ');
+            console.log('This is: ' + weatherCity);
 
             getWeather();
 
