@@ -36,14 +36,12 @@
                             'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
                             'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
                             'Wind:  ' + result.current_observation.wind_string,'<br>',
-                            'Pressure:  ' + result.current_observation.pressure_in,'<br>',
+                            'Pressure:  ' + result.current_observation.pressure_in,'<br>');
                             //forecast here
-                            $('<p>').text('Powered by Weather Underground'),
-                            $('<img>',{src:"http://icons.wxug.com/graphics/wu2/logo_130x80.png"}));
 
                     $('#radar').append(
                             $('<img>', {
-                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=950&height=950&newmaps=1&rainsnow=1&smooth=1&noclutter=1&timelabel=1", alt:"weather radar"
+                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=280&height=280&newmaps=1&rainsnow=1&smooth=1&noclutter=1&timelabel=1", alt:"weather radar"
                             }));
 
 
@@ -95,20 +93,16 @@
                     noAlerts();
                     console.log(alertmessage);
 
-                    $('#currentlocation').append(
-                            result.current_observation.display_location.full);
-                    $('#alerts').append(
-                            alertmessage);
-                    $('#icon').append(
-                            $('<img>', {src: result.current_observation.icon_url}));
-                    $('#temp').append(
-                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F');
-                    $('#humidity').append(
-                            'Humidity:  ' + result.current_observation.relative_humidity);
-                    $('#wind').append(
-                            'Wind:  ' + result.current_observation.wind_string);
-                    $('#barometer').append(
-                            'Pressure:  ' + result.current_observation.pressure_in);
+                    $('#display').append(
+                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
+                            result.current_observation.display_location.full,'<br>',
+                            //need to fix bug for undefined alerts if there are no alerts
+                            alertmessage,'<br>',
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
+                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                            'Wind:  ' + result.current_observation.wind_string,'<br>',
+                            'Pressure:  ' + result.current_observation.pressure_in,'<br>');
+
 
 
                 },
@@ -137,6 +131,12 @@
     <a href="indexFinal.html">Back to Map</a>
 </div>
 
+<div id="radar">
+
+    <!--This is the radar-->
+
+</div>
+
 <div id="display">
     <div class="current"><p>Current</p>
         <div id="currentlocation"></div>
@@ -158,8 +158,8 @@
         <button onclick="getWeather()" type="button">I want to go here!</button>
     </form>
 </div>
-<div id="credit">
-
+<div id="weather-underground-credit">
+    <p>Powered by <a href="https://www.wunderground.com/"><img src="https://icons.wxug.com/logos/JPG/wundergroundLogo_4c_horz.jpg" width=90 height=21 alt="Powered by Weather Underground"></a></p>
 </div>
 </body>
 </html>

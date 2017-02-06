@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <title>Weather Forminput Portrait</title>
+    <script>
+
+        //THIS IS THE REQUESTED LOCATION CALL
+
+        $(document).ready(function() {
+            console.log('doc ready fired');
+
+        //THIS PARSES THE STRING AND REVERTS BACK TO THE ORIGINAL CITY AND STATE VARIABLES
+
+            function getJsonFromUrl() {
+                var query = location.search.substr(1);
+                var result = {};
+                query.split("&").forEach(function(part) {
+                    var item = part.split("=");
+                    result[item[0]] = decodeURIComponent(item[1]);
+                });
+                return result;
+            }console.log('trythis' + getJsonFromUrl());
+
+            weatherState = getJsonFromUrl().weatherState;
+            weatherCity = getJsonFromUrl().weatherCity;
+            console.log(weatherCity);
+
+            getWeather();
+
+            function getWeather() {
+                console.log('the function ran');
+                $("#display").empty();
+                $("#radar").empty();
+                console.log("get WEATHER function called");
+
+                console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);
+                $.ajax({
+                    dataType: 'jsonp',
+                    method: "GET",
+                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/' + weatherState + '/' + weatherCity + '.json',
+                    success: function (result) {
+                        console.log('call was successful');
+                        var alertmessage = null;
+                        console.log(result.alerts);
+                        console.log('Test: ' + result.alerts);
+
+
+                        function noAlerts() {
+                            if (result.alerts === undefined) {
+                                alertmessage = "No info available.";
+                            } else if (result.alerts.length === 0) {
+                                alertmessage = "No alerts.";
+                            } else {
+                                alertmessage = result.alerts[0].description;
+                            }
+                        }
+
+                        noAlerts();
+                        console.log(alertmessage);
+
+                        $('#top-left').append(
+                                result.current_observation.display_location.full, '<br>',
+                                $('<img>', {src: result.current_observation.icon_url}), '<br>',
+                                alertmessage, '<br>');
+                        $('#top-right').append(
+                                'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
+                                'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                                'Wind:  ' + result.current_observation.wind_string, '<br>',
+                                'Pressure:  ' + result.current_observation.pressure_in);
+                        $('#day0forecast').append(
+                                result.forecast.simpleforecast.forecastday[0].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[0].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[0].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[0].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[0].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[0].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[0].avewind.dir);
+                        $('#day1forecast').append(
+                                result.forecast.simpleforecast.forecastday[1].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[1].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[1].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[1].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[1].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[1].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[1].avewind.dir);
+                        $('#day2forecast').append(
+                                result.forecast.simpleforecast.forecastday[2].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[2].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[2].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[2].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[2].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[2].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[2].avewind.dir);
+                        $('#day3forecast').append(
+                                result.forecast.simpleforecast.forecastday[3].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[3].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[3].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[3].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[3].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[3].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[3].avewind.dir);
+                    }
+                    //need to put failure here
+                })
+            }
+        });
+    </script>
+    <style>
+        #top-left {
+            border-right: solid 1px black;
+            border-bottom: solid 1px black;
+
+            height: 175px;
+        }
+        #top-right {
+            border-bottom: solid 1px black;
+            height: 175px;
+
+        }
+        #day0forecast {
+            border-right: solid 1px black;
+            border-bottom: solid 1px black;
+            height: 200px;
+
+        }
+        #day1forecast {
+            border-bottom: solid 1px black;
+            height: 200px;
+
+        }
+        #day2forecast {
+            border-right: solid 1px black;
+            border-bottom: solid 1px black;
+            height: 200px;
+
+        }
+        #day3forecast {
+            border-bottom: solid 1px black;
+            height: 200px;
+
+        }
+        #footer {
+            height:30px;
+        }
+        #back {
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+<div class="col-xs-6" id="top-left">
+</div>
+<div class="col-xs-6" id="top-right">
+</div>
+<div class="col-xs-6" id="day0forecast">
+</div>
+<div class="col-xs-6" id="day1forecast">
+</div>
+<div class="col-xs-6" id="day2forecast">
+</div>
+<div class="col-xs-6" id="day3forecast">
+</div>
+<div class="col-xs-8" id="footer">
+    <p>Powered by <a href="https://www.wunderground.com/"><img src="https://icons.wxug.com/logos/JPG/wundergroundLogo_4c_horz.jpg" width=90 height=21 alt="Powered by Weather Underground"></a></p>
+</div>
+<div>
+    <p id="back"><a href="weathergeo.html">Back</a></p>
+</div>
+</body>
+</html>
