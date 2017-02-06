@@ -1,7 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function(){
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
+
     $('#actionSubmit').click(function(){
+        slicedNodes();
+
         checkForCheckedValues();
         startPlaces(nodesToCheck);
         startPlaces(nodesToCheck2);
@@ -24,7 +27,9 @@ var map;
 var checkedBoxes = [];
 var loc = {};
 var geocoder;
+
 var trafficLayer= null;
+var nodes = null;
 var nodesToCheck = null;
 var nodesToCheck2 = null;
 var nodesToCheck3 = null;
@@ -33,6 +38,7 @@ var nodesToCheck5 = null;
 var nodesToCheck6 = null;
 var marker_event;
 var infowindow;
+
 
 
 function initMap() {
@@ -76,15 +82,15 @@ function AutocompleteDirectionsHandler(map) {
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
 }
 
+
+
 /**
  *Create event Marker and info_window for marker
  */
 
 function create_event_marker(result,lat,lng){
      marker_event = new google.maps.Marker({
-        // The below line is equivalent to writing:
-        // position: new google.maps.LatLng(-34.397, 150.644)
-        position: {lat: lat, lng: lng},
+         position: {lat: lat, lng: lng},
         map: map,
         icon:'images/location_pin_marker.png'
     });
@@ -112,24 +118,20 @@ function create_info_event(pos,result){
     });
     return pos;
 }
-
-
-
-
-
     AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+
     var radioButton = document.getElementById(id);
     var me = this;
-    radioButton.addEventListener('click', function() {
+    radioButton.addEventListener('click', function () {
         me.travelMode = mode;
         me.route();
     });
 };
 
-AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
     var me = this;
     autocomplete.bindTo('bounds', this.map);
-    autocomplete.addListener('place_changed', function() {
+    autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
         if (!place.place_id) {
             window.alert("Please select an option from the drop down list.");
@@ -137,8 +139,8 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
         }
         if (mode === 'ORIG') {
             me.originPlaceId = place.place_id;
-            geocoder.geocode({'placeId': place.place_id}, function(results){
-                var latLng = results[0].geometry.location ;
+            geocoder.geocode({'placeId': place.place_id}, function (results) {
+                var latLng = results[0].geometry.location;
                 loc.lat = latLng.lat();
                 loc.lng = latLng.lng();
             });
@@ -152,9 +154,9 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
 };
 
 
-
 //auto complete showing route function
 AutocompleteDirectionsHandler.prototype.route = function() {
+
     if (!this.originPlaceId || !this.destinationPlaceId) {
         return;
     }
@@ -163,7 +165,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         origin: {'placeId': this.originPlaceId},
         destination: {'placeId': this.destinationPlaceId},
         travelMode: this.travelMode
-    }, function(response, status) {
+    }, function (response, status) {
         if (status === 'OK') {
             console.log('cung',response);
             me.directionsDisplay.setDirections(response);
@@ -171,7 +173,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
             var path = response.routes[0].overview_path;
 
             var currentI = 0;
-            nodesToCheck = [path[0]];
+            nodes = [path[0]];
             for(var i =1; i< path.length; i++ ){
                var firstLat = path[currentI].lat();
                var firstLng = path[currentI].lng();
@@ -182,24 +184,12 @@ AutocompleteDirectionsHandler.prototype.route = function() {
                 var squareRoot = Math.sqrt(solutionLng + solutionLat);
                 var check = squareRoot * 69 ;
                 if(check>15){
-                    nodesToCheck.push(path[currentI]);
+                    nodes.push(path[currentI]);
                     currentI = i;
                     console.log("This counts as one places google places api");
                 }
             }
-            nodesToCheck.push(path[path.length-1]);
-            console.log(nodesToCheck.length);
-            var splitPoint = Math.ceil(nodesToCheck.length / 6);
-            nodesToCheck2 = nodesToCheck.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 5);
-            nodesToCheck3 = nodesToCheck2.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 4);
-            nodesToCheck4 = nodesToCheck3.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 3);
-            nodesToCheck5 = nodesToCheck4.splice(splitPoint);
-            splitPoint = Math.ceil(nodesToCheck.length / 2);
-            nodesToCheck6 = nodesToCheck5.splice(splitPoint);
-
+            nodes.push(path[path.length-1]);
             $("#getDirectionsButton").show();
         } else {
             window.alert('Directions request failed due to ' + status);
@@ -212,37 +202,44 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 
 
 <!-- Mikes JS-->
+
 function checkForCheckedValues(){
+    checkedBoxes=[];
     $("input[type=checkbox]:checked").each(function() {
         checkedBoxes.push($(this).val() );
     });
     console.log("users picks to have displayed:" +" "+ checkedBoxes);
 }
 
+function slicedNodes() {
+    nodesToCheck = nodes.slice();
+    var splitPoint = Math.ceil(nodesToCheck.length / 6);
+    nodesToCheck2 = nodesToCheck.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 5);
+    nodesToCheck3 = nodesToCheck2.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 4);
+    nodesToCheck4 = nodesToCheck3.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 3);
+    nodesToCheck5 = nodesToCheck4.splice(splitPoint);
+    splitPoint = Math.ceil(nodesToCheck.length / 2);
+    nodesToCheck6 = nodesToCheck5.splice(splitPoint);
+
+}
+
 function startPlaces(nodes) {
+    if(nodes.length == 0){
+        return;
+    }
     var service = new google.maps.places.PlacesService(map);
-
-    // ----------- The for loop is the fastest way to display the data but the browser limits to 9 calls at one time
-    // for( var i = 0; i<nodesToCheck.length; i++) {
-    //     service.nearbySearch({
-    //         location: nodesToCheck[i],
-    //         radius: 8046.72, //5 Mile radius
-    //         name: checkedBoxes
-    //     }, processResults);
-    // }
-
     service.nearbySearch({
         location: nodes[0],
         radius: 8046.72, //5 Mile radius
         name: checkedBoxes
     }, function(results, status, pagination){
         nodes.shift();
-        if(nodes.length > 0){
-            startPlaces(nodes);
-        }
+        startPlaces(nodes);
         processResults(results, status, pagination);
     });
-
 }
 
 function processResults(results, status, pagination) {
@@ -250,19 +247,15 @@ function processResults(results, status, pagination) {
         return;
     } else {
         createMarkers(results);
-
         if (pagination.hasNextPage) {
-            var moreButton = document.getElementById('more');
 
-            moreButton.disabled = false;
+            pagination.nextPage();
+            }
 
-            moreButton.addEventListener('click', function() {
-                moreButton.disabled = true;
-                pagination.nextPage();
-            });
         }
-    }
 }
+
+
 
 function createMarkers(places) {
     var bounds = new google.maps.LatLngBounds();
@@ -270,9 +263,9 @@ function createMarkers(places) {
         var name = place.name;
         var address = places[i].vicinity;
         var content =
-            '<div class="infoWindow">'+
-            '<h1 class="infoPlaceName">'+ name+ '</h1>'+
-            '<h5 class="infoPlaceAddress>">'+ address+'</h5>'+
+            '<div class="infoWindow">' +
+            '<h1 class="infoPlaceName">' + name + '</h1>' +
+            '<h5 class="infoPlaceAddress>">' + address + '</h5>' +
             '</div>';
 
         var image = {
@@ -296,12 +289,13 @@ function createMarkers(places) {
 
         });
 
-        marker.addListener('click',function(){
-            infoWindow.open(map,marker);
+        marker.addListener('click', function () {
+            infoWindow.open(map, marker);
         });
 
         bounds.extend(place.geometry.location);
     }
+
 }
 <!-- JS nav bar on home page -->
 function openNav() {
@@ -316,10 +310,10 @@ function closeNav() {
 <!-- JS nav bar on index page -->
 function openNav2() {
     document.getElementById("mySidenav2").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+    //document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-function closeNav2(){
+function closeNav2() {
     document.getElementById("mySidenav2").style.width = "0";
 }
 
@@ -329,18 +323,18 @@ function openNav3() {
     document.getElementById("main").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-function closeNav3(){
+function closeNav3() {
     document.getElementById("mySidenav3").style.width = "0";
 }
 
 function showTraffic() {
-    if(document.getElementById('traffic').checked){
+    if (document.getElementById('traffic').checked) {
         trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
 
-    }  else{
+    } else {
         trafficLayer.setMap(null);
- }
+    }
 }
 
 
