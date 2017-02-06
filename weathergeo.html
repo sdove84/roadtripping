@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <title>Weather Geolocation Portrait</title>
+    <script>
+
+        //THIS IS THE GEOLOCATION WEATHER CALL!
+
+        $(document).ready(function(){
+            $.ajax({
+                dataType: 'jsonp',
+                method: "GET",
+                url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/q/autoip.json',
+                success: function(result) {
+                    var alertmessage = null;
+                    function noAlerts () {
+                        if (result.alerts.length === 0) {
+                            alertmessage = "No alerts.";
+                        } else {
+                            alertmessage = result.alerts[0].description;
+                        }
+                    }
+                    noAlerts();
+
+                    //THIS WILL SHOW UP ON THE PAGE
+
+                    $('#left-condition').append(
+                            result.current_observation.display_location.full,'<br>',
+                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
+                            alertmessage,'<br>');
+                    $('#right-condition').append(
+                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
+                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                            'Wind:  ' + result.current_observation.wind_string,'<br>',
+                            'Pressure:  ' + result.current_observation.pressure_in,'<br>');
+                            //forecast here
+
+                    $('#radar').append(
+                            $('<img>', {
+                                src: "http://api.wunderground.com/api/dd19086be18c6fc3/radar/q/autoip.gif?width=375&height=375&newmaps=1&rainsnow=1", alt:"weather radar"
+                            }));
+
+
+                    //need to put failure here
+                }
+            });
+        });
+    </script>
+    <script>
+        var weatherState = null;
+        var weatherCity = null;
+
+
+        function saveDestination() {
+            weatherCity = $('#city').val();
+            weatherState = $('#state').val();
+            console.log(weatherCity);
+            window.location = 'weatherdest.html?weatherCity=' + weatherCity + '&weatherState=' + weatherState;
+            console.log('Window: ' + window.location);
+
+        }
+
+    </script>
+    <style>
+        #radar {
+            padding: 0px;
+        }
+        #left-condition {
+            height:155px;
+            border-top: solid 1px black;
+            border-right: solid 1px black;
+            border-bottom: solid 1px black;
+        }
+        #right-condition {
+            height:155px;
+            border-top: solid 2px black;
+            border-bottom: solid 1px black;
+        }
+        #locationfinder {
+            height:100px;
+            border-bottom: solid 1px black;
+        }
+        #wunderground-credit {
+            height:30px;
+        }
+    </style>
+</head>
+<body>
+<div class="col-xs-12" class="col-sm-12" id="radar">
+</div>
+<div class="col-xs-6" class="col-sm-6" id="left-condition">
+</div>
+<div class="col-xs-6" class="col-sm-6" id="right-condition">
+</div>
+<div class="col-xs-12" class="col-sm-12" id="locationfinder">
+
+    <!--THIS LINKS TO THE DESTINATION WEATHER PAGE-->
+
+    <form method="link" action="weatherdest.html" class="selector">
+        Where do you want to go?<br>
+        <input type="text" name="weatherCity" id="city" autofocus placeholder="city" style="text-transform:capitalize" size="25">
+        <input type="text" name="weatherState" id="state" autofocus placeholder="state (e.g. CA)" style="text-transform:uppercase" size="12"><br>
+        <input type="submit" value="I want to go here!">
+    </form>
+</div>
+<div class="col-xs-12" class="col-sm-12" id="wunderground-credit">
+    <p>Powered by <a href="https://www.wunderground.com/"><img src="https://icons.wxug.com/logos/JPG/wundergroundLogo_4c_horz.jpg" width=90 height=21 alt="Powered by Weather Underground"></a></p>
+</div>
+</body>
+</html>
