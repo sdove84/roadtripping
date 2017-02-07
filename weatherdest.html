@@ -62,8 +62,48 @@
                                 alertmessage = result.alerts[0].description;
                             }
                         }
-
                         noAlerts();
+<<<<<<< HEAD
+                        console.log(alertmessage);
+//
+//                        $('#top-left').append(
+//                                result.current_observation.display_location.full, '<br>',
+//                                $('<img>', {src: result.current_observation.icon_url}), '<br>',
+//                                alertmessage, '<br>');
+//                        $('#top-right').append(
+//                                'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
+//                                'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+//                                'Wind:  ' + result.current_observation.wind_string, '<br>',
+//                                'Pressure:  ' + result.current_observation.pressure_in);
+                        $('#day0forecast').append(
+                                result.forecast.simpleforecast.forecastday[0].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[0].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[0].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[0].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[0].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[0].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[0].avewind.dir);
+                        $('#day1forecast').append(
+                                result.forecast.simpleforecast.forecastday[1].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[1].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[1].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[1].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[1].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[1].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[1].avewind.dir);
+                        $('#day2forecast').append(
+                                result.forecast.simpleforecast.forecastday[2].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[2].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[2].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[2].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[2].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[2].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[2].avewind.dir);
+                        $('#day3forecast').append(
+                                result.forecast.simpleforecast.forecastday[3].date.weekday, '<br>',
+                                $('<img>',{src:result.forecast.simpleforecast.forecastday[3].icon_url}), '<br>',
+                                'High:  ', result.forecast.simpleforecast.forecastday[3].high.fahrenheit, '<br>',
+                                'Low:  ', result.forecast.simpleforecast.forecastday[3].low.fahrenheit, '<br>',
+                                'Chance of precip:  ', result.forecast.simpleforecast.forecastday[3].pop, + '%', '<br>',
+                                'Wind:  ', result.forecast.simpleforecast.forecastday[3].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[3].avewind.dir);
+=======
 
                         $('#top-left').append(
                                 result.current_observation.display_location.full, '<br>',
@@ -104,6 +144,7 @@
                                         'Wind:  ', result.forecast.simpleforecast.forecastday[i].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[i].avewind.dir);
                             }
                         }
+>>>>>>> c277bb0671ba8259e58860da30fd7481577c8661
                     }
                     //need to put failure here
                 })
