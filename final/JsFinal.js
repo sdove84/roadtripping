@@ -224,7 +224,6 @@ function slicedNodes() {
     nodesToCheck5 = nodesToCheck4.splice(splitPoint);
     splitPoint = Math.ceil(nodesToCheck.length / 2);
     nodesToCheck6 = nodesToCheck5.splice(splitPoint);
-
 }
 
 function startPlaces(nodes) {
@@ -254,8 +253,6 @@ function processResults(results, status, pagination) {
     }
 }
 
-
-
 function createMarkers(places) {
     var  markersArray = [];
     var bounds = new google.maps.LatLngBounds();
@@ -275,27 +272,20 @@ function createMarkers(places) {
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(25, 25)
         };
-
         let marker = new google.maps.Marker({
             map: map,
             icon: image,
             title: place.name,
             position: place.geometry.location
-
         });
-
         let infoWindow = new google.maps.InfoWindow({
             content: content
-
-
         });
         markersArray.push(marker);
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
         });
-
         bounds.extend(place.geometry.location);
-
     }
     var markerCluster = new MarkerClusterer(map, markersArray,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
