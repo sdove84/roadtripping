@@ -39,6 +39,7 @@ var infowindow;
 var destination = null;
 var city = null;
 var state = null;
+
 var totalMilesofTrip = null;
 var pricePerGallon = null;
 var usersCostOfTrip = null;
@@ -188,7 +189,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
                 var solutionLng = Math.pow((secondLng-firstLng),2);
                 var squareRoot = Math.sqrt(solutionLng + solutionLat);
                 var check = squareRoot * 69 ;
-                if(check>20){
+                if(check>60){
                     nodes.push(path[currentI]);
                     currentI = i;
                     console.log("This counts as one places google places api");

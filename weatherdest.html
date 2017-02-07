@@ -14,19 +14,16 @@
         $(document).ready(function() {
             console.log('doc ready fired');
 
-        //THIS PARSES THE STRING AND REVERTS BACK TO THE ORIGINAL CITY AND STATE VARIABLES
+
+
+            //THIS PARSES THE STRING AND REVERTS BACK TO THE ORIGINAL CITY AND STATE VARIABLES
 
             function getJsonFromUrl() {
                 var query = location.search.substr(1);
-                console.log('Query: ' + query);
                 var result = {};
-                console.log('Result: ' + result);
                 query.split("&").forEach(function(part) {
                     var item = part.split("=");  //get rid of + in city with multiple words
-                    console.log('Item: ' + item);
                     result[item[0]] = decodeURIComponent(item[1]);
-                    console.log('Result item: ' + result[item[0]]);
-                    console.log('URI component: ' + (item[1]));
 
                 });
                 return result;
@@ -49,11 +46,10 @@
                 $.ajax({
                     dataType: 'jsonp',
                     method: "GET",
-                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/' + weatherState + '/' + weatherCity + '.json',
+                    url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/forecast/q/' + weatherState + '/' + weatherCity + '.json',
                     success: function (result) {
                         console.log('call was successful');
                         var alertmessage = null;
-                        console.log(result.alerts);
                         console.log('Test: ' + result.alerts);
 
 
@@ -67,6 +63,7 @@
                             }
                         }
                         noAlerts();
+<<<<<<< HEAD
                         console.log(alertmessage);
 //
 //                        $('#top-left').append(
@@ -106,6 +103,48 @@
                                 'Low:  ', result.forecast.simpleforecast.forecastday[3].low.fahrenheit, '<br>',
                                 'Chance of precip:  ', result.forecast.simpleforecast.forecastday[3].pop, + '%', '<br>',
                                 'Wind:  ', result.forecast.simpleforecast.forecastday[3].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[3].avewind.dir);
+=======
+
+                        $('#top-left').append(
+                                result.current_observation.display_location.full, '<br>',
+                                $('<img>', {src: result.current_observation.icon_url}), '<br>',
+                                alertmessage, '<br>');
+                        $('#top-right').append(
+                                'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
+                                'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+                                'Wind:  ' + result.current_observation.wind_string, '<br>',
+                                'Pressure:  ' + result.current_observation.pressure_in);
+
+                        //THIS IS THE LOOP THAT APPENDS 3-DAY FORECAST TO BODY OF PAGE
+
+                        var weekday;
+                        var icon;
+                        var highTemp;
+                        var lowTemp;
+                        var precip;
+                        var wind;
+
+                        forecast();
+
+                        function forecast() {
+                            for (var i =0; i < 4; i++) {
+                                weekday = result.forecast.simpleforecast.forecastday[i].date.weekday;
+                                icon = $('<img>',{src:result.forecast.simpleforecast.forecastday[i].icon_url});
+                                highTemp = result.forecast.simpleforecast.forecastday[i].high.fahrenheit;
+                                lowTemp = result.forecast.simpleforecast.forecastday[i].low.fahrenheit;
+                                precip = result.forecast.simpleforecast.forecastday[i].pop + '%';
+                                wind = result.forecast.simpleforecast.forecastday[i].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[i].avewind.dir;
+
+                                $('#day'+i+'forecast').append(
+                                        result.forecast.simpleforecast.forecastday[i].date.weekday, '<br>',
+                                        $('<img>',{src:result.forecast.simpleforecast.forecastday[i].icon_url}), '<br>',
+                                        'High:  ', result.forecast.simpleforecast.forecastday[i].high.fahrenheit, '<br>',
+                                        'Low:  ', result.forecast.simpleforecast.forecastday[i].low.fahrenheit, '<br>',
+                                        'Chance of precip:  ', result.forecast.simpleforecast.forecastday[i].pop, + '%', '<br>',
+                                        'Wind:  ', result.forecast.simpleforecast.forecastday[i].avewind.mph + ' ' + result.forecast.simpleforecast.forecastday[i].avewind.dir);
+                            }
+                        }
+>>>>>>> c277bb0671ba8259e58860da30fd7481577c8661
                     }
                     //need to put failure here
                 })
