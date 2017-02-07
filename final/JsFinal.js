@@ -40,7 +40,7 @@ var infowindow;
 var destination = null;
 var city = null;
 var state = null;
-
+var totalMilesofTrip = null;
 
 
 function initMap() {
@@ -173,6 +173,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
             me.directionsDisplay.setDirections(response);
             route = response.routes[0];
             var path = response.routes[0].overview_path;
+            totalMilesofTrip = parseFloat(response.routes[0].legs[0].distance.text);
 
             var currentI = 0;
             nodes = [path[0]];
