@@ -1,11 +1,9 @@
 $(document).ready(function(){
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
-    getGasolineCost();
-
+    $("#weatherDisplayContainer").hide();
     $('#actionSubmit').click(function(){
         slicedNodes();
-
         checkForCheckedValues();
         startPlaces(nodesToCheck);
         startPlaces(nodesToCheck2);
@@ -44,6 +42,7 @@ var state = null;
 var totalMilesofTrip = null;
 var pricePerGallon = null;
 var usersCostOfTrip = null;
+var weatherLoaded = false;
 
 
 function initMap() {
@@ -349,7 +348,7 @@ function getWeather() {
     if (city == null && state == null) {
         alert("Please select route");
     }
-    else {
+    else if (weatherLoaded === false){
         $.ajax({
             dataType: 'jsonp',
             method: "GET",
@@ -358,38 +357,40 @@ function getWeather() {
             success: function (result) {
                 //TODO: do dom creation instead of using hard coded html
                 noAlerts(result);
+                mapPageWeatherAccordian();
+
                 var weatherImage = $('<img>', {src: result.current_observation.icon_url});
                 var location = result.current_observation.display_location.full;
                 var temp = result.current_observation.temp_f + '&#176;' + ' F';
                 var humidity = result.current_observation.relative_humidity;
                 var wind = result.current_observation.relative_humidity;
-                var pressure = result.current_observation.pressure_in;
                 $('#weatherImage').append(weatherImage);
                 $('#weatherLocation').append(location);
                 $('#weatherAlerts').append(alertmessage);
                 $('#weatherTemp').append(temp);
-                $('#weatherHumidity').append(humidity);
-                $('#weatherWind').append(wind);
-                $('#weatherPressure').append(pressure);
+                $('#weatherHumidity').append(humidity+" "+ "Humidity");
                 var  forecastSet= result.forecast.simpleforecast.forecastday;
                 for (var i = 1; i < 4; i++) {
-              
                     var dayOfWeek = forecastSet[i].date.weekday;
                     var weatherIcon = $('<img>', {src: forecastSet[i].icon_url});
-                    var highTemp = forecastSet[i].high.fahrenheit + '&#176;' + ' F';
-                    var lowTemp = forecastSet[i].low.fahrenheit + '&#176;' + ' F';
-                    var precipitation = forecastSet[i].pop + '%';
-                    var wind = forecastSet[i].avewind.mph + ' ' + forecastSet[i].avewind.dir;
+                    var highTemp = "High" + " " + forecastSet[i].high.fahrenheit + '&#176;' + ' F';
+                    var lowTemp = "Low" + " " + forecastSet[i].low.fahrenheit + '&#176;' + ' F';
+                    var precipitation = "Precepitation"+" "+forecastSet[i].pop + '%';
+                    wind = "Wind"+" "+forecastSet[i].avewind.mph + ' ' + forecastSet[i].avewind.dir;
                     $("#weatherDOW"+[i]).append(dayOfWeek);
                     $("#weatherIcon"+[i]).append(weatherIcon);
                     $("#weatherHigh"+[i]).append(highTemp);
                     $("#weatherLow"+[i]).append(lowTemp);
                     $("#weatherPrep"+[i]).append(precipitation);
                     $("#weatherWind"+[i]).append(wind);
-
+                    weatherLoaded = true;
                 }
             }
         });
+    }
+    else{
+        mapPageWeatherAccordian();
+
     }
 }
 
@@ -420,4 +421,19 @@ function calculateCostOfTrip(){
 
 }
 
+function mapPageWeatherAccordian() {
+    $("#weatherDisplayContainer").toggle();
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].onclick = function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            }
+        }
+    }
 
