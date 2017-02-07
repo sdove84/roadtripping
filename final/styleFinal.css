@@ -154,9 +154,9 @@ html, body {
 }
 
 .homeNav a {
-    padding: 15px 56px 8px 70px;
+    padding: 0px 56px 0px 70px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     color: white;
     display: inline-block;
     transition: 0.8s;
@@ -168,10 +168,24 @@ html, body {
     cursor: pointer;
 }
 
+.signIn{
+
+    background-color: #444;
+    background: url(http://mymaplist.com/img/parallax/pinlayer2.png) no-repeat center center fixed,url(http://mymaplist.com/img/parallax/pinlayer1.png) no-repeat center center fixed,url(http://www.istartedsomething.com/bingimages/cache/AKHumpbacks_EN-AU1914968143.jpg) no-repeat center center fixed;
+    -webkit-background-size: auto auto;
+    -moz-background-size: auto auto;
+    -o-background-size: auto auto;
+    background-size: auto auto;
+}
+
+.vertical-offset-100{
+    padding-top:100px;
+}
+
 .signInNav a {
     padding: 15px 8px 8px 10px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     color: white;
     display: block;
     transition: 0.8s;
@@ -186,7 +200,7 @@ html, body {
 .createAccountNav a {
     padding: 15px 8px 8px 10px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     color: white;
     display: block;
     transition: 0.8s;
@@ -270,6 +284,7 @@ html, body {
     background-size: cover;
     height: 100%;
     width: 100%;
+    text-align: center;
 }
 
 #map {
@@ -389,6 +404,13 @@ html, body {
 
     #destination-input {
         width: 45%
+    }
+    .homeNav a {
+        padding: 0 11px 0 11px;
+        text-decoration: none;
+        font-size: 20px;
+        display: inline-block;
+        transition: 0.8s;
     }
 }
 

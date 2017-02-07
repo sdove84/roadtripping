@@ -14,8 +14,10 @@
     <script src="events_finder.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLGhFk5m-1IGHOHb02jvRBSJIZZfrlDic&libraries=places&callback=initMap" defer></script>
 
+
 </head>
 <body>
+
 <div id="mapPageMenuContainer" class="container-fluid">
     <div class="row">
         <span class="mapMenu col-sm-4" id="home2" onclick="openNav2()">&#9776;<span>Menu</span></span>
@@ -40,13 +42,23 @@
 
 <div id="mySidenav2" class="sidenav2">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav2()">&times;</a>
-    <a href="backend/signin.php">Sign In</a>
+    <a href="signin.html">Sign In</a>
     <a href="create_new_account.html">Create Account</a>
     <a href="">My Account</a>
     <a id=displayData type="button" data-toggle="modal" data-target="#myModal">Choose Places</a>
     <a href="check_list.html">Pack/Shop List</a>
-    <a href="weathertest.html">Weather</a>
     <a id= displayData2 type="button" data-toggle="modal" data-target="#myModal2" onclick="set_val_destination()">Find Event</a>
+    <a onclick="getWeather()">Weather</a>
+    <a href="check_list.html" onclick="flipPage()">Pack/Shop List</a>
+    <div id="weatherDisplayContainer">
+        <div id="weatherImage"></div>
+        <div id="weatherLocation"></div>
+        <div id="weatherAlerts"></div>
+        <div id="weatherTemp"></div>
+        <div id="weatherHumidity"></div>
+        <div id="weatherWind"></div>
+        <div id="weatherPressure"></div>
+    </div>
 </div>
 
 <div id="mySidenav3" class="sidenav3">
@@ -171,6 +183,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

@@ -58,6 +58,7 @@
         var weatherState = null;
         var weatherCity = null;
 
+
         //THIS IS THE REQUESTED LOCATION CALL
         //"http://autocomplete.wunderground.com/aq?query=city&c=US" query string needed for autocomplete
         //using variable to read inputs
@@ -67,51 +68,42 @@
         function getWeather() {
             $("#display").empty();
             $("#radar").empty();
-            console.log("get WEATHER function called");
             weatherState = $('#state').val();
-            console.log(weatherState);
             weatherCity = $('#city').val();
-            console.log(weatherCity);
-            console.log("User wants to see the weather in :" + weatherState + " " + weatherCity);
+            console.log("User wants to see the weather in:" + weatherState + " " + weatherCity);
+
             $.ajax({
                 dataType: 'jsonp',
                 method: "GET",
                 url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/'+weatherState+'/'+weatherCity+'.json',
                 success: function (result) {
-
-                    var alertmessage = null;
-
-                    function noAlerts() {
-                        if (result.alerts.length === 0) {
-                            console.log('Test: ' + result.alerts);
-                            alertmessage = "No weather alerts.";
-                        } else {
-                            alertmessage = result.alerts[0].description;
-                        }
-                    }
-
-                    noAlerts();
+                    noAlerts(result);
+                    var weatherImage = $('<img>',{src:result.current_observation.icon_url});
+                    var location =  result.current_observation.display_location.full;
                     console.log(alertmessage);
-
-                    $('#display').append(
-                            $('<img>',{src:result.current_observation.icon_url}),'<br>',
-                            result.current_observation.display_location.full,'<br>',
-                            //need to fix bug for undefined alerts if there are no alerts
-                            alertmessage,'<br>',
-                            'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F','<br>',
-                            'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                            'Wind:  ' + result.current_observation.wind_string,'<br>',
-                            'Pressure:  ' + result.current_observation.pressure_in,'<br>');
-
-
-
-                },
-                //need to put failure here
-                error: function(result) {
-                    $('#display').append(
-                            $('<p>').text('Error'));
+                    var temp = result.current_observation.temp_f + '&#176;' + ' F';
+                    var humidity = result.current_observation.relative_humidity;
+                    var wind = result.current_observation.relative_humidity;
+                    var pressure = result.current_observation.pressure_in;
+                    $('#weatherImage').append(weatherImage);
+                    $('#weatherLocation').append(location);
+                    $('#weatherAlerts').append(alertmessage);
+                    $('#weatherTemp').append(temp);
+                    $('#weatherHumidity').append(humidity);
+                    $('#weatherWind').append(wind);
+                    $('#weatherPressure').append(pressure);
                 }
+
             })
+        }
+
+        function noAlerts(result) {
+            if (result.alerts.length === 0) {
+                console.log('Test: ' + result.alerts);
+                alertmessage = "No weather alerts.";
+            } else {
+                alertmessage = result.alerts[0].description;
+            }
         }
     </script>
     <style>

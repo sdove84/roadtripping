@@ -13,22 +13,38 @@
     <title>Login Page</title>
 </head>
 
+<body class="singIn">
 <div class="container">
     <div class="text-center">
         <h1>TRIP PLANNER</h1>
-        <div class="container">
-            <form class="form form-inline" role="form" action="" method="post">
-                <legend>Login</legend>
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+        <legend></legend>
+            <div class="row vertical-offset-100">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Please sign in</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form accept-charset="UTF-8" role="form" method="Post">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="User Name" name="username" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Password" name="password" type="password">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="remember" type="checkbox" value="Remember You"> Remember You
+                                        </label>
+                                    </div>
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" name="submit">
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-xs-12">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                    </div>
-                    <input type="submit" name="submit" value="submit" class="btn btn-success">
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

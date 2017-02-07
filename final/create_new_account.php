@@ -15,9 +15,10 @@
 <body class="container">
 <div class="text-center">
     <h1>TRIP PLANNER</h1>
+    <legend></legend>
     <div class="container">
         <form class="form form-inline" role="form" action="create_new_account.php" method="post">
-            <legend>Create New Account</legend>
+            <h4>Create New Account</h4>
             <div class="form-group">
                 <div class="col-xs-6">
                     <input type="text" class="form-control" name="username" placeholder="Username">
