@@ -18,21 +18,28 @@
     <legend></legend>
     <div class="container">
         <form class="form form-inline" role="form" action="create_new_account.php" method="post">
-            <h4>Create New Account</h4>
+            <h1>Create New Account</h1>
+
+            <?php if(isset($_GET['err'])) { ?>
+            <div class="alert alert-danger"><?php echo $_GET['err'] ?></div>
+            <?php } ?>
             <div class="form-group">
                 <div class="col-xs-6">
-                    <input type="text" class="form-control" name="username" placeholder="Username">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
                 </div>
                 <div class="col-xs-6">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                 </div>
                 <div class="col-xs-6">
-                    <input type="text" class="form-control" name="email" placeholder="Email">
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
                 </div>
                 <div class="col-xs-6">
-                    <input type="number" class="form-control" name="mpg" placeholder="MPG">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
                 </div>
-                <input type="submit" name ="submit" class="btn btn-success">
+                <div class="col-xs-6">
+                    <input type="number" class="form-control" name="mpg" placeholder="MPG" required>
+                </div>
+                <input type="submit" name ="submit" class="btn btn-success" value="Create Account">
             </div>
         </form>
     </div>

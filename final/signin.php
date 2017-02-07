@@ -38,7 +38,7 @@
                                             <input name="remember" type="checkbox" value="Remember You"> Remember You
                                         </label>
                                     </div>
-                                    <input class="btn btn-lg btn-success btn-block" type="submit" name="submit">
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" name="submit" value="Login">
                                 </fieldset>
                             </form>
                         </div>
