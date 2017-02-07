@@ -66,19 +66,18 @@
                                 alertmessage = result.alerts[0].description;
                             }
                         }
-
                         noAlerts();
                         console.log(alertmessage);
-
-                        $('#top-left').append(
-                                result.current_observation.display_location.full, '<br>',
-                                $('<img>', {src: result.current_observation.icon_url}), '<br>',
-                                alertmessage, '<br>');
-                        $('#top-right').append(
-                                'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
-                                'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
-                                'Wind:  ' + result.current_observation.wind_string, '<br>',
-                                'Pressure:  ' + result.current_observation.pressure_in);
+//
+//                        $('#top-left').append(
+//                                result.current_observation.display_location.full, '<br>',
+//                                $('<img>', {src: result.current_observation.icon_url}), '<br>',
+//                                alertmessage, '<br>');
+//                        $('#top-right').append(
+//                                'Temp:  ' + result.current_observation.temp_f + '&#176;' + ' F', '<br>',
+//                                'Humidity:  ' + result.current_observation.relative_humidity, '<br>',
+//                                'Wind:  ' + result.current_observation.wind_string, '<br>',
+//                                'Pressure:  ' + result.current_observation.pressure_in);
                         $('#day0forecast').append(
                                 result.forecast.simpleforecast.forecastday[0].date.weekday, '<br>',
                                 $('<img>',{src:result.forecast.simpleforecast.forecastday[0].icon_url}), '<br>',

@@ -342,7 +342,7 @@ function showTraffic() {
 }
 
 /**
- *Identifies the City and State based on the destination
+ * Identifies the City and State based on the destination
  * The City and State are going to be used for the weather input
  */
 function cityStateDestination (){
@@ -350,7 +350,6 @@ function cityStateDestination (){
     state = destination.split(",")[1];
     console.log("this is the city and state of the destination:" + city + " " + state);
 }
-
 
 function getWeather() {
     if (city == null && state == null) {
@@ -360,12 +359,13 @@ function getWeather() {
         $.ajax({
             dataType: 'jsonp',
             method: "GET",
-            url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/' + state + '/' + city + '.json',
+            url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/forecast/q/' + state + '/' + city + '.json',
+
             success: function (result) {
+                //TODO: do dom creation instead of using hard coded html
                 noAlerts(result);
                 var weatherImage = $('<img>', {src: result.current_observation.icon_url});
                 var location = result.current_observation.display_location.full;
-                console.log(alertmessage);
                 var temp = result.current_observation.temp_f + '&#176;' + ' F';
                 var humidity = result.current_observation.relative_humidity;
                 var wind = result.current_observation.relative_humidity;
@@ -377,13 +377,33 @@ function getWeather() {
                 $('#weatherHumidity').append(humidity);
                 $('#weatherWind').append(wind);
                 $('#weatherPressure').append(pressure);
-            }
+                var  forecastSet= result.forecast.simpleforecast.forecastday;
+                for (var i = 1; i < 4; i++) {
+              
+                    var dayOfWeek = forecastSet[i].date.weekday;
+                    var weatherIcon = $('<img>', {src: forecastSet[i].icon_url});
+                    var highTemp = forecastSet[i].high.fahrenheit + '&#176;' + ' F';
+                    var lowTemp = forecastSet[i].low.fahrenheit + '&#176;' + ' F';
+                    var precipitation = forecastSet[i].pop + '%';
+                    var wind = forecastSet[i].avewind.mph + ' ' + forecastSet[i].avewind.dir;
+                    $("#weatherDOW"+[i]).append(dayOfWeek);
+                    $("#weatherIcon"+[i]).append(weatherIcon);
+                    $("#weatherHigh"+[i]).append(highTemp);
+                    $("#weatherLow"+[i]).append(lowTemp);
+                    $("#weatherPrep"+[i]).append(precipitation);
+                    $("#weatherWind"+[i]).append(wind);
 
-        })
+                }
+            }
+        });
     }
 }
 
-function noAlerts(result) {
+
+
+
+
+function noAlerts(result){
     if (result.alerts.length === 0) {
         console.log('Test: ' + result.alerts);
         alertmessage = "No weather alerts.";
