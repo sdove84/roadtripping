@@ -435,5 +435,5 @@ function mapPageWeatherAccordian() {
                 }
             }
         }
-    }
+}
 
