@@ -16,26 +16,61 @@
 <div class="text-center">
     <h1>TRIP PLANNER</h1>
     <legend></legend>
-    <div class="container">
-        <form class="form form-inline" role="form" action="create_new_account.php" method="post">
-            <h4>Create New Account</h4>
-            <div class="form-group">
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" name="username" placeholder="Username">
+
+    <div class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please create your account</h3>
                 </div>
-                <div class="col-xs-6">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form" method="Post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="User Name" name="username" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Email" name="email" type="email">
+                            </div>
+
+                            <input class="btn btn-lg btn-info btn-block" type="submit" name="submit" value="Create Account">
+                        </fieldset>
+                    </form>
+                    <div class="createAccountCancel">
+                        <p>Already have an account?<a href="signin.php"> Sign in</a><p>
+                    </div>
+                    <hr>
+                    <div class="createAccountCancel">
+                        <a href="homePage.html">Cancel</a>
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" name="email" placeholder="Email">
-                </div>
-                <div class="col-xs-6">
-                    <input type="number" class="form-control" name="mpg" placeholder="MPG">
-                </div>
-                <input type="submit" name ="submit" class="btn btn-success">
             </div>
-        </form>
+        </div>
     </div>
+
+<!--    <div class="container">-->
+<!--        <form class="form form-inline" role="form" action="create_new_account.php" method="post">-->
+<!--            <h4>Create New Account</h4>-->
+<!--            <div class="form-group">-->
+<!--                <div class="col-xs-6">-->
+<!--                    <input type="text" class="form-control" name="username" placeholder="Username">-->
+<!--                </div>-->
+<!--                <div class="col-xs-6">-->
+<!--                    <input type="password" class="form-control" name="password" placeholder="Password">-->
+<!--                </div>-->
+<!--                <div class="col-xs-6">-->
+<!--                    <input type="text" class="form-control" name="email" placeholder="Email">-->
+<!--                </div>-->
+<!--                <div class="col-xs-6">-->
+<!--                    <input type="number" class="form-control" name="mpg" placeholder="MPG">-->
+<!--                </div>-->
+<!--                <input type="submit" name ="submit" class="btn btn-success">-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 </body>
 </html>
