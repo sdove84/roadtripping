@@ -227,13 +227,14 @@
     }
 
     // Add a "checked" symbol when clicking on a list item
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function(ev) {
-        if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
-        }
-    }, false);
-
+    var list = document.querySelectorAll('ul');
+    for (var i = 0; i < list.length; i++) {
+        list[i].addEventListener('click', function (ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+    }
     // Create a new list item when clicking on the "Add" button for shopping list
     function newElement() {
         var li = document.createElement("li");
