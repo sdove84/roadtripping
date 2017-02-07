@@ -21,7 +21,7 @@ function getInformation(choice,cityForEvent) {
             console.log('here is the result ',output);
             //returns message if no results found
             if (result.events === null) {
-                $('#display').append('no results found');
+                alertmessage("No Events found")
             } else {
                 //loop for results including condition for fewer than 10 events(max)
                 for (var i = 0; i < result.events.event.length; i++) {
