@@ -37,6 +37,7 @@ var nodesToCheck5 = null;
 var nodesToCheck6 = null;
 var marker_event;
 var infowindow;
+var destination;
 
 
 
@@ -145,6 +146,8 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
         } else {
             me.destinationPlaceId = place.place_id;
         }
+        destination = $("#destination-input").val();
+        console.log(destination);
         me.route();
     });
 
@@ -153,7 +156,6 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
 
 //auto complete showing route function
 AutocompleteDirectionsHandler.prototype.route = function() {
-
     if (!this.originPlaceId || !this.destinationPlaceId) {
         return;
     }
@@ -180,7 +182,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
                 var solutionLng = Math.pow((secondLng-firstLng),2);
                 var squareRoot = Math.sqrt(solutionLng + solutionLat);
                 var check = squareRoot * 69 ;
-                if(check>20){
+                if(check>60){
                     nodes.push(path[currentI]);
                     currentI = i;
                     console.log("This counts as one places google places api");

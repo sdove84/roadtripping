@@ -41,12 +41,16 @@ var cityForEvent = null;
 var choice = null;
 
 function getResults(){
+
+    console.log('here is des',destination);
     cityForEvent = $('#cityEvent').val();
     choice = (document.querySelector('input[name="choose"]:checked').value);
     console.log('User has typed: ' + choice);
-    // startDate = $('#start').val();
-    // endDate = $('#end').val();
-    // myDateRange= (startDate + '00-' + endDate + '00');
-    // console.log(myDateRange);
     getInformation(choice,cityForEvent);
 }
+
+function set_val_destination(){
+    $('#cityEvent').val(destination);
+    console.log('des',destination);
+}
+

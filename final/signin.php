@@ -6,32 +6,27 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="JsFinal.js"></script>
+<!--    <script src="JsFinal.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="styleFinal.css">
+    <link type="text/css" rel="stylesheet" href="<?= ($rootDir) ? $rootDir : './' ?>styleFinal.css">
     <title>Login Page</title>
 </head>
-<div class="container">
 
+<div class="container">
     <div class="text-center">
         <h1>TRIP PLANNER</h1>
         <div class="container">
-            <form class="form form-inline" role="form">
+            <form class="form form-inline" role="form" action="" method="post">
                 <legend>Login</legend>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
                     <div class="col-xs-12">
-                        <input type="text" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
-                    <div class="col-xs-12">
-                        <input type="submit" class="col-xs-6 col-xs-push-3 btn btn-success">
-                    </div>
-                    <div class="signInNav">
-                        <a href="create_new_account.html">Create Account</a>
-                    </div>
+                    <input type="submit" name="submit" value="submit" class="btn btn-success">
                 </div>
             </form>
         </div>
