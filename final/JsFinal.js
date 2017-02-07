@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
+    getGasolineCost();
 
     $('#actionSubmit').click(function(){
         slicedNodes();
@@ -41,6 +42,8 @@ var destination = null;
 var city = null;
 var state = null;
 var totalMilesofTrip = null;
+var pricePerGallon = null;
+var usersCostOfTrip = null;
 
 
 function initMap() {
@@ -390,10 +393,6 @@ function getWeather() {
     }
 }
 
-
-
-
-
 function noAlerts(result){
     if (result.alerts.length === 0) {
         console.log('Test: ' + result.alerts);
@@ -403,5 +402,22 @@ function noAlerts(result){
     }
 }
 
+function getGasolineCost() {
+    $.ajax({
+        dataType: 'json',
+        method: "POST",
+        url: 'http://api.eia.gov/series/?api_key=13465938b39393fc5b239c466cf067b2&series_id=PET.EMM_EPM0_PTE_NUS_DPG.W',
+
+            success: function (result) {
+                pricePerGallon = result.series[0].data[0][1];
+                console.log("Average price per gallon:"+ "$"+ pricePerGallon);
+            }
+    })
+}
+
+function calculateCostOfTrip(){
+     //usersCostOfTrip = (totalMilesofTrip/  ) * pricePerGallon;
+
+}
 
 
