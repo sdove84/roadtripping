@@ -37,6 +37,9 @@ var nodesToCheck5 = null;
 var nodesToCheck6 = null;
 var marker_event;
 var infowindow;
+var destination = null;
+var city = null;
+var state = null;
 
 
 
@@ -145,6 +148,7 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
         } else {
             me.destinationPlaceId = place.place_id;
         }
+        destination = $("#destination-input").val();
         me.route();
     });
 
@@ -153,15 +157,16 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
 
 //auto complete showing route function
 AutocompleteDirectionsHandler.prototype.route = function() {
-
     if (!this.originPlaceId || !this.destinationPlaceId) {
         return;
     }
+    cityStateDestination();
     var me = this;
     this.directionsService.route({
         origin: {'placeId': this.originPlaceId},
         destination: {'placeId': this.destinationPlaceId},
         travelMode: this.travelMode
+
     }, function (response, status) {
         if (status === 'OK') {
             console.log('cung',response);
@@ -336,7 +341,56 @@ function showTraffic() {
     }
 }
 
+/**
+ *Identifies the City and State based on the destination
+ * The City and State are going to be used for the weather input
+ */
+function cityStateDestination (){
+    city = destination.split(",")[0];
+    state = destination.split(",")[1];
+    console.log("this is the city and state of the destination:" + city + " " + state);
+}
 
+
+function getWeather() {
+    if (city == null && state == null) {
+        alert("Please select route");
+    }
+    else {
+        $.ajax({
+            dataType: 'jsonp',
+            method: "GET",
+            url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/' + state + '/' + city + '.json',
+            success: function (result) {
+                noAlerts(result);
+                var weatherImage = $('<img>', {src: result.current_observation.icon_url});
+                var location = result.current_observation.display_location.full;
+                console.log(alertmessage);
+                var temp = result.current_observation.temp_f + '&#176;' + ' F';
+                var humidity = result.current_observation.relative_humidity;
+                var wind = result.current_observation.relative_humidity;
+                var pressure = result.current_observation.pressure_in;
+                $('#weatherImage').append(weatherImage);
+                $('#weatherLocation').append(location);
+                $('#weatherAlerts').append(alertmessage);
+                $('#weatherTemp').append(temp);
+                $('#weatherHumidity').append(humidity);
+                $('#weatherWind').append(wind);
+                $('#weatherPressure').append(pressure);
+            }
+
+        })
+    }
+}
+
+function noAlerts(result) {
+    if (result.alerts.length === 0) {
+        console.log('Test: ' + result.alerts);
+        alertmessage = "No weather alerts.";
+    } else {
+        alertmessage = result.alerts[0].description;
+    }
+}
 
 
 
