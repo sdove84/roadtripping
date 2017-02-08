@@ -1,6 +1,7 @@
 <?php
 require_once('emailconfig.php');
 require('phpmailer/PHPMailer/PHPMailerAutoload.php');
+//include_once "../create_new_account.php";
 $mail = new PHPMailer;
 $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
@@ -22,10 +23,10 @@ $options = array(
 );
 $mail->smtpConnect($options);
 $mail->From = $_POST['email'];//your email sending account
-$mail->FromName = $_POST['name'];//your email sending account name
-$mail->addAddress(EMAIL_USER/*your email address, or the email the sender if you are sending confirmation*/, 'Boss'/*email address user name*/);     // Add a recipient
+$mail->FromName = 'RoadTrip';//your email sending account name
+$mail->addAddress($_POST['email']/*your email address, or the email the sender if you are sending confirmation*/, $_POST['username']/*email address user name*/);     // Add a recipient
 //$mail->addAddress('ellen@example.com');               // Name is optional
-$mail->addReplyTo($_POST['email']/*email address of the person sending the message, so you can reply*/);
+$mail->addReplyTo('roadtrip@noreply.com'/*email address of the person sending the message, so you can reply*/);
 //$mail->addCC('cc@example.com');
 //$mail->addBCC('bcc@example.com');
 
@@ -33,8 +34,14 @@ $mail->addReplyTo($_POST['email']/*email address of the person sending the messa
 //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 $mail->isHTML(true);                                  // Set email format to HTML
 
-$mail->Subject = 'here is the subject';
-$mail->Body    = 'this is the body';
+$mail->Subject = 'Email Verification';
+$message =
+    "
+                Confirm your email 
+                Click the link below to verify your account 
+                http://localhost/final/backend/email_confirm.php?username=$username&code=$confirmCode
+                ";
+$mail->Body    = 'this is the body'.$message;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {

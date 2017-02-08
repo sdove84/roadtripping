@@ -25,10 +25,10 @@
             <?php } ?>
             <div class="form-group">
                 <div class="col-xs-6">
-                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                    <input type="text" class="form-control" name="username" placeholder="Username 4 character" required>
                 </div>
                 <div class="col-xs-6">
-                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <input type="password" class="form-control" name="password" placeholder="Password 4 character" required>
                 </div>
                 <div class="col-xs-6">
                     <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>

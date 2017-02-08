@@ -6,38 +6,66 @@ if(isset($_POST['submit'])) {
     $email = $_POST['email'];
     $confirm_password = $_POST['confirm_password'];
     $mpg = $_POST['mpg'];
+    define('name','$username');
+    function is_unique_email(){
+        global $email;
+        global $connection;
+        $query = "SELECT * FROM `users` WHERE email = '$email'";
 
-    if($username ==="" ||$password ==="" || $email ==="" || $mpg===""){
-        echo '<script language="javascript">';
-        echo 'alert("please enter valid input")';
-        echo '</script>';
-    }else if(strlen($username) < 4){
+        $result = mysqli_query($connection,$query);
+        if(mysqli_num_rows($result) > 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function is_unique_username(){
+        global $username;
+        global $connection;
+        $query = "SELECT * FROM `users` WHERE username = '$username'";
+
+        $result = mysqli_query($connection,$query);
+        if(mysqli_num_rows($result) > 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    if(strlen($username) <4){
         header("location:create_new_account.php?err=". urldecode("The name must be at least 4 characters long"));
         exit();
     }else if ($password != $confirm_password){
         header("location:create_new_account.php?err=". urldecode("Confirm password does NOT match"));
         exit();
-    }else if(strlen($password) <6){
-        header("location:create_new_account.php?err=". urldecode("Password need to be at least 6 character long"));
+    }else if(strlen($password) <4){
+        header("location:create_new_account.php?err=". urldecode("Password need to be at least 4 character long"));
+        exit();
+    }else if(!is_unique_email($email)){
+        header("location:create_new_account.php?err=". urldecode("Email already existed"));
+        exit();
+    }else if(!is_unique_username($username)){
+        header("location:create_new_account.php?err=". urldecode("Username already taken"));
         exit();
     }else {
         if(!$connection){
             echo (mysqli_error($connection));
         }else {
             $confirmCode= rand();
+
             $query = "INSERT INTO `users` VALUES ('','$username','$password','$email','0','$confirmCode','$mpg')";
             $result = mysqli_query($connection,$query);
-
             $message =
                 "
-                Confirm your email Click the link below to verify your account 
-                http://localhost/backend/email_confirm.php?username=$username&code=$confirmCode;
+                Confirm your email 
+                Click the link below to verify your account 
+                http://localhost/final/backend/email_confirm.php?username=$username&code=$confirmCode;
                 ";
 
            include "php_mailer/mail_handler.php";
 
-            echo ("Please confirm your email address");
-
+            echo '<script language="javascript">';
+            echo 'alert("Please verify your email")';
+            echo '</script>';
 
             if(!$result){
                 echo(mysqli_error($result));
