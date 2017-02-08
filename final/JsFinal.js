@@ -2,6 +2,7 @@ $(document).ready(function(){
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
     $("#weatherDisplayContainer").hide();
+    getGasolineCost();
     $('#actionSubmit').click(function(){
         slicedNodes();
         checkForCheckedValues();
@@ -13,13 +14,24 @@ $(document).ready(function(){
         startPlaces(nodesToCheck6);
 
     });
-    // $('#submit_event').click(function (){
-    //     getResults();
-    // });
-
     $('#submit_event').on('click', function() {
         getResults();
     });
+    $("#displayData").on('click',function() {
+        if(dataPointsBlocker === false){
+            show_message("Please select your route first");
+        } else {
+            $("#myModal").modal('show');
+        }
+    });
+
+    $("#displayData2").on('click',function () {
+        if(findEventBlocker === false){
+            show_message("Please select route");
+        }else{
+            $("#myModalTwo").modal("show");
+        }
+    })
 });
 
 var map;
@@ -34,7 +46,6 @@ var nodesToCheck3 = null;
 var nodesToCheck4 = null;
 var nodesToCheck5 = null;
 var nodesToCheck6 = null;
-// var marker_event;
 var infowindow;
 var destination = null;
 var city = null;
@@ -43,6 +54,13 @@ var totalMilesofTrip = null;
 var pricePerGallon = null;
 var usersCostOfTrip = null;
 var weatherLoaded = false;
+var result;
+var cityForEvent = null;
+var choice = null;
+
+
+var dataPointsBlocker = false;
+var findEventBlocker = false;
 
 
 function initMap() {
@@ -76,7 +94,6 @@ function AutocompleteDirectionsHandler(map) {
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, {placeIdOnly: true});
 
-    console.log('omg',destinationAutocomplete);
 
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
@@ -182,11 +199,13 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 
     }, function (response, status) {
         if (status === 'OK') {
-            console.log('cung',response);
             me.directionsDisplay.setDirections(response);
             route = response.routes[0];
             var path = response.routes[0].overview_path;
             totalMilesofTrip = parseFloat(response.routes[0].legs[0].distance.text);
+            dataPointsBlocker = true;
+            findEventBlocker = true;
+
 
             var currentI = 0;
             nodes = [path[0]];
@@ -446,5 +465,53 @@ function mapPageWeatherAccordian() {
                 }
             }
         }
+}
+
+function getInformation(choice,cityForEvent) {
+    console.log('call get info at event_finder.js');
+    $.ajax({
+        data: {
+            app_key: "9QPc4kCRH3JtNMsD"
+        },
+
+        dataType: 'jsonp',
+        method: "get",
+        // url: 'http://api.eventful.com/json/events/search?...&keywords=Las Vegas, NV, United States&date=2017020500-2017021500&app_key=9QPc4kCRH3JtNMsD',
+        url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date=2017020400-2017071500&app_key=9QPc4kCRH3JtNMsD',
+
+        success: function (result) {
+            console.log('here is the result ',result);
+            if (result.events === null) {
+                alert("No Events found");
+            } else {
+                for (var i = result.events.event.length-1; i >=0 ; i--) {
+                    // cityEvent = result.events.event[i].city_name;
+                    // eventAddress = result.events.event[i].venue_address;
+                    // eventTitle = result.events.event[i].title;
+                    var marker = create_event_marker(result.events.event[i]);
+                    create_info_event(marker,result.events.event[i]);
+                }
+            }
+        },
+        error: function(){
+            console.log('event finder not sucessful');
+        }
+    })
+}
+
+
+function getResults(){
+    cityForEvent = $('#cityEvent').val();
+    choice = $('input[name=choose]:checked').val();
+    getInformation(choice,cityForEvent);
+}
+
+function set_val_destination(){
+    $('#cityEvent').val(destination);
+    console.log('des',destination);
+}
+
+function show_message(message){
+    alert(message);
 }
 
