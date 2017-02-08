@@ -24,6 +24,9 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Please sign in</h3>
                         </div>
+                        <?php if(isset($_GET['err'])) { ?>
+                            <div class="alert alert-success"><?php echo $_GET['err'] ?></div>
+                        <?php } ?>
                         <div class="panel-body">
                             <form accept-charset="UTF-8" role="form" method="Post">
                                 <fieldset>

@@ -39,7 +39,7 @@ $message =
     "
                 Confirm your email 
                 Click the link below to verify your account 
-                http://localhost/final/backend/email_confirm.php?username=$username&code=$confirmCode
+                http://localhost/final/backend/signin.php?username=$username&code=$confirmCode
                 ";
 $mail->Body    = 'this is the body'.$message;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

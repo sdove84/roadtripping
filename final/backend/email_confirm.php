@@ -10,6 +10,9 @@
 <body>
 <?php
 require("db.php");
+
+
+
 $username = $_GET['username'];
 $code = $_GET['code'];
 
