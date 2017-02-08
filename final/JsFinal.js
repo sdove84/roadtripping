@@ -132,7 +132,9 @@ function create_info_event(marker,result){
     });
     var eventLink = $("<a>",{
         href: result.venue_url,
-        text: "Click here for more details"
+        text: "Click here for more details",
+        target:"_blank"
+
     });
 
     var container = $("<div>").append(title,cityLabel,address,eventLink);
@@ -376,7 +378,7 @@ function cityStateDestination (){
 
 function getWeather() {
     if (city == null && state == null) {
-        alert("Please select route");
+        show_message("Please select route");
     }
     else if (weatherLoaded === false){
         $.ajax({
@@ -482,7 +484,7 @@ function getInformation(choice,cityForEvent) {
         success: function (result) {
             console.log('here is the result ',result);
             if (result.events === null) {
-                alert("No Events found");
+                show_message("No Events found");
             } else {
                 for (var i = result.events.event.length-1; i >=0 ; i--) {
                     // cityEvent = result.events.event[i].city_name;
