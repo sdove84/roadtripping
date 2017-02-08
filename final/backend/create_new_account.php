@@ -6,7 +6,11 @@ if(isset($_POST['submit'])) {
     $email = $_POST['email'];
     $confirm_password = $_POST['confirm_password'];
     $mpg = $_POST['mpg'];
-    define('name','$username');
+
+
+
+
+        define('name','$username');
     function is_unique_email(){
         global $email;
         global $connection;
@@ -50,8 +54,23 @@ if(isset($_POST['submit'])) {
         if(!$connection){
             echo (mysqli_error($connection));
         }else {
-            $confirmCode= rand();
+            $username = mysqli_real_escape_string($connection,$username);
+            $password = mysqli_real_escape_string($connection,$password);
+            $email = mysqli_real_escape_string($connection,$email);
+            $confirmCode = mysqli_real_escape_string($connection,$confirmCode);
+            $mpg = mysqli_real_escape_string($connection,$mpg);
 
+
+            //    password encryption
+//            $hash_format = "$2y$10$";
+//            $salt = "iusesomecrazystrings22";//22character
+//
+//            $hash_and_salt = $hash_format.$salt;
+//            $password = crypt($password,$hash_and_salt);
+
+//    password encryption end
+
+            $confirmCode= rand();
             $query = "INSERT INTO `users` VALUES ('','$username','$password','$email','0','$confirmCode','$mpg')";
             $result = mysqli_query($connection,$query);
             $message =
