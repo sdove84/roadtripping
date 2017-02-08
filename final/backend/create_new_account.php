@@ -24,20 +24,28 @@ if(isset($_POST['submit'])) {
         if(!$connection){
             echo (mysqli_error($connection));
         }else {
-            $query = "INSERT INTO users (username,password,email,mpg) ";
-            echo $username;
-            echo $password;
-            echo $email;
-            echo $mpg;
-            $query .= "VALUES('$username','$password','$email','$mpg')";
+            $confirmCode= rand();
+            $query = "INSERT INTO `users` VALUES ('','$username','$password','$email','0','$confirmCode','$mpg')";
             $result = mysqli_query($connection,$query);
+
+            $message =
+                "
+                Confirm your email Click the link below to verify your account 
+                http://localhost/backend/email_confirm.php?username=$username&code=$confirmCode;
+                ";
+
+            mail($email,"RoadTrip Confirmation Email",$message,"From: DoNotReply@roadtrip4guy.com");
+
+            echo ("Please confirm your email address");
+
+
             if(!$result){
                 echo(mysqli_error($result));
-            }else {
-                session_start();
-                $_SESSION['auth'] = true;
-                header('Location:cung_final.php');
-                echo ('successfully query');
+//            }else {
+//                session_start();
+//                $_SESSION['auth'] = true;
+//                header('Location:cung_final.php');
+//                echo ('successfully query');
             }
         }
     }
