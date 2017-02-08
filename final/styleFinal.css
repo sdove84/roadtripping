@@ -169,9 +169,8 @@ html, body {
 }
 
 .signIn{
-
     background-color: #444;
-    background: url(http://mymaplist.com/img/parallax/pinlayer2.png) no-repeat center center fixed,url(http://mymaplist.com/img/parallax/pinlayer1.png) no-repeat center center fixed,url(http://www.istartedsomething.com/bingimages/cache/AKHumpbacks_EN-AU1914968143.jpg) no-repeat center center fixed;
+
     -webkit-background-size: auto auto;
     -moz-background-size: auto auto;
     -o-background-size: auto auto;
@@ -180,6 +179,10 @@ html, body {
 
 .vertical-offset-100{
     padding-top:100px;
+}
+
+.panel{
+    background-color: rgba(255,255,255,0.7);
 }
 
 .signInNav a {
@@ -196,7 +199,11 @@ html, body {
     text-decoration: none;
     cursor: pointer;
 }
-
+.createAccountCancel a{
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-block;
+}
 .createAccountNav a {
     padding: 15px 8px 8px 10px;
     text-decoration: none;
@@ -276,7 +283,17 @@ html, body {
 }
 
 /* Home page */
-.container {
+.containerHome {
+    background: url("images/road-trip1.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+.container{
     background: url("images/road-trip1.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -416,5 +433,70 @@ html, body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Put my code down here to avoid any conflicts hope it works */
+
+button.accordion {
+    color: #444;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: 0.4s;
+    background-color: white;
+    padding: 6px 8px 6px 32px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+div.panelAccordian {
+    padding: 0 50px;
+    background-color: black;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    color: white;
+}
 
 

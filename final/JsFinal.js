@@ -1,10 +1,10 @@
 $(document).ready(function(){
     $("#mode-selector").hide();
     $("#getDirectionsButton").hide();
-
+    $("#weatherDisplayContainer").hide();
+    getGasolineCost();
     $('#actionSubmit').click(function(){
         slicedNodes();
-
         checkForCheckedValues();
         startPlaces(nodesToCheck);
         startPlaces(nodesToCheck2);
@@ -14,13 +14,24 @@ $(document).ready(function(){
         startPlaces(nodesToCheck6);
 
     });
-    // $('#submit_event').click(function (){
-    //     getResults();
-    // });
-
     $('#submit_event').on('click', function() {
         getResults();
     });
+    $("#displayData").on('click',function() {
+        if(dataPointsBlocker === false){
+            show_message("Please select your route first");
+        } else {
+            $("#myModal").modal('show');
+        }
+    });
+
+    $("#displayData2").on('click',function () {
+        if(findEventBlocker === false){
+            show_message("Please select route");
+        }else{
+            $("#myModalTwo").modal("show");
+        }
+    })
 });
 
 var map;
@@ -35,11 +46,23 @@ var nodesToCheck3 = null;
 var nodesToCheck4 = null;
 var nodesToCheck5 = null;
 var nodesToCheck6 = null;
-var marker_event;
 var infowindow;
 var destination = null;
 var city = null;
 var state = null;
+var totalMilesofTrip = null;
+var pricePerGallon = null;
+var usersCostOfTrip = null;
+var weatherLoaded = false;
+var result;
+var cityForEvent = null;
+var choice = null;
+
+
+var dataPointsBlocker = false;
+var findEventBlocker = false;
+
+
 function initMap() {
     geocoder = new google.maps.Geocoder;
     directionsDisplay = new google.maps.DirectionsRenderer;
@@ -71,7 +94,6 @@ function AutocompleteDirectionsHandler(map) {
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, {placeIdOnly: true});
 
-    console.log('omg',destinationAutocomplete);
 
     this.setupClickListener('changemode-driving', 'DRIVING');
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
@@ -87,34 +109,47 @@ function AutocompleteDirectionsHandler(map) {
  *Create event Marker and info_window for marker
  */
 
-function create_event_marker(result,lat,lng){
-     marker_event = new google.maps.Marker({
+function create_event_marker(eventData){
+    var lat = parseFloat(eventData.latitude);
+    var lng = parseFloat(eventData.longitude);
+     var marker_event = new google.maps.Marker({
          position: {lat: lat, lng: lng},
          map: map,
          icon:'images/location_pin_marker.png'
     });
-    create_info_event(marker_event,result);
+    return marker_event;
 }
 
-function create_info_event(pos,result){
-    var contentString2 = '<div>' + '<p>'+ result.title+'</p>' + '</div>';
-    contentString2 += '<br>' + result.city_name;
+function create_info_event(marker,result){
+    var title = $("<h1>",{
+        text: result.title
+    });
+    var cityLabel = $("<h3>",{
+        text: result.city_name
+    });
+    var address = $("<p>",{
+        text: result.venue_address
+    });
+    var eventLink = $("<a>",{
+        href: result.venue_url,
+        text: "Click here for more details",
+        target:"_blank"
+
+    });
+
+    var container = $("<div>").append(title,cityLabel,address,eventLink);
     var infoWindow2 = new google.maps.InfoWindow({
-        content: contentString2
+        content: container.html()
     });
 
-    //create info window for locations
-    // infoWindow2.addListener('domready',function(){
-    //     $('.direction').on('click',function(){
-    //         calculateAndDisplayRoute(infoWindow2,newMarker);//truyen newmarker vao de lay vi tri 2
-    //     });
-    // });
-    //when location marker clicked
-    pos.addListener('click',function(){
-        infoWindow2.open(map,pos);
-    });
-    return pos;
+    marker.addListener('click', (
+        function(){return function(){
+            infoWindow2.open(map,marker);
+        };}
+    )());
+    return marker;
 }
+
     AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
 
     var radioButton = document.getElementById(id);
@@ -166,10 +201,13 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 
     }, function (response, status) {
         if (status === 'OK') {
-            console.log('cung',response);
             me.directionsDisplay.setDirections(response);
             route = response.routes[0];
             var path = response.routes[0].overview_path;
+            totalMilesofTrip = parseFloat(response.routes[0].legs[0].distance.text);
+            dataPointsBlocker = true;
+            findEventBlocker = true;
+
 
             var currentI = 0;
             nodes = [path[0]];
@@ -195,7 +233,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         }
     });
     //marker for events
-    getInformation();
+
 };
 
 
@@ -221,7 +259,6 @@ function slicedNodes() {
     nodesToCheck5 = nodesToCheck4.splice(splitPoint);
     splitPoint = Math.ceil(nodesToCheck.length / 2);
     nodesToCheck6 = nodesToCheck5.splice(splitPoint);
-
 }
 
 function startPlaces(nodes) {
@@ -251,8 +288,6 @@ function processResults(results, status, pagination) {
     }
 }
 
-
-
 function createMarkers(places) {
     var  markersArray = [];
     var bounds = new google.maps.LatLngBounds();
@@ -272,27 +307,20 @@ function createMarkers(places) {
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(25, 25)
         };
-
         let marker = new google.maps.Marker({
             map: map,
             icon: image,
             title: place.name,
             position: place.geometry.location
-
         });
-
         let infoWindow = new google.maps.InfoWindow({
             content: content
-
-
         });
         markersArray.push(marker);
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
         });
-
         bounds.extend(place.geometry.location);
-
     }
     var markerCluster = new MarkerClusterer(map, markersArray,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
@@ -339,7 +367,7 @@ function showTraffic() {
 }
 
 /**
- *Identifies the City and State based on the destination
+ * Identifies the City and State based on the destination
  * The City and State are going to be used for the weather input
  */
 function cityStateDestination (){
@@ -348,39 +376,57 @@ function cityStateDestination (){
     console.log("this is the city and state of the destination:" + city + " " + state);
 }
 
-
 function getWeather() {
     if (city == null && state == null) {
-        alert("Please select route");
+        show_message("Please select route");
     }
-    else {
+    else if (weatherLoaded === false){
         $.ajax({
             dataType: 'jsonp',
             method: "GET",
-            url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/geolookup/forecast/q/' + state + '/' + city + '.json',
+            url: 'http://api.wunderground.com/api/dd19086be18c6fc3/alerts/almanac/conditions/forecast/q/' + state + '/' + city + '.json',
+
             success: function (result) {
+                //TODO: do dom creation instead of using hard coded html
                 noAlerts(result);
+                mapPageWeatherAccordian();
+
                 var weatherImage = $('<img>', {src: result.current_observation.icon_url});
                 var location = result.current_observation.display_location.full;
-                console.log(alertmessage);
                 var temp = result.current_observation.temp_f + '&#176;' + ' F';
                 var humidity = result.current_observation.relative_humidity;
                 var wind = result.current_observation.relative_humidity;
-                var pressure = result.current_observation.pressure_in;
                 $('#weatherImage').append(weatherImage);
                 $('#weatherLocation').append(location);
                 $('#weatherAlerts').append(alertmessage);
                 $('#weatherTemp').append(temp);
-                $('#weatherHumidity').append(humidity);
-                $('#weatherWind').append(wind);
-                $('#weatherPressure').append(pressure);
+                $('#weatherHumidity').append(humidity+" "+ "Humidity");
+                var  forecastSet= result.forecast.simpleforecast.forecastday;
+                for (var i = 1; i < 4; i++) {
+                    var dayOfWeek = forecastSet[i].date.weekday;
+                    var weatherIcon = $('<img>', {src: forecastSet[i].icon_url});
+                    var highTemp = "High" + " " + forecastSet[i].high.fahrenheit + '&#176;' + ' F';
+                    var lowTemp = "Low" + " " + forecastSet[i].low.fahrenheit + '&#176;' + ' F';
+                    var precipitation = "Precepitation"+" "+forecastSet[i].pop + '%';
+                    wind = "Wind"+" "+forecastSet[i].avewind.mph + ' ' + forecastSet[i].avewind.dir;
+                    $("#weatherDOW"+[i]).append(dayOfWeek);
+                    $("#weatherIcon"+[i]).append(weatherIcon);
+                    $("#weatherHigh"+[i]).append(highTemp);
+                    $("#weatherLow"+[i]).append(lowTemp);
+                    $("#weatherPrep"+[i]).append(precipitation);
+                    $("#weatherWind"+[i]).append(wind);
+                    weatherLoaded = true;
+                }
             }
+        });
+    }
+    else{
+        mapPageWeatherAccordian();
 
-        })
     }
 }
 
-function noAlerts(result) {
+function noAlerts(result){
     if (result.alerts.length === 0) {
         console.log('Test: ' + result.alerts);
         alertmessage = "No weather alerts.";
@@ -389,5 +435,85 @@ function noAlerts(result) {
     }
 }
 
+function getGasolineCost() {
+    $.ajax({
+        dataType: 'json',
+        method: "POST",
+        url: 'http://api.eia.gov/series/?api_key=13465938b39393fc5b239c466cf067b2&series_id=PET.EMM_EPM0_PTE_NUS_DPG.W',
 
+            success: function (result) {
+                pricePerGallon = result.series[0].data[0][1];
+                console.log("Average price per gallon:"+ "$"+ pricePerGallon);
+            }
+    })
+}
+
+function calculateCostOfTrip(){
+     //usersCostOfTrip = (totalMilesofTrip/  ) * pricePerGallon;
+
+}
+
+function mapPageWeatherAccordian() {
+    $("#weatherDisplayContainer").toggle();
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].onclick = function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            }
+        }
+}
+
+function getInformation(choice,cityForEvent) {
+    console.log('call get info at event_finder.js');
+    $.ajax({
+        data: {
+            app_key: "9QPc4kCRH3JtNMsD"
+        },
+
+        dataType: 'jsonp',
+        method: "get",
+        // url: 'http://api.eventful.com/json/events/search?...&keywords=Las Vegas, NV, United States&date=2017020500-2017021500&app_key=9QPc4kCRH3JtNMsD',
+        url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date=2017020400-2017071500&app_key=9QPc4kCRH3JtNMsD',
+
+        success: function (result) {
+            console.log('here is the result ',result);
+            if (result.events === null) {
+                show_message("No Events found");
+            } else {
+                for (var i = result.events.event.length-1; i >=0 ; i--) {
+                    // cityEvent = result.events.event[i].city_name;
+                    // eventAddress = result.events.event[i].venue_address;
+                    // eventTitle = result.events.event[i].title;
+                    var marker = create_event_marker(result.events.event[i]);
+                    create_info_event(marker,result.events.event[i]);
+                }
+            }
+        },
+        error: function(){
+            console.log('event finder not sucessful');
+        }
+    })
+}
+
+
+function getResults(){
+    cityForEvent = $('#cityEvent').val();
+    choice = $('input[name=choose]:checked').val();
+    getInformation(choice,cityForEvent);
+}
+
+function set_val_destination(){
+    $('#cityEvent').val(destination);
+    console.log('des',destination);
+}
+
+function show_message(message){
+    alert(message);
+}
 

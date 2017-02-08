@@ -16,32 +16,47 @@
 <div class="text-center">
     <h1>TRIP PLANNER</h1>
     <legend></legend>
-    <div class="container">
-        <form class="form form-inline" role="form" action="create_new_account.php" method="post">
-            <h1>Create New Account</h1>
+    <div class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please create your account</h3>
+                </div>
+                <?php if(isset($_GET['err'])) { ?>
+                    <div class="alert alert-danger"><?php echo $_GET['err'] ?></div>
+                <?php } ?>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form" method="Post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" name="username" placeholder="Username at least 4 character" type="text" required >
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="password" placeholder="Password at least 4 character" type="password" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="confirm_password" placeholder="Confirm Password" type="password" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control"  name="mpg" placeholder="MPG" type="number" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="email" placeholder="Email address" type="email" required>
+                            </div>
 
-            <?php if(isset($_GET['err'])) { ?>
-            <div class="alert alert-danger"><?php echo $_GET['err'] ?></div>
-            <?php } ?>
-            <div class="form-group">
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" name="username" placeholder="Username 4 character" required>
+                            <input class="btn btn-lg btn-info btn-block" type="submit" name="submit" value="Create Account">
+                        </fieldset>
+                    </form>
+                    <div class="createAccountCancel">
+                        <p>Already have an account?<a href="signin.php"> Sign in</a><p>
+                    </div>
+                    <hr>
+                    <div class="createAccountCancel">
+                        <a href="homePage.html">Cancel</a>
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    <input type="password" class="form-control" name="password" placeholder="Password 4 character" required>
-                </div>
-                <div class="col-xs-6">
-                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
-                </div>
-                <div class="col-xs-6">
-                    <input type="email" class="form-control" name="email" placeholder="Email" required>
-                </div>
-                <div class="col-xs-6">
-                    <input type="number" class="form-control" name="mpg" placeholder="MPG" required>
-                </div>
-                <input type="submit" name ="submit" class="btn btn-success" value="Create Account">
             </div>
-        </form>
+        </div>
     </div>
 </div>
 </body>

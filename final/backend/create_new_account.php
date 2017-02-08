@@ -7,9 +7,6 @@ if(isset($_POST['submit'])) {
     $confirm_password = $_POST['confirm_password'];
     $mpg = $_POST['mpg'];
 
-
-
-
         define('name','$username');
     function is_unique_email(){
         global $email;
