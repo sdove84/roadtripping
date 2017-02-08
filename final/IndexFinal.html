@@ -29,9 +29,9 @@
 <div id="inputsContainer" class="container-fluid">
     <div class="row">
         <input id="origin-input" class="col-sm-5" type="text"
-               placeholder="Enter a location">
+               placeholder="Enter a location" value="Primm, NV, United States">
         <input id="destination-input" class="col-sm-5" type="text"
-               placeholder="Enter a destination ">
+               placeholder="Enter a destination " value="Las Vegas, NV, United States">
     </div>
 </div>
 
@@ -47,11 +47,11 @@
     <a href="">My Account</a>
     <a id=displayData type="button" data-toggle="modal" data-target="#myModal">Choose Places</a>
     <a href="check_list.html" onclick="flipPage()">Pack/Shop List</a>
-    <a id= displayData2 type="button" data-toggle="modal" data-target="#myModal2" onclick="set_val_destination()">Find Event</a>
+    <a id= "displayData2" type="button" data-toggle="modal" data-target="#myModal2" onclick="set_val_destination()">Find Event</a>
     <a onclick="getWeather()">Weather</a>
     <div id="weatherDisplayContainer">
         <button class="accordion">Current Weather</button>
-        <div class="panel">
+        <div class="panelAccordian">
             <div id="weatherImage"></div>
             <div id="weatherLocation"></div>
             <div id="weatherAlerts"></div>
@@ -60,7 +60,7 @@
             <div id="weatherWind"></div>
         </div>
         <button class="accordion" id="weatherDOW1"></button>
-        <div class="panel">
+        <div class="panelAccordian">
             <div id="weatherIcon1"></div>
             <div id="weatherHigh1"></div>
             <div id="weatherLow1"></div>
@@ -68,14 +68,14 @@
             <div id="weatherWind1"></div>
         </div>
         <button class="accordion" id="weatherDOW2"></button>
-        <div class="panel">
+        <div class="panelAccordian">
             <div id="weatherIcon2"></div>
             <div id="weatherHigh2"></div>
             <div id="weatherLow2"></div>
             <div id="weatherPrep2"></div>
         </div>
         <button class="accordion" id="weatherDOW3"></button>
-        <div class="panel">
+        <div class="panelAccordian">
             <div id="weatherIcon3"></div>
             <div id="weatherHigh3"></div>
             <div id="weatherLow3"></div>
@@ -202,7 +202,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="submit_event"  type="button" class="btn btn-default" data-dismiss="modal">Show Results</button>
+                <button id="submit_event"  type="button" class="btn btn-default" data-dismiss="modal" onclick="/*getInformation()*/">Show Results</button>
             </div>
         </div>
     </div>

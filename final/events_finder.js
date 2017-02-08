@@ -1,7 +1,11 @@
-var output;
+var result;
 var startDate;
 var endDate;
 var myDateRange;
+var cityEvent = null;
+var eventAddress = null;
+var eventTitle = null;
+
 
 function getInformation(choice,cityForEvent) {
 
@@ -17,22 +21,22 @@ function getInformation(choice,cityForEvent) {
         url: 'http://api.eventful.com/json/events/search?...&keywords='+choice+'&location='+cityForEvent+'&date=2017020400-2017071500&app_key=9QPc4kCRH3JtNMsD',
 
         success: function (result) {
-            output = result;
-            console.log('here is the result ',output);
-            //returns message if no results found
+
+            console.log('here is the result ',result);
             if (result.events === null) {
-                $('#display').append('no results found');
+                alert("No Events found");
             } else {
-                //loop for results including condition for fewer than 10 events(max)
-                for (var i = 0; i < result.events.event.length; i++) {
-                    var lat = result.events.event[i].latitude;
-                    var lng = result.events.event[i].longitude;
-                    lat = parseInt(lat);
-                    lng = parseInt(lng);
-                    console.log('here is lat and lng',lat +''+lng);
-                    create_event_marker(result.events.event[i],lat,lng);
+                for (var i = result.events.event.length-1; i >=0 ; i--) {
+                    // cityEvent = result.events.event[i].city_name;
+                    // eventAddress = result.events.event[i].venue_address;
+                    // eventTitle = result.events.event[i].title;
+                    var marker = create_event_marker(result.events.event[i]);
+                    create_info_event(marker,result.events.event[i]);
                 }
             }
+        },
+        error: function(){
+            console.log('event finder not sucessful');
         }
     })
 }
@@ -41,11 +45,8 @@ var cityForEvent = null;
 var choice = null;
 
 function getResults(){
-
-    console.log('here is des',destination);
     cityForEvent = $('#cityEvent').val();
-    choice = (document.querySelector('input[name="choose"]:checked').value);
-    console.log('User has typed: ' + choice);
+    choice = $('input[name=choose]:checked').val();
     getInformation(choice,cityForEvent);
 }
 

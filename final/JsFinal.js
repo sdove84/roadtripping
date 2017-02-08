@@ -34,12 +34,11 @@ var nodesToCheck3 = null;
 var nodesToCheck4 = null;
 var nodesToCheck5 = null;
 var nodesToCheck6 = null;
-var marker_event;
+// var marker_event;
 var infowindow;
 var destination = null;
 var city = null;
 var state = null;
-
 var totalMilesofTrip = null;
 var pricePerGallon = null;
 var usersCostOfTrip = null;
@@ -93,34 +92,45 @@ function AutocompleteDirectionsHandler(map) {
  *Create event Marker and info_window for marker
  */
 
-function create_event_marker(result,lat,lng){
-     marker_event = new google.maps.Marker({
+function create_event_marker(eventData){
+    var lat = parseFloat(eventData.latitude);
+    var lng = parseFloat(eventData.longitude);
+     var marker_event = new google.maps.Marker({
          position: {lat: lat, lng: lng},
          map: map,
          icon:'images/location_pin_marker.png'
     });
-    create_info_event(marker_event,result);
+    return marker_event;
 }
 
-function create_info_event(pos,result){
-    var contentString2 = '<div>' + '<p>'+ result.title+'</p>' + '</div>';
-    contentString2 += '<br>' + result.city_name;
+function create_info_event(marker,result){
+    var title = $("<h1>",{
+        text: result.title
+    });
+    var cityLabel = $("<h3>",{
+        text: result.city_name
+    });
+    var address = $("<p>",{
+        text: result.venue_address
+    });
+    var eventLink = $("<a>",{
+        href: result.venue_url,
+        text: "Click here for more details"
+    });
+
+    var container = $("<div>").append(title,cityLabel,address,eventLink);
     var infoWindow2 = new google.maps.InfoWindow({
-        content: contentString2
+        content: container.html()
     });
 
-    //create info window for locations
-    // infoWindow2.addListener('domready',function(){
-    //     $('.direction').on('click',function(){
-    //         calculateAndDisplayRoute(infoWindow2,newMarker);//truyen newmarker vao de lay vi tri 2
-    //     });
-    // });
-    //when location marker clicked
-    pos.addListener('click',function(){
-        infoWindow2.open(map,pos);
-    });
-    return pos;
+    marker.addListener('click', (
+        function(){return function(){
+            infoWindow2.open(map,marker);
+        };}
+    )());
+    return marker;
 }
+
     AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
 
     var radioButton = document.getElementById(id);
@@ -202,7 +212,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         }
     });
     //marker for events
-    getInformation();
+
 };
 
 
