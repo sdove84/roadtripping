@@ -34,7 +34,7 @@ if(isset($_POST['submit'])) {
                 http://localhost/backend/email_confirm.php?username=$username&code=$confirmCode;
                 ";
 
-            mail($email,"RoadTrip Confirmation Email",$message,"From: DoNotReply@roadtrip4guy.com");
+           include "php_mailer/mail_handler.php";
 
             echo ("Please confirm your email address");
 
