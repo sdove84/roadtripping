@@ -19,4 +19,5 @@ if(!empty($_POST['destination'])){
     }
 }
 
+print_r($_POST);
 ?>

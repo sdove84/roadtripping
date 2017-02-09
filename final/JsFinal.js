@@ -184,7 +184,6 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
         }
         destination = $("#destination-input").val();
         origin = $("#origin-input").val();
-        get_value_database();
 
         me.route();
     });

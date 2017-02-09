@@ -25,6 +25,7 @@
         <span class="col-sm-4" id="mapLogo">Roadtripping </span>
         <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Directions</span>
     </div>
+    <button id="save_routes_to_database">Save shet</button>
 </div>
 
 <div id="inputsContainer" class="container-fluid">
@@ -109,9 +110,9 @@
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Accommodations:</p>
-                        <li><a><input value="hotels" type="checkbox"/>Hotels</a></li>
-                        <li><a><input value="motel" type="checkbox"/>Motels</a></li>
-                        <li><a><input value="campground + rv_park" type="checkbox"/>Camping/RV Parks</a></li>
+                        <li><a><input value="hotels" type="checkbox" name="acc_hotels"/>Hotels</a></li>
+                        <li><a><input value="motel" type="checkbox" name = "acc_motels"/>Motels</a></li>
+                        <li><a><input value="campground + rv_park" type="checkbox" name="acc_camping"/>Camping/RV Parks</a></li>
                     </ul>
                 </div>
                 <! --- second drop down Attractions -->
@@ -121,7 +122,7 @@
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                         <p>Attractions</p>
-                        <li><a><input value="amusement park" type="checkbox"/>Amusement Parks</a></li>
+                        <li><a><input value="amusement park" type="checkbox" name="att_amusement"/>Amusement Parks</a></li>
                         <li><a><input value="museums" type="checkbox"/>Museums</a></li>
                         <li><a><input  value="zoo / aquarium" type="checkbox"/>Zoo/Aquarium</a></li>
                    </ul>
@@ -171,6 +172,8 @@
             </div>
             <div class="modal-footer">
                 <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal">Show Results
+                </button>
+                <button id="save_places_to_database" type="button" class="btn btn-default" data-dismiss="modal">save places
                 </button>
             </div>
         </div>
