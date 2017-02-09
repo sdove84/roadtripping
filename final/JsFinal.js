@@ -31,7 +31,8 @@ $(document).ready(function(){
         }else{
             $("#myModalTwo").modal("show");
         }
-    })
+    });
+
 });
 
 var map;
@@ -48,6 +49,7 @@ var nodesToCheck5 = null;
 var nodesToCheck6 = null;
 var infowindow;
 var destination = null;
+var origin = null;
 var city = null;
 var state = null;
 var totalMilesofTrip = null;
@@ -181,9 +183,11 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (au
             me.destinationPlaceId = place.place_id;
         }
         destination = $("#destination-input").val();
+        origin = $("#origin-input").val();
+        get_value_database();
+
         me.route();
     });
-
 };
 
 
@@ -373,7 +377,7 @@ function showTraffic() {
 function cityStateDestination (){
     city = destination.split(",")[0];
     state = destination.split(",")[1];
-    console.log("this is the city and state of the destination:" + city + " " + state);
+    // console.log("this is the city and state of the destination:" + city + " " + state);
 }
 
 function getWeather() {
