@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if(isset($_SESSION['auth'])){
+
+}else {
+    header('Location:signin.php');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +25,26 @@
     <script src="database.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgbouMURMuy_zBO2i2WZX_UqBppNMQPvY&libraries=places&callback=initMap" defer></script>
 
+    <script>
 
+        function test(){
+            console.log('hahahahaha');
+            $.ajax({
+                url: 'http://localhost/final/backend/display_data_from_database.php',
+                type: "POST",
+                dataType: 'json',
+                data: ({
+                    id:<?php echo $_SESSION['user_id']?>
+                }),
+                success: function(result){
+                    console.log('cung',result);
+                    $('#origin-input').val(result[0].origin);
+                    $('#destination-input').val(result[0].destination);
+                    console.log('here is origin', result[0].origin);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -25,7 +54,8 @@
         <span class="col-sm-4" id="mapLogo">Roadtripping </span>
         <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Directions</span>
     </div>
-    <button id="save_routes_to_database">Save shet</button>
+    <button id="save_routes_to_database" onclick="test()">Save shet</button>
+
 </div>
 
 <div id="inputsContainer" class="container-fluid">
@@ -125,7 +155,7 @@
                         <li><a><input value="amusement park" type="checkbox" name="att_amusement"/>Amusement Parks</a></li>
                         <li><a><input value="museums" type="checkbox" name="att_museums"/>Museums</a></li>
                         <li><a><input  value="zoo / aquarium" type="checkbox" name="att_zoo"/>Zoo/Aquarium</a></li>
-                   </ul>
+                    </ul>
                 </div>
                 <!-- Third drop down Outdoors and Recreation -->
                 <div class="dropdown">
@@ -166,7 +196,7 @@
                         <li><a><input value="health Food + health" type="checkbox" name="food_vegetarian"/>Vegetarian and Health Food</a></li>
                         <li><a><input value="bars" type="checkbox" name="food_bars"/>Bars and Drinks</a></li>
                         <li><a><input value="wineries/Breweries" type="checkbox" name="food_wineries"/>Wineries, Breweries and
-                            Distilleries</a></li>
+                                Distilleries</a></li>
                     </ul>
                 </div>
             </div>

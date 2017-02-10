@@ -48,7 +48,8 @@ if(isset($_POST['submit'])) {
         $row = mysqli_fetch_assoc($result);
         if($row['confirmed'] == '1'){
             $_SESSION['auth'] = true;
-            header('Location:cung_final.php');
+            $_SESSION['user_id'] = $row['id'];
+            header('Location:http://localhost/final/indexFinal.php');
         }else {
             header("location:signin.php?err=". urldecode("Please activate your account before log in"));
             exit();

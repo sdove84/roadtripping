@@ -1,20 +1,20 @@
-
-
-function send_route_database(){
-    console.log('save to data function clicked');
-    $.ajax({
-        url: 'http://localhost/final/backend/data_from_frontend.php',
-        type: "POST",
-        data: ({
-            origin: origin,
-            destination:destination
-        }),
-        success: function(result){
-           console.log(result);
-        }
-    });
-}
-
+//
+//
+// function send_route_database(){
+//     console.log('save to data function clicked');
+//     $.ajax({
+//         url: 'http://localhost/final/backend/data_from_frontend.php',
+//         type: "POST",
+//         data: ({
+//             origin: origin,
+//             destination:destination
+//         }),
+//         success: function(result){
+//            console.log(result);
+//         }
+//     });
+// }
+//
 
 
 function send_places_database(){
@@ -44,7 +44,9 @@ function send_places_database(){
         url: 'http://localhost/final/backend/data_from_frontend.php',
         type: "POST",
         data: ({
-            places: sendData
+            places: sendData,
+            origin: origin,
+            destination:destination
         }),
         success: function(result){
             console.log(result);
@@ -53,22 +55,8 @@ function send_places_database(){
 
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function(){
-   $('#save_routes_to_database').on('click',send_route_database);
+   // $('#save_routes_to_database').on('click',send_route_database);
     $('#save_places_to_database').on('click',send_places_database);
 });
 
