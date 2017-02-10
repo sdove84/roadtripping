@@ -74,13 +74,14 @@ if(isset($_SESSION['auth'])){
 
 <div id="mySidenav2" class="sidenav2">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav2()">&times;</a>
-    <a href="signin.html">Sign In</a>
-    <a href="create_new_account.html">Create Account</a>
+<!--    <a href="signin.html">Sign In</a>-->
+<!--    <a href="create_new_account.html">Create Account</a>-->
     <a href="">My Account</a>
     <a id=displayData type="button">Choose Places</a>
     <a href="check_list.html" onclick="flipPage()">Pack/Shop List</a>
     <a id= "displayData2" type="button" data-toggle="modal" data-target="#myModal2" onclick="set_val_destination()">Find Event</a>
     <a onclick="getWeather()">Weather</a>
+    <a href="signout.php"> Sign out </a>
     <div id="weatherDisplayContainer">
         <button class="accordion">Current Weather</button>
         <div class="panelAccordian">

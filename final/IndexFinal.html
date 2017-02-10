@@ -25,7 +25,7 @@
         <span class="col-sm-4" id="mapLogo">Roadtripping </span>
         <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Directions</span>
     </div>
-    <button id="save_routes_to_database">Save shet</button>
+    <!--<button id="save_routes_to_database">Save shet</button>-->
 </div>
 
 <div id="inputsContainer" class="container-fluid">
@@ -37,6 +37,8 @@
     </div>
 </div>
 
+
+
 <div id="mode-selector" class="controls">
     <input name="type" id="changemode-driving">
     <label for="changemode-driving"></label>
@@ -44,13 +46,15 @@
 
 <div id="mySidenav2" class="sidenav2">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav2()">&times;</a>
-    <a href="signin.html">Sign In</a>
-    <a href="create_new_account.html">Create Account</a>
+    <a href="backend/signin.php">Sign In</a>
+    <a href="backend/create_new_account.php">Create Account</a>
     <a href="">My Account</a>
     <a id=displayData type="button">Choose Places</a>
     <a href="check_list.html" onclick="flipPage()">Pack/Shop List</a>
     <a id= "displayData2" type="button" data-toggle="modal" data-target="#myModal2" onclick="set_val_destination()">Find Event</a>
     <a onclick="getWeather()">Weather</a>
+
+
     <div id="weatherDisplayContainer">
         <button class="accordion">Current Weather</button>
         <div class="panelAccordian">
@@ -85,7 +89,6 @@
         </div>
     </div>
 </div>
-
 
 <div id="mySidenav3" class="sidenav3">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav3()">&times;</a>
