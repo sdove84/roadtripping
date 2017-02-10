@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if(isset($_SESSION['auth'])){
 
 }else {
@@ -40,7 +39,6 @@ if(isset($_SESSION['auth'])){
                     console.log('cung',result);
                     $('#origin-input').val(result[0].origin);
                     $('#destination-input').val(result[0].destination);
-                    console.log('here is origin', result[0].origin);
                 }
             });
         }
@@ -54,7 +52,9 @@ if(isset($_SESSION['auth'])){
         <span class="col-sm-4" id="mapLogo">Roadtripping </span>
         <span class="col-sm-4" id="getDirectionsButton" onclick="openNav3()">Directions</span>
     </div>
-    <button id="save_routes_to_database" onclick="test()">Save shet</button>
+    <button class="btn btn-info" onclick="test()">My last trip</button>
+    <button id="save_places_to_database" class="btn btn-info">save places
+    </button>
 
 </div>
 
@@ -203,8 +203,7 @@ if(isset($_SESSION['auth'])){
             <div class="modal-footer">
                 <button id="actionSubmit" type="button" class="btn btn-default" data-dismiss="modal">Show Results
                 </button>
-                <button id="save_places_to_database" type="button" class="btn btn-default" data-dismiss="modal">save places
-                </button>
+
             </div>
         </div>
     </div>

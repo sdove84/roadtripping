@@ -1,11 +1,11 @@
 <?php
 require("db.php");
 session_start();
-
 print_r('here is post global'.$_POST);
 $output = ['success'=>false];
 $places_types = [
     'acc_hotels' => 'acc_hotels',
+    'acc_motels' => 'acc_motels',
     'acc_camping' => 'acc_camping',
     'att_amusement' => 'att_amusement',
     'att_museums' =>'att_museums',
@@ -29,7 +29,6 @@ foreach($places_types AS $key=>$value){
 
 }
 
-
 if(!empty($_POST['destination'])){
     $origin = addslashes($_POST['origin']);
     $destination = addslashes($_POST['destination']);
@@ -38,6 +37,7 @@ if(!empty($_POST['destination'])){
       `origin` = '$origin',
       `destination` = '$destination',
       `acc_hotels` = {$to_save['acc_hotels']},
+      `acc_motels` = {$to_save['acc_motels']},
       `acc_camping` = {$to_save['acc_camping']},
       `att_amusement` = {$to_save['att_amusement']},
       `att_museums` ={$to_save['att_museums']},
@@ -53,9 +53,10 @@ if(!empty($_POST['destination'])){
       `food_vegetarian` = {$to_save['food_vegetarian']},
       `food_bars` = {$to_save['food_bars']},
       `food_wineries` = {$to_save['food_wineries']},
-      `user_id` = {$_SESSION['user_id']}
+      `user_id` = {$_SESSION['user_id']} 
       ON DUPLICATE KEY UPDATE
       `acc_hotels` = {$to_save['acc_hotels']},
+      `acc_motels` = {$to_save['acc_motels']},
       `acc_camping` = {$to_save['acc_camping']},
       `att_amusement` = {$to_save['att_amusement']},
       `att_museums` ={$to_save['att_museums']},
@@ -89,14 +90,7 @@ if(!empty($_POST['destination'])){
             }
         }
     }
-
 }
-
 print(json_encode($output));
 
-//$query = "UPDATE original_destination SET ";
-//$query .= "acc_hotels = '4', ";
-//$query .= "acc_motels = '4' ";
-////$query .= "WHERE id = $id ";
-//$result = mysqli_query($connection,$query);
 ?>

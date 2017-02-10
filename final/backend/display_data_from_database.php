@@ -1,7 +1,9 @@
 <?php
 require ("db.php");
     session_start();
-    $user_id = $_SESSION['user_id'];
+
+    //getting data back from data base
+    $user_id = $_SESSION['user_id'];//passing session from sign in page
     $query = "SELECT * FROM original_destination WHERE `user_id`='$user_id'";
     $result = mysqli_query($connection,$query);
     $output = [];

@@ -51,6 +51,7 @@ if(isset($_POST['submit'])) {
         if(!$connection){
             echo (mysqli_error($connection));
         }else {
+            $confirmCode= rand();
             $username = mysqli_real_escape_string($connection,$username);
             $password = mysqli_real_escape_string($connection,$password);
             $email = mysqli_real_escape_string($connection,$email);
@@ -67,7 +68,7 @@ if(isset($_POST['submit'])) {
 
 //    password encryption end
 
-            $confirmCode= rand();
+
             $query = "INSERT INTO `users` VALUES ('','$username','$password','$email','0','$confirmCode','$mpg')";
             $result = mysqli_query($connection,$query);
             $message =
