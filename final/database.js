@@ -38,21 +38,13 @@ function send_places_database(){
     sendData.food_bars=false;
     sendData.food_wineries=false;
     $("input[type=checkbox]:checked").each(function(index, ele) {
-        console.log('ele:', ele, 'index:', index, 'value', $(ele).val());
         sendData[$(ele).attr('name')] = true;
-
     });
-    console.log('here is object',sendData);
-    // console.log('Data to send', sendData);
-    return;
     $.ajax({
         url: 'http://localhost/final/backend/data_from_frontend.php',
         type: "POST",
         data: ({
-            acc_hotels: acc_hotels,
-            acc_motels:acc_motels,
-            acc_camping:acc_camping
-
+            places: sendData
         }),
         success: function(result){
             console.log(result);
